@@ -3,14 +3,19 @@ package View;
 import com.formdev.flatlaf.FlatLightLaf;
 import lib.TextPrompt;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class LoginView extends JPanel {
-    private JButton verifyUser;
-    private JButton adminButton;
+    private JButton loginButton;
     private JTextField userField;
     private JPasswordField passwordField;
+    private Image logo;
 
     public LoginView(){
         FlatLightLaf.setup();
@@ -21,52 +26,61 @@ public class LoginView extends JPanel {
         setBackground(new Color(0x4A66CA));
 
         //Logo?? no gibran no pongas mi foto
-
+        try {
+            logo = ImageIO.read(new File("src/img/logo.png"));
+            logo = logo.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        } catch (IOException e){
+            System.out.println("Error al cargar la imagen: " + e.getMessage());
+        }
 
         //panel central del login (rectangulo blanco)
         JPanel centralPanel = new JPanel();
         centralPanel.setLayout(new BoxLayout(centralPanel, BoxLayout.Y_AXIS));
         centralPanel.setBackground(Color.WHITE);
+        centralPanel.setOpaque(false);
         centralPanel.setPreferredSize(new Dimension(480, 580));
         add(centralPanel);
 
-        JLabel loginLabel = createJLabel("Identifícate", 40);
-        centralPanel.add(Box.createVerticalStrut(100));
+        JLabel loginLabel = createJLabel("Bienvenido", 40);
+        centralPanel.add(Box.createVerticalStrut(140));
         loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(loginLabel);
-
+        
         JLabel user = createJLabel("Usuario", 15);
-        centralPanel.add(Box.createVerticalStrut(40));
+        centralPanel.add(Box.createVerticalStrut(30));
         user.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(user);
 
-        userField = createTextField("   Ingresar usuario", 350, 50);
-        userField.setMaximumSize(new Dimension(350, 50));
+        userField = createTextField("Ingresar usuario", 350, 50);
+        userField.setMaximumSize(new Dimension(325, 50));
         userField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userField.setBorder(BorderFactory.createCompoundBorder(userField.getBorder(), new EmptyBorder(0, 10, 0, 0))); //agrega un espacio al campo
         centralPanel.add(Box.createVerticalStrut(5)); //baja el textfield
         centralPanel.add(userField);
 
         JLabel password = createJLabel("Contraseña", 15);
-        centralPanel.add(Box.createVerticalStrut(15));
+        centralPanel.add(Box.createVerticalStrut(25));
         password.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(password);
 
-        passwordField = createPasswordField("   Ingresar contraseña");
-        passwordField.setMaximumSize(new Dimension(350, 50));
+        passwordField = createPasswordField("Ingresar contraseña");
+        passwordField.setMaximumSize(new Dimension(325, 50));
         passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordField.setBorder(BorderFactory.createCompoundBorder(passwordField.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         centralPanel.add(Box.createVerticalStrut(5));
         centralPanel.add(passwordField);
 
-        verifyUser = createButton("Ingresar", 20,160, 40);
-        verifyUser.setAlignmentX(Component.CENTER_ALIGNMENT);
-        centralPanel.add(Box.createVerticalStrut(35));
-        centralPanel.add(verifyUser);
-
+        loginButton = createButton("Ingresar", 20,160, 40);
+        loginButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        centralPanel.add(Box.createVerticalStrut(40));
+        centralPanel.add(loginButton);
     }
+
+
 
     public JLabel createJLabel(String title, int fontSize){
         JLabel label = new JLabel(title);
-        label.setFont(new Font("Montserrat", Font.BOLD, fontSize));
+        label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
         label.setForeground(new Color(30, 30, 30));
         return label;
     }
@@ -74,7 +88,7 @@ public class LoginView extends JPanel {
     //crea los botones
     public JButton createButton(String buttonName, int fontSize, int w, int h){
         JButton button = new JButton(buttonName);
-        button.setFont(new Font("Montserrat", Font.BOLD, fontSize));
+        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
@@ -86,7 +100,7 @@ public class LoginView extends JPanel {
     }
 
     public JTextField createTextField(String placeHolder, int w, int h){
-        Font font = new Font("Montserrat", Font.PLAIN, 15);
+        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
         JTextField textField = new JTextField();
 
         textField.setFont(font);
@@ -95,7 +109,7 @@ public class LoginView extends JPanel {
         textField.setMaximumSize(new Dimension(w, h));
 
         TextPrompt ph = new TextPrompt(placeHolder, textField);
-        ph.setForeground(new Color(150, 150, 150));
+        ph.setForeground(new Color(100, 100, 100));
         ph.setFont(font);
 
         return textField;
@@ -103,13 +117,15 @@ public class LoginView extends JPanel {
 
     public JPasswordField createPasswordField(String placeHolder){
         JPasswordField pf = new JPasswordField();
+        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
 
         pf.setForeground(new Color(30, 30, 30));
         pf.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
+        pf.setFont(font);
 
         TextPrompt ph = new TextPrompt(placeHolder, pf);
-        ph.setForeground(new Color(150, 150, 150));
-        ph.setFont(new Font("Montserrat", Font.PLAIN, 15));
+        ph.setForeground(new Color(100, 100, 100));
+        ph.setFont(font);
 
         return pf;
     }
@@ -123,5 +139,20 @@ public class LoginView extends JPanel {
 
         g2.setColor(Color.WHITE);
         g2.fillRoundRect(442, 130, 500, 600, 20, 20);
+
+        g2.drawImage(logo, 643, 180, this);
+
+    }
+
+    public String getUserField(){
+        return userField.getText();
+    }
+
+    public String getPasswordField(){
+        return new String(passwordField.getPassword());
+    }
+
+    public void setListeners(ActionListener listener){
+        loginButton.addActionListener(listener);
     }
 }
