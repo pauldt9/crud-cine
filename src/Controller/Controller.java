@@ -36,7 +36,7 @@ public class Controller implements ActionListener {
 
     public boolean validateLogin(){
         /*Aqui agregar validaciones del login*/
-        return true;
+        return false;
     }
 
     public void openMainView(){
