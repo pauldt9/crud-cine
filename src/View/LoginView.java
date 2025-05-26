@@ -20,7 +20,6 @@ public class LoginView extends JPanel {
     public LoginView(){
         FlatLightLaf.setup();
         UIManager.put("Button.arc", 25);
-        UIManager.put("TextField.arc", 20);
 
         setLayout(new GridBagLayout());
         setBackground(new Color(0x4A66CA));
@@ -75,8 +74,6 @@ public class LoginView extends JPanel {
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
     }
-
-
 
     public JLabel createJLabel(String title, int fontSize){
         JLabel label = new JLabel(title);

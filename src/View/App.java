@@ -4,9 +4,8 @@ import Controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
-public class Main {
+public class App {
     public static void main(String[] args) {
         JFrame login = new JFrame(); //ventana principal
         login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,6 +21,8 @@ public class Main {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image icon = tk.getImage("src/img/logo.png");
         login.setIconImage(icon);
-        Controller control = new Controller(loginPanel);
+
+
+        new Controller(loginPanel, login);
     }
 }
