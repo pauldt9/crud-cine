@@ -3,12 +3,13 @@ package View;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class MainView extends JPanel {
+public class AdminMenu extends JPanel {
     private Image logo;
-    public MainView() {
+    public AdminMenu() {
         setBackground(new Color(0x4A66CA));
         setLayout(new BorderLayout());
 
@@ -53,6 +54,10 @@ public class MainView extends JPanel {
         }
 
         return label;
+    }
+
+    public void setListeners(ActionListener listener){
+
     }
 
     @Override

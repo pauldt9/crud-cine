@@ -1,8 +1,7 @@
 package Controller;
 
-import View.App;
 import View.LoginView;
-import View.MainView;
+import View.AdminMenu;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,10 +10,12 @@ import java.awt.event.ActionListener;
 public class Controller implements ActionListener {
     private LoginView loginView;
     private JFrame loginFrame;
+    private AdminMenu adminMenu;
 
-    public Controller(LoginView loginView, JFrame loginFrame) {
+    public Controller(LoginView loginView, JFrame loginFrame, AdminMenu adminMenu) {
         this.loginView = loginView;
         this.loginFrame = loginFrame;
+        this.adminMenu = adminMenu;
         this.loginView.setListeners(this);
     }
 
@@ -34,14 +35,14 @@ public class Controller implements ActionListener {
     }
 
     public boolean validateLogin(){
-        /*Agregar aqui las validar el usuario y contraseña*/
+        /*Aqui validar el usuario y contraseña*/
         return true;
     }
 
     public void openMainView(){
-        MainView mainView = new MainView();
+        AdminMenu adminMenu = new AdminMenu();
         loginFrame.remove(loginView);
-        loginFrame.add(mainView);
+        loginFrame.add(adminMenu);
 
         loginFrame.repaint();
         loginFrame.revalidate();

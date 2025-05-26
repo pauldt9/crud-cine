@@ -44,7 +44,7 @@ public class LoginView extends JPanel {
         centralPanel.add(Box.createVerticalStrut(140));
         loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(loginLabel);
-        
+
         JLabel user = createJLabel("Usuario", 15);
         centralPanel.add(Box.createVerticalStrut(30));
         user.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -73,6 +73,8 @@ public class LoginView extends JPanel {
         loginButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
+
+
     }
 
     public JLabel createJLabel(String title, int fontSize){
@@ -138,7 +140,6 @@ public class LoginView extends JPanel {
         g2.fillRoundRect(442, 130, 500, 600, 20, 20);
 
         g2.drawImage(logo, 643, 180, this);
-
     }
 
     public String getUserField(){

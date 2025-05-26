@@ -23,6 +23,6 @@ public class App {
         login.setIconImage(icon);
 
 
-        new Controller(loginPanel, login);
+        new Controller(loginPanel, login, new AdminMenu());
     }
 }
