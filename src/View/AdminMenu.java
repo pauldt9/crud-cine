@@ -145,7 +145,7 @@ public class AdminMenu extends JPanel {
 
         return button;
     }
-    
+
     public JPanel getCenterPanel() {
         return centerPanel;
     }
