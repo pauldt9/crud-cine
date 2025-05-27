@@ -9,14 +9,15 @@ import java.awt.event.ActionListener;
 
 public class Controller implements ActionListener {
     private LoginView loginView;
-    private JFrame loginFrame;
+    private JFrame frame;
     private AdminMenu adminMenu;
 
-    public Controller(LoginView loginView, JFrame loginFrame, AdminMenu adminMenu) {
+    public Controller(LoginView loginView, JFrame frame, AdminMenu adminMenu) {
         this.loginView = loginView;
-        this.loginFrame = loginFrame;
+        this.frame = frame;
         this.adminMenu = adminMenu;
         this.loginView.setListeners(this);
+        this.adminMenu.setListeners(this);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -24,28 +25,53 @@ public class Controller implements ActionListener {
 
         switch (command) {
             case "Ingresar":
-                System.out.println("el ususario ha hecho click en ingresar");
+                System.out.println("el dinosaurio ha hecho click en ingresar:v");
                 if (validateLogin()){
                     openMainView();
                 } else {
-                    JOptionPane.showMessageDialog(loginFrame, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                break;
+            case "Salir":
+                System.out.println("el usuario ha hecho click en salir");
+                exit();
+                break;
+            case "Menu":
+                System.out.println("el usuario quiere ingresar al menu");
+                break;
+            case "Peliculas":
+                System.out.println("el usuario accedio a peliculas");
+                break;
+            case "Ventas":
+                System.out.println("el usuario accedio a ventas");
                 break;
         }
     }
 
     public boolean validateLogin(){
         /*Aqui agregar validaciones del login*/
-        return false;
+        return true;
     }
 
-    public void openMainView(){
-        AdminMenu adminMenu = new AdminMenu();
-        loginFrame.remove(loginView);
-        loginFrame.add(adminMenu);
+    public void exit(){
+        int answer = JOptionPane.showConfirmDialog(frame, "Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
 
-        loginFrame.repaint();
-        loginFrame.revalidate();
-        loginFrame.setTitle("Inicio");
+        if (answer == JOptionPane.YES_OPTION){
+            frame.remove(adminMenu);
+            frame.add(loginView);
+            frame.repaint();
+            frame.revalidate();
+            frame.setTitle("Ingresar credenciales");
+        }
+    }
+
+
+    public void openMainView(){
+        frame.remove(loginView);
+        frame.add(adminMenu);
+
+        frame.repaint();
+        frame.revalidate();
+        frame.setTitle("Inicio");
     }
 }
