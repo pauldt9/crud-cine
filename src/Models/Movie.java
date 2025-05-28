@@ -1,10 +1,19 @@
 package Models;
 
 public class Movie {
-    private int idMovie;
+    private int idMovie; //Primary Key
     private String title;
     private int duration;
     private String genre;
+    private String classification;
+
+    public Movie(int idMovie, String title, int duration, String genre, String classification) {
+        this.idMovie = idMovie;
+        this.title = title;
+        this.duration = duration;
+        this.genre = genre;
+        this.classification = classification;
+    }
 
     public int getIdMovie() {
         return idMovie;
@@ -37,4 +46,13 @@ public class Movie {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
+
 }

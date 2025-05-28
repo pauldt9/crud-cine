@@ -1,18 +1,21 @@
 package Models;
 
 public class Room {
-    private int idRoom;
+    private int idRoom; //primary key
     private String roomName;
     private int capacity;
+    private String roomType;
+
 
     //Por lo pronto y por conveniencia, empezamos los asientos como una matriz
     private Seat[][] seats;
 
-    public Room(int idRoom, int capacity, String roomName, Seat[][] seats) {
+    public Room(int idRoom, int capacity, String roomName, Seat[][] seats, String roomType) {
         this.idRoom = idRoom;
         this.capacity = capacity;
         this.roomName = roomName;
         this.seats = seats;
+        this.roomType = roomType;
     }
 
     public int getIdRoom() {
@@ -45,5 +48,12 @@ public class Room {
 
     public void setSeats(Seat[][] seats) {
         this.seats = seats;
+    }
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 }
