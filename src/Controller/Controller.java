@@ -1,23 +1,27 @@
 package Controller;
 
-import View.LoginView;
-import View.AdminMenu;
+import View.EmployeeView;
+import View.LoginPanel;
+import View.AdminView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller implements ActionListener {
-    private LoginView loginView;
+    private LoginPanel loginPanel;
     private JFrame frame;
-    private AdminMenu adminMenu;
+    private AdminView adminView;
+    private EmployeeView empView;
 
-    public Controller(LoginView loginView, JFrame frame, AdminMenu adminMenu) {
-        this.loginView = loginView;
+    public Controller(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView empView) {
+        this.loginPanel = loginPanel;
         this.frame = frame;
-        this.adminMenu = adminMenu;
-        this.loginView.setListeners(this);
-        this.adminMenu.setListeners(this);
+        this.adminView = adminView;
+        this.empView = empView;
+        this.loginPanel.setListeners(this);
+        this.adminView.setListeners(this);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -27,7 +31,12 @@ public class Controller implements ActionListener {
             case "Ingresar":
                 System.out.println("el dinosaurio ha hecho click en ingresar:v");
                 if (validateLogin()){
-                    openMainView();
+                    if (isAdmin()){
+                        openAdminView();
+
+                    } else {
+                        openEmployeeView();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(frame, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -38,21 +47,23 @@ public class Controller implements ActionListener {
                 break;
             case "Menu":
                 System.out.println("el usuario quiere ingresar al menu");
+                showAdminPanel("menu");
                 break;
             case "Peliculas":
                 System.out.println("el usuario accedio a peliculas");
+                showAdminPanel("peliculas");
                 break;
             case "Ventas":
                 System.out.println("el usuario accedio a ventas");
+                showAdminPanel("ventas");
                 break;
             case "Modo Oscuro":
                 System.out.println("cambiar a oscuro");
-
-                adminMenu.setViewMode("Modo Claro");
+                adminView.setViewMode("Modo Claro");
                 break;
             case "Modo Claro":
                 System.out.println("cambiar a claro");
-                adminMenu.setViewMode("Modo Oscuro");
+                adminView.setViewMode("Modo Oscuro");
                 break;
         }
     }
@@ -66,17 +77,36 @@ public class Controller implements ActionListener {
         int answer = JOptionPane.showConfirmDialog(frame, "Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
 
         if (answer == JOptionPane.YES_OPTION){
-            frame.remove(adminMenu);
-            frame.add(loginView);
+            frame.remove(adminView);
+            frame.add(loginPanel);
             frame.repaint();
             frame.revalidate();
             frame.setTitle("Ingresar credenciales");
         }
     }
 
-    public void openMainView(){
-        frame.remove(loginView);
-        frame.add(adminMenu);
+    public boolean isAdmin(){
+        /*alguna validacion si el usuario es admin, pero algo para determinar que ventana abrir*/
+        return true;
+    }
+
+    public void showAdminPanel(String namePanel){
+        CardLayout card = (CardLayout) (adminView.getMainPanel().getLayout());
+        card.show(adminView.getMainPanel(), namePanel);
+    }
+
+    public void openAdminView(){
+        frame.remove(loginPanel);
+        frame.add(adminView);
+
+        frame.repaint();
+        frame.revalidate();
+        frame.setTitle("Inicio");
+    }
+
+    public void openEmployeeView(){
+        frame.remove(loginPanel);
+        frame.add(empView);
 
         frame.repaint();
         frame.revalidate();

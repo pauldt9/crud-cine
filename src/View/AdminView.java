@@ -6,59 +6,73 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class AdminMenu extends JPanel {
+public class AdminView extends JPanel {
+    private String action;
+
+    //botones
     private JButton exitButton;
     private JButton menuButton;
     private JButton moviesButton;
     private JButton salesButton;
     private JButton darkMode;
-    private JPanel centerPanel;
-    private String action;
-    private JLabel title;
-    private JPanel leftPanel;
-    private JLabel userTitle;
-//    private Color titleCol = new Color(0x2A3D66);
 
-    public AdminMenu() {
+    //paneles
+    private JPanel mainPanel;
+    private JPanel leftPanel;
+    private JPanel menuPanel;
+    private JPanel moviesPanel;
+    private JPanel salesPanel;
+
+    //labels
+    private JLabel title;
+    private JLabel userTitle;
+    private JLabel dashboardLbl;
+
+    //solo para los botones y labels
+    private Color fgColor = new Color(0x2C3E50);
+    private Color bgColor = new Color(0xEDF2FA);
+
+    public AdminView() {
         setLayout(new BorderLayout());
 
-        /*Panel izquierdo*/
+        /*-----------Panel izquierdo-----------*/
         leftPanel = new JPanel();
         leftPanel.setBackground(new Color(0xDCE9F9));
         leftPanel.setPreferredSize(new Dimension(200, getHeight()));
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         add(leftPanel, BorderLayout.WEST);
 
-        userTitle = createJLabel("Admin", 30);
-        userTitle.setForeground(new Color(0x2C3E50));
+        userTitle = createJLabel("Admin", 30, true); //donde dice admin en el panel izquierdo
+        userTitle.setForeground(fgColor);
         userTitle.setAlignmentX(CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(100));
+        leftPanel.add(Box.createVerticalStrut(70));
         leftPanel.add(userTitle);
 
+        //botones
         menuButton = createButton("Menu", 20, 150, 40);
-        menuButton.setBackground(new Color(0xEDF2FA));
-        menuButton.setForeground(new Color(0x2C3E50));
+        menuButton.setBackground(bgColor);
+        menuButton.setForeground(fgColor);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(50));
         leftPanel.add(menuButton);
 
         moviesButton = createButton("Peliculas", 20, 150, 40);
-        moviesButton.setBackground(new Color(0xEDF2FA));
-        moviesButton.setForeground(new Color(0x2C3E50));
+        moviesButton.setBackground(bgColor);
+        moviesButton.setForeground(fgColor);
         moviesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(moviesButton);
 
         salesButton = createButton("Ventas", 20, 150, 40);
         salesButton.setBackground(new Color(0xEDF2FA));
-        salesButton.setForeground(new Color(0x2C3E50));
+        salesButton.setForeground(fgColor);
         salesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(salesButton);
 
         darkMode = createButton("Modo Oscuro", 15, 150, 40);
         darkMode.setBackground(new Color(0xEDF2FA));
-        darkMode.setForeground(new Color(0x2C3E50));
+        darkMode.setForeground(fgColor);
         darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(350));
         leftPanel.add(darkMode);
@@ -83,20 +97,43 @@ public class AdminMenu extends JPanel {
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
 
-        /*panel central*/
-        centerPanel = new JPanel();
-        centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        add(centerPanel, BorderLayout.CENTER);
+        /*-----------Panel central-----------*/
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new CardLayout());
+        add(mainPanel, BorderLayout.CENTER);
 
-        title = createJLabel("Inicio", 40);
-        title.setBorder(BorderFactory.createEmptyBorder(75, 55, 5, 5));
-        centerPanel.add(title);
+        menuPanel = new JPanel();
+        moviesPanel = new JPanel();
+        salesPanel = new JPanel();
+        mainPanel.add(menuPanel, "menu");
+        mainPanel.add(moviesPanel, "peliculas");
+        mainPanel.add(salesPanel, "ventas");
+
+        //Panel menu
+        menuPanel.setLayout(new BorderLayout());
+
+        title = createJLabel("Inicio", 40, true); //titulo inicio
+        title.setForeground(fgColor);
+        title.setHorizontalAlignment(SwingConstants.LEFT);
+        title.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        menuPanel.add(title, BorderLayout.NORTH);
+
+        dashboardLbl = createJLabel("Dashboard", 40, true);
+        dashboardLbl.setForeground(fgColor);
+        dashboardLbl.setBorder(BorderFactory.createEmptyBorder(205, 0, 5, 5));
+
+        //Panel peliculas
+        moviesPanel.setLayout(new BorderLayout());
 
     }
 
-    public JLabel createJLabel(String title, int fontSize){
+    public JLabel createJLabel(String title, int fontSize, boolean bold){
         JLabel label = new JLabel(title);
-        label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
+        if (bold){
+            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
+        } else {
+            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
+        }
 
         return label;
     }
@@ -128,54 +165,79 @@ public class AdminMenu extends JPanel {
         darkMode.setActionCommand(action);
 
         if (action.equals("Modo Oscuro")){
-            centerPanel.setBackground(Color.WHITE);
+            fgColor = new Color(0x2C3E50);
+
             leftPanel.setBackground(new Color(0xDCE9F9));
+            menuPanel.setBackground(Color.WHITE);
+            moviesPanel.setBackground(Color.WHITE);
+            salesPanel.setBackground(Color.WHITE);
 
             title.setForeground(new Color(0x2C3E50));
-            userTitle.setForeground(new Color(0x2C3E50));
+            userTitle.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0xEDF2FA));
-            menuButton.setForeground(new Color(0x2C3E50));
+            menuButton.setForeground(fgColor);
 
             moviesButton.setBackground(new Color(0xEDF2FA));
-            moviesButton.setForeground(new Color(0x2C3E50));
+            moviesButton.setForeground(fgColor);
 
             salesButton.setBackground(new Color(0xEDF2FA));
-            salesButton.setForeground(new Color(0x2C3E50));
+            salesButton.setForeground(fgColor);
 
             darkMode.setBackground(new Color(0xEDF2FA));
-            darkMode.setForeground(new Color(0x2C3E50));
+            darkMode.setForeground(fgColor);
 
             exitButton.setBackground(new Color(0x17C3B2));
+
+            try {
+                Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
+                darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                darkMode.setIcon(new ImageIcon(darkIcon));
+            } catch (IOException e){
+                System.out.println("error al cargar imagen: " + e.getMessage());
+            }
+
         } else {
+            fgColor = new Color(0xE0E0E0);
+
             leftPanel.setBackground(new Color(0x1E2A47));
-            centerPanel.setBackground(new Color(0x1C1C2E));
+            menuPanel.setBackground(new Color(0x1C1C2E));
+            moviesPanel.setBackground(new Color(0x1C1C2E));
+            salesPanel.setBackground(new Color(0x1C1C2E));
 
             title.setForeground(new Color(0xF0F4FF));
-            userTitle.setForeground(new Color(0xE0E0E0));
+            userTitle.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0x3A4E84));
-            menuButton.setForeground(new Color(0xF5F9FF));
+            menuButton.setForeground(fgColor);
 
             moviesButton.setBackground(new Color(0x3A4E84));
-            moviesButton.setForeground(new Color(0xF5F9FF));
+            moviesButton.setForeground(fgColor);
 
             salesButton.setBackground(new Color(0x3A4E84));
-            salesButton.setForeground(new Color(0xF5F9FF));
+            salesButton.setForeground(fgColor);
 
             darkMode.setBackground(new Color(0x3A4E84));
-            darkMode.setForeground(new Color(0xF5F9FF));
+            darkMode.setForeground(fgColor);
 
             exitButton.setBackground(new Color(0x1ABC9C));
+
+            try {
+                Image darkIcon = ImageIO.read(getClass().getResource("/img/brightness.png"));
+                darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                darkMode.setIcon(new ImageIcon(darkIcon));
+            } catch (IOException e){
+                System.out.println("error al cargar imagen: " + e.getMessage());
+            }
         }
     }
 
-    public JPanel getCenterPanel() {
-        return centerPanel;
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 
-    public void setCenterPanel(JPanel centerPanel) {
-        this.centerPanel = centerPanel;
+    public void setMainPanel(JPanel mainPanel) {
+        this.mainPanel = mainPanel;
     }
 
     @Override

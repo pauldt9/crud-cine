@@ -14,7 +14,7 @@ public class App {
         login.setResizable(false);
         login.setTitle("Ingresar credenciales");
 
-        LoginView loginPanel = new LoginView();
+        LoginPanel loginPanel = new LoginPanel();
         login.add(loginPanel);
         login.setVisible(true);
 
@@ -23,6 +23,6 @@ public class App {
         login.setIconImage(icon);
 
 
-        new Controller(loginPanel, login, new AdminMenu());
+        new Controller(loginPanel, login, new AdminView(), new EmployeeView());
     }
 }

@@ -11,26 +11,21 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class LoginView extends JPanel {
+public class LoginPanel extends JPanel {
     private JButton loginButton;
     private JTextField userField;
     private JPasswordField passwordField;
     private Image logo;
 
-    public LoginView(){
+    public LoginPanel(){
         FlatLightLaf.setup();
         UIManager.put("Button.arc", 10);
         UIManager.put("Component.arc", 10);
         UIManager.put("TextComponent.arc", 10);
 
-//        UIManager.put("Button.background", new Color(242, 247, 254));
-//        UIManager.put("Button.foreground", new Color(44, 62, 80));
-//        UIManager.put("Button.focusWidth", 0);
-
         setLayout(new GridBagLayout());
         setBackground(new Color(0x5B75D6));
 
-        //Logo?? no gibran no pongas mi foto
         try {
             logo = ImageIO.read(new File("src/img/logo.png"));
             logo = logo.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
