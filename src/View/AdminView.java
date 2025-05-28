@@ -9,12 +9,15 @@ import java.io.IOException;
 public class AdminView extends JPanel {
     private String action;
 
-    //botones
+    //botones de navegacion
     private JButton exitButton;
     private JButton menuButton;
     private JButton moviesButton;
     private JButton salesButton;
     private JButton darkMode;
+
+    //botones del menu
+    private JButton addEmployee;
 
     //paneles
     private JPanel mainPanel;
@@ -26,9 +29,14 @@ public class AdminView extends JPanel {
     //labels
     private JLabel title;
     private JLabel userTitle;
-    private JLabel dashboardLbl;
+    private JLabel summaryLbl;
     private JLabel moviesLbl;
     private JLabel salesLbl;
+
+
+    private JLabel numEmployees; //Label donde se mostrara la cantidad de empleados
+    private JLabel numMovies; //numero de peliculas disponibles
+    private JLabel totalSales; //ventas totales
 
     //solo para los botones y labels
     private Color fgColor = new Color(0x2C3E50);
@@ -50,7 +58,7 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(70));
         leftPanel.add(userTitle);
 
-        //botones
+        //botones de navegacion
         menuButton = createButton("Menu", 20, 150, 40);
         menuButton.setBackground(bgColor);
         menuButton.setForeground(fgColor);
@@ -89,17 +97,6 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(exitButton);
 
-        try {
-            Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
-            exitIcon = exitIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            exitButton.setIcon(new ImageIcon(exitIcon));
-
-            Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
-            darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            darkMode.setIcon(new ImageIcon(darkIcon));
-        } catch (IOException e){
-            System.out.println("error al cargar imagen: " + e.getMessage());
-        }
 
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
@@ -114,19 +111,42 @@ public class AdminView extends JPanel {
         mainPanel.add(salesPanel, "ventas");
 
         //Panel menu
-        menuPanel.setLayout(new BorderLayout());
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
         title = createJLabel("Inicio", 40, true); //titulo inicio
         title.setForeground(fgColor);
-        title.setHorizontalAlignment(SwingConstants.LEFT);
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        menuPanel.add(title, BorderLayout.NORTH);
+        menuPanel.add(title);
 
-        dashboardLbl = createJLabel("Dashboard", 20, true);
-        dashboardLbl.setForeground(fgColor);
-        dashboardLbl.setHorizontalAlignment(SwingConstants.LEFT);
-        dashboardLbl.setBorder(BorderFactory.createEmptyBorder(0, 40, 550, 0));
-        menuPanel.add(dashboardLbl, BorderLayout.WEST);
+        summaryLbl = createJLabel("Resumen", 20, true);
+        summaryLbl.setForeground(fgColor);
+        summaryLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+        summaryLbl.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
+        menuPanel.add(summaryLbl);
+
+        numEmployees = createJLabel("Cantidad de empleados: " + "#no. empleado", 15, true);
+        numEmployees.setForeground(fgColor);
+        numEmployees.setAlignmentX(Component.LEFT_ALIGNMENT);
+        numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
+        menuPanel.add(numEmployees);
+
+        numMovies = createJLabel("Peliculas disponibles: " + "#no. pel", 15, true);
+        numMovies.setForeground(fgColor);
+        numMovies.setAlignmentX(Component.LEFT_ALIGNMENT);
+        numMovies.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
+        menuPanel.add(numMovies);
+
+        totalSales = createJLabel("Ventas: $" + "$$", 15, true);
+        totalSales.setForeground(fgColor);
+        totalSales.setAlignmentX(Component.LEFT_ALIGNMENT);
+        totalSales.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
+        menuPanel.add(totalSales);
+
+        addEmployee = createButton(null, 1, 100, 100);
+        addEmployee.setBackground(bgColor);
+        addEmployee.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        menuPanel.add(addEmployee);
 
         //Panel peliculas
         moviesPanel.setLayout(new BorderLayout());
@@ -146,7 +166,22 @@ public class AdminView extends JPanel {
         salesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         salesPanel.add(salesLbl, BorderLayout.NORTH);
 
+        //Iconos en botones
+        try {
+            Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
+            exitIcon = exitIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            exitButton.setIcon(new ImageIcon(exitIcon));
 
+            Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
+            darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            darkMode.setIcon(new ImageIcon(darkIcon));
+
+            Image userIcon = ImageIO.read(getClass().getResource("/img/user.png"));
+            userIcon = userIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            addEmployee.setIcon(new ImageIcon(userIcon));
+        } catch (IOException e){
+            System.out.println("error al cargar imagen: " + e.getMessage());
+        }
     }
 
     public JLabel createJLabel(String title, int fontSize, boolean bold){
@@ -195,9 +230,12 @@ public class AdminView extends JPanel {
 
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
-            dashboardLbl.setForeground(fgColor);
+            summaryLbl.setForeground(fgColor);
 
             moviesLbl.setForeground(fgColor);
+            numEmployees.setForeground(fgColor);
+            numMovies.setForeground(fgColor);
+            totalSales.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
 
@@ -233,9 +271,12 @@ public class AdminView extends JPanel {
 
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
-            dashboardLbl.setForeground(fgColor);
 
+            summaryLbl.setForeground(fgColor);
             moviesLbl.setForeground(fgColor);
+            numEmployees.setForeground(fgColor);
+            numMovies.setForeground(fgColor);
+            totalSales.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
 

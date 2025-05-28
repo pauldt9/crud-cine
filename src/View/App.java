@@ -22,7 +22,6 @@ public class App {
         Image icon = tk.getImage("src/img/logo.png");
         login.setIconImage(icon);
 
-
         new Controller(loginPanel, login, new AdminView(), new EmployeeView());
     }
 }
