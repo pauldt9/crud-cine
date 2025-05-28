@@ -45,6 +45,15 @@ public class Controller implements ActionListener {
             case "Ventas":
                 System.out.println("el usuario accedio a ventas");
                 break;
+            case "Modo Oscuro":
+                System.out.println("cambiar a oscuro");
+
+                adminMenu.setViewMode("Modo Claro");
+                break;
+            case "Modo Claro":
+                System.out.println("cambiar a claro");
+                adminMenu.setViewMode("Modo Oscuro");
+                break;
         }
     }
 
@@ -64,7 +73,6 @@ public class Controller implements ActionListener {
             frame.setTitle("Ingresar credenciales");
         }
     }
-
 
     public void openMainView(){
         frame.remove(loginView);

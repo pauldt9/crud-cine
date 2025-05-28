@@ -19,10 +19,16 @@ public class LoginView extends JPanel {
 
     public LoginView(){
         FlatLightLaf.setup();
-        UIManager.put("Button.arc", 25);
+        UIManager.put("Button.arc", 10);
+        UIManager.put("Component.arc", 10);
+        UIManager.put("TextComponent.arc", 10);
+
+//        UIManager.put("Button.background", new Color(242, 247, 254));
+//        UIManager.put("Button.foreground", new Color(44, 62, 80));
+//        UIManager.put("Button.focusWidth", 0);
 
         setLayout(new GridBagLayout());
-        setBackground(new Color(0x4A66CA));
+        setBackground(new Color(0x5B75D6));
 
         //Logo?? no gibran no pongas mi foto
         try {
@@ -69,12 +75,10 @@ public class LoginView extends JPanel {
         centralPanel.add(Box.createVerticalStrut(5));
         centralPanel.add(passwordField);
 
-        loginButton = createButton("Ingresar", 20,160, 40);
-        loginButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        loginButton = createButton("Ingresar", 20,330, 40);
+        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
-
-
     }
 
     public JLabel createJLabel(String title, int fontSize){
@@ -108,7 +112,7 @@ public class LoginView extends JPanel {
         textField.setMaximumSize(new Dimension(w, h));
 
         TextPrompt ph = new TextPrompt(placeHolder, textField);
-        ph.setForeground(new Color(100, 100, 100));
+        ph.setForeground(new Color(0x999999));
         ph.setFont(font);
 
         return textField;
