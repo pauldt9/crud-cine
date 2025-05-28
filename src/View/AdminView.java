@@ -27,6 +27,8 @@ public class AdminView extends JPanel {
     private JLabel title;
     private JLabel userTitle;
     private JLabel dashboardLbl;
+    private JLabel moviesLbl;
+    private JLabel salesLbl;
 
     //solo para los botones y labels
     private Color fgColor = new Color(0x2C3E50);
@@ -70,14 +72,16 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(salesButton);
 
-        darkMode = createButton("Modo Oscuro", 15, 150, 40);
+        darkMode = createButton(null, 15, 150, 40);
+        darkMode.setActionCommand("Modo Oscuro");
         darkMode.setBackground(new Color(0xEDF2FA));
         darkMode.setForeground(fgColor);
         darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(350));
         leftPanel.add(darkMode);
 
-        exitButton = createButton("Salir", 20, 150, 40);
+        exitButton = createButton(null, 20, 150, 40);
+        exitButton.setActionCommand("Salir");
         exitButton.setBackground(new Color(0x17C3B2));
         exitButton.setForeground(Color.WHITE);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -118,12 +122,30 @@ public class AdminView extends JPanel {
         title.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         menuPanel.add(title, BorderLayout.NORTH);
 
-        dashboardLbl = createJLabel("Dashboard", 40, true);
+        dashboardLbl = createJLabel("Dashboard", 20, true);
         dashboardLbl.setForeground(fgColor);
-        dashboardLbl.setBorder(BorderFactory.createEmptyBorder(205, 0, 5, 5));
+        dashboardLbl.setHorizontalAlignment(SwingConstants.LEFT);
+        dashboardLbl.setBorder(BorderFactory.createEmptyBorder(0, 40, 550, 0));
+        menuPanel.add(dashboardLbl, BorderLayout.WEST);
 
         //Panel peliculas
         moviesPanel.setLayout(new BorderLayout());
+
+        moviesLbl = createJLabel("Peliculas", 40, true);
+        moviesLbl.setForeground(fgColor);
+        moviesLbl.setHorizontalAlignment(SwingConstants.LEFT);
+        moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        moviesPanel.add(moviesLbl, BorderLayout.NORTH);
+
+        //Panel ventas
+        salesPanel.setLayout(new BorderLayout());
+
+        salesLbl = createJLabel("Ventas", 40, true);
+        salesLbl.setForeground(fgColor);
+        salesLbl.setHorizontalAlignment(SwingConstants.LEFT);
+        salesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        salesPanel.add(salesLbl, BorderLayout.NORTH);
+
 
     }
 
@@ -161,7 +183,6 @@ public class AdminView extends JPanel {
     //Cambiar modos (dark mode)
     public void setViewMode(String action){
         this.action = action;
-        darkMode.setText(action);
         darkMode.setActionCommand(action);
 
         if (action.equals("Modo Oscuro")){
@@ -172,8 +193,13 @@ public class AdminView extends JPanel {
             moviesPanel.setBackground(Color.WHITE);
             salesPanel.setBackground(Color.WHITE);
 
-            title.setForeground(new Color(0x2C3E50));
+            title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
+            dashboardLbl.setForeground(fgColor);
+
+            moviesLbl.setForeground(fgColor);
+
+            salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0xEDF2FA));
             menuButton.setForeground(fgColor);
@@ -205,8 +231,13 @@ public class AdminView extends JPanel {
             moviesPanel.setBackground(new Color(0x1C1C2E));
             salesPanel.setBackground(new Color(0x1C1C2E));
 
-            title.setForeground(new Color(0xF0F4FF));
+            title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
+            dashboardLbl.setForeground(fgColor);
+
+            moviesLbl.setForeground(fgColor);
+
+            salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0x3A4E84));
             menuButton.setForeground(fgColor);

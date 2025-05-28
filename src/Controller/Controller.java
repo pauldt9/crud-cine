@@ -90,6 +90,7 @@ public class Controller implements ActionListener {
         return true;
     }
 
+    //con este metodo se cambia las pestañas del admin
     public void showAdminPanel(String namePanel){
         CardLayout card = (CardLayout) (adminView.getMainPanel().getLayout());
         card.show(adminView.getMainPanel(), namePanel);
