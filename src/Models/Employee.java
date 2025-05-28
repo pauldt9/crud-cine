@@ -5,12 +5,14 @@ public class Employee {
     private int idEmployee;
     private String firstName;
     private String lastName;
+    private String employeeType;
     private String username;
     private String password;
 
-    public Employee(int idEmployee, String firstName, String lastName, String username, String password) {
+    public Employee(int idEmployee, String firstName, String lastName, String employeeType, String username, String password) {
         this.idEmployee = idEmployee;
         this.firstName = firstName;
+        this.employeeType = employeeType;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
@@ -18,12 +20,10 @@ public class Employee {
 
     public int getIdEmployee() {
         return idEmployee;
-
     }
 
     public void setIdEmployee(int idEmployee) {
         this.idEmployee = idEmployee;
-        
     }
 
     public String getFirstName() {
@@ -42,6 +42,14 @@ public class Employee {
         this.lastName = lastName;
     }
 
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(String employeeType) {
+        this.employeeType = employeeType;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -57,4 +65,5 @@ public class Employee {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

@@ -28,8 +28,6 @@ public class Controller implements ActionListener {
                 System.out.println("el dinosaurio ha hecho click en ingresar:v");
                 if (validateLogin()){
                     openMainView();
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "Salir":
@@ -50,7 +48,30 @@ public class Controller implements ActionListener {
 
     public boolean validateLogin(){
         /*Aqui agregar validaciones del login*/
+        String mensajeCamposVacios = camposVacios();
+
+        if (!mensajeCamposVacios.isBlank()) {
+            JOptionPane.showMessageDialog(null, mensajeCamposVacios, "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         return true;
+    }
+
+    public String camposVacios() {
+        StringBuilder faltantes = new StringBuilder();
+
+        if (loginView.getUserField().trim().isEmpty()) {
+            faltantes.append("Usuario, ");
+        }
+        if (loginView.getPasswordField().trim().isEmpty()) {
+            faltantes.append("Contraseña, ");
+        }
+
+        if (faltantes.length() == 0) {
+            return "";
+        }
+
+        return "Los siguientes parámetros están vacíos: " + faltantes.substring(0, faltantes.length() - 2);
     }
 
     public void exit(){
