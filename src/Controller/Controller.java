@@ -37,8 +37,6 @@ public class Controller implements ActionListener {
                     } else {
                         openEmployeeView();
                     }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "Salir":
@@ -70,7 +68,30 @@ public class Controller implements ActionListener {
 
     public boolean validateLogin(){
         /*Aqui agregar validaciones del login*/
+        String mensajeCamposVacios = camposVacios();
+
+        if (!mensajeCamposVacios.isBlank()) {
+            JOptionPane.showMessageDialog(null, mensajeCamposVacios, "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         return true;
+    }
+
+    public String camposVacios() {
+        StringBuilder faltantes = new StringBuilder();
+
+        if (loginPanel.getUserField().trim().isEmpty()) {
+            faltantes.append("Usuario, ");
+        }
+        if (loginPanel.getPasswordField().trim().isEmpty()) {
+            faltantes.append("Contraseña, ");
+        }
+
+        if (faltantes.length() == 0) {
+            return "";
+        }
+
+        return "Los siguientes parámetros están vacíos: " + faltantes.substring(0, faltantes.length() - 2);
     }
 
     public void exit(){
