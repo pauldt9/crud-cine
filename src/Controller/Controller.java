@@ -48,8 +48,10 @@ public class Controller implements ActionListener {
                 showAdminPanel("menu");
                 break;
             case "Peliculas":
-                System.out.println("el usuario accedio a peliculas");
-                showAdminPanel("peliculas");
+                System.out.println("peliculas");
+                break;
+            case "Empleados":
+                System.out.println("empleados");
                 break;
             case "Ventas":
                 System.out.println("el usuario accedio a ventas");
