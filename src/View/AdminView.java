@@ -2,6 +2,7 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -9,28 +10,58 @@ import java.io.IOException;
 public class AdminView extends JPanel {
     private String action;
 
-    //botones
+    //botones de navegacion
     private JButton exitButton;
     private JButton menuButton;
-    private JButton moviesButton;
     private JButton salesButton;
     private JButton darkMode;
+
+    //botones del menu
+    private JButton employeeButton;
+    private JButton moviesButton;
+
+    //botones de empleados
+    private JButton addEmployee;
+    private JButton deleteEmployee;
+    private JButton editButton;
+    private JButton backButton;
+
+    //paneles del menu
+    private JPanel employeePanel;
 
     //paneles
     private JPanel mainPanel;
     private JPanel leftPanel;
+
     private JPanel menuPanel;
-    private JPanel moviesPanel;
+    private JPanel menuButtonsPanel;
+
     private JPanel salesPanel;
 
-    //labels
+    /*------------Labels------------*/
+    //Menu
     private JLabel title;
     private JLabel userTitle;
-    private JLabel dashboardLbl;
+    private JLabel buttonTitleEmp;
+    private JLabel managementTitle;
+    private JLabel buttonTitleMov;
+    private JLabel summaryLbl;
     private JLabel moviesLbl;
     private JLabel salesLbl;
+    private JLabel numEmployees; //Label donde se mostrara la cantidad de empleados
+    private JLabel numMovies; //numero de peliculas disponibles
+    private JLabel totalSales; //ventas totales
 
-    //solo para los botones y labels
+    //Empleados
+    private JLabel empTitle;
+
+    /*----------Tablas----------*/
+    //Empleados
+    private JTable empTable;
+    private DefaultTableModel tableModelEmp;
+
+    /*----------Colores de botones y texto----------*/
+    //no muevan aqui paro
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColor = new Color(0xEDF2FA);
 
@@ -50,20 +81,13 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(70));
         leftPanel.add(userTitle);
 
-        //botones
+        //botones de navegacion
         menuButton = createButton("Menu", 20, 150, 40);
         menuButton.setBackground(bgColor);
         menuButton.setForeground(fgColor);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(50));
         leftPanel.add(menuButton);
-
-        moviesButton = createButton("Peliculas", 20, 150, 40);
-        moviesButton.setBackground(bgColor);
-        moviesButton.setForeground(fgColor);
-        moviesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(30));
-        leftPanel.add(moviesButton);
 
         salesButton = createButton("Ventas", 20, 150, 40);
         salesButton.setBackground(new Color(0xEDF2FA));
@@ -77,7 +101,7 @@ public class AdminView extends JPanel {
         darkMode.setBackground(new Color(0xEDF2FA));
         darkMode.setForeground(fgColor);
         darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(350));
+        leftPanel.add(Box.createVerticalStrut(450));
         leftPanel.add(darkMode);
 
         exitButton = createButton(null, 20, 150, 40);
@@ -89,53 +113,157 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(exitButton);
 
-        try {
-            Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
-            exitIcon = exitIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            exitButton.setIcon(new ImageIcon(exitIcon));
-
-            Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
-            darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            darkMode.setIcon(new ImageIcon(darkIcon));
-        } catch (IOException e){
-            System.out.println("error al cargar imagen: " + e.getMessage());
-        }
-
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
+        mainPanel.setBackground(Color.WHITE);
         add(mainPanel, BorderLayout.CENTER);
 
         menuPanel = new JPanel();
-        moviesPanel = new JPanel();
         salesPanel = new JPanel();
+        employeePanel = new JPanel();
+
         mainPanel.add(menuPanel, "menu");
-        mainPanel.add(moviesPanel, "peliculas");
         mainPanel.add(salesPanel, "ventas");
+        mainPanel.add(employeePanel, "Empleados");
 
         //Panel menu
-        menuPanel.setLayout(new BorderLayout());
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+        menuPanel.setBackground(Color.WHITE);
 
         title = createJLabel("Inicio", 40, true); //titulo inicio
         title.setForeground(fgColor);
-        title.setHorizontalAlignment(SwingConstants.LEFT);
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        menuPanel.add(title, BorderLayout.NORTH);
+        menuPanel.add(title);
 
-        dashboardLbl = createJLabel("Dashboard", 20, true);
-        dashboardLbl.setForeground(fgColor);
-        dashboardLbl.setHorizontalAlignment(SwingConstants.LEFT);
-        dashboardLbl.setBorder(BorderFactory.createEmptyBorder(0, 40, 550, 0));
-        menuPanel.add(dashboardLbl, BorderLayout.WEST);
+        summaryLbl = createJLabel("Resumen", 20, true);
+        summaryLbl.setForeground(fgColor);
+        summaryLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+        summaryLbl.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
+        menuPanel.add(summaryLbl);
+
+        numEmployees = createJLabel("Cantidad de empleados: " + "#no. empleado", 15, true);
+        numEmployees.setForeground(fgColor);
+        numEmployees.setAlignmentX(Component.LEFT_ALIGNMENT);
+        numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
+        menuPanel.add(numEmployees);
+
+        numMovies = createJLabel("Peliculas disponibles: " + "#no. pel", 15, true);
+        numMovies.setForeground(fgColor);
+        numMovies.setAlignmentX(Component.LEFT_ALIGNMENT);
+        numMovies.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
+        menuPanel.add(numMovies);
+
+        totalSales = createJLabel("Ventas: $" + "$$", 15, true);
+        totalSales.setForeground(fgColor);
+        totalSales.setAlignmentX(Component.LEFT_ALIGNMENT);
+        totalSales.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
+        menuPanel.add(totalSales);
+
+        managementTitle = createJLabel("Gestion", 20, true);
+        managementTitle.setForeground(fgColor);
+        managementTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+        managementTitle.setBorder(BorderFactory.createEmptyBorder(40, 40, 0, 0));
+        menuPanel.add(managementTitle);
+
+        //Aqui estan otros botones del menu
+        menuButtonsPanel = new JPanel();
+        menuButtonsPanel.setLayout(new GridBagLayout());
+        menuButtonsPanel.setBackground(Color.WHITE);
+        menuButtonsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                                                    //obtiene el mayor valor para el width del panel
+        menuButtonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
+        menuPanel.add(menuButtonsPanel);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridy = 1;
+        c.gridx = 0;
+        c.weighty = 0;
+        c.weightx = 0;
+        c.insets = new Insets(0, 40, 80, 10);
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.fill = GridBagConstraints.NONE;
+
+        employeeButton = createButton(null, 1, 100, 100);
+        employeeButton.setBackground(new Color(245, 245, 245));
+        employeeButton.setActionCommand("Empleados");
+
+        menuButtonsPanel.add(employeeButton, c);
+
+        buttonTitleEmp = createJLabel("Gestionar Empleados", 15, true);
+        buttonTitleEmp.setForeground(fgColor);
+
+        c.gridy = 1;
+        c.gridx = 1;
+        c.weightx = 1;
+        c.weighty = 0;
+        c.insets = new Insets(0, 10, 80, 10);
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+
+        menuButtonsPanel.add(buttonTitleEmp, c);
+
+        c.gridy = 1;
+        c.gridx = 2;
+        c.weightx = 2;
+        c.weighty = 0;
+        c.insets = new Insets(0, 30, 80, 10);
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.fill = GridBagConstraints.NONE;
+
+        moviesButton = createButton(null, 1, 100, 100);
+        moviesButton.setBackground(new Color(245, 245, 245));
+        moviesButton.setActionCommand("Peliculas");
+        menuButtonsPanel.add(moviesButton, c);
+
+        buttonTitleMov = createJLabel("Gestionar Peliculas", 15, true);
+        buttonTitleMov.setForeground(fgColor);
+
+        c.gridy = 1;
+        c.gridx = 2;
+        c.weightx = 3;
+        c.weighty = 0;
+        c.insets = new Insets(0, 150, 80, 10);
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+
+        menuButtonsPanel.add(buttonTitleMov, c);
+
+        //----------Boton empleados
+        employeePanel.setOpaque(false);
+        employeePanel.setLayout(new BorderLayout());
+
+        empTitle = createJLabel("Empleados", 40, true);
+        empTitle.setForeground(fgColor);
+        empTitle.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        employeePanel.add(empTitle, BorderLayout.NORTH);
+
+        JPanel empButtonPanel = new JPanel();
+        empButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        empButtonPanel.setOpaque(false);
+        empButtonPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
+        employeePanel.add(empButtonPanel, BorderLayout.SOUTH);
+
+        JPanel emptyWest = new JPanel();
+        emptyWest.setOpaque(false);
+        emptyWest.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        employeePanel.add(emptyWest, BorderLayout.WEST);
+
+        JPanel emptyEast = new JPanel();
+        emptyEast.setOpaque(false);
+        emptyEast.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        employeePanel.add(emptyEast, BorderLayout.EAST);
+
+        initEmpTable();
+
+
 
         //Panel peliculas
-        moviesPanel.setLayout(new BorderLayout());
-
         moviesLbl = createJLabel("Peliculas", 40, true);
         moviesLbl.setForeground(fgColor);
         moviesLbl.setHorizontalAlignment(SwingConstants.LEFT);
         moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        moviesPanel.add(moviesLbl, BorderLayout.NORTH);
 
         //Panel ventas
         salesPanel.setLayout(new BorderLayout());
@@ -146,7 +274,26 @@ public class AdminView extends JPanel {
         salesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         salesPanel.add(salesLbl, BorderLayout.NORTH);
 
+        //Iconos en botones
+        try {
+            Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
+            exitIcon = exitIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            exitButton.setIcon(new ImageIcon(exitIcon));
 
+            Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
+            darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            darkMode.setIcon(new ImageIcon(darkIcon));
+
+            Image userIcon = ImageIO.read(getClass().getResource("/img/employee.png"));
+            userIcon = userIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            employeeButton.setIcon(new ImageIcon(userIcon));
+
+            Image moviesIcon = ImageIO.read(getClass().getResource("/img/movies.png"));
+            moviesIcon = moviesIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            moviesButton.setIcon(new ImageIcon(moviesIcon));
+        } catch (IOException e){
+            System.out.println("error al cargar imagen: " + e.getMessage());
+        }
     }
 
     public JLabel createJLabel(String title, int fontSize, boolean bold){
@@ -163,9 +310,14 @@ public class AdminView extends JPanel {
     public void setListeners(ActionListener listener){
         exitButton.addActionListener(listener);
         menuButton.addActionListener(listener);
-        moviesButton.addActionListener(listener);
         salesButton.addActionListener(listener);
         darkMode.addActionListener(listener);
+        employeeButton.addActionListener(listener);
+        moviesButton.addActionListener(listener);
+        addEmployee.addActionListener(listener);
+        deleteEmployee.addActionListener(listener);
+        editButton.addActionListener(listener);
+        backButton.addActionListener(listener);
     }
 
 
@@ -175,9 +327,21 @@ public class AdminView extends JPanel {
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
+        button.setPreferredSize(new Dimension(w, h));
+        button.setMinimumSize(new Dimension(w, h));
         button.setMaximumSize(new Dimension(w, h));
         button.setActionCommand(buttonName);
         return button;
+    }
+
+    public void initEmpTable(){
+        String[] col = {"Nombre", "Apellido", "Tipo de Empleado", "Usuario"};
+        tableModelEmp = new DefaultTableModel();
+        tableModelEmp.setColumnIdentifiers(col);
+
+        empTable = new JTable(tableModelEmp);
+        JScrollPane scroll = new JScrollPane(empTable);
+        employeePanel.add(scroll, BorderLayout.CENTER);
     }
 
     //Cambiar modos (dark mode)
@@ -189,23 +353,33 @@ public class AdminView extends JPanel {
             fgColor = new Color(0x2C3E50);
 
             leftPanel.setBackground(new Color(0xDCE9F9));
-            menuPanel.setBackground(Color.WHITE);
-            moviesPanel.setBackground(Color.WHITE);
-            salesPanel.setBackground(Color.WHITE);
 
+            //Menu
+            menuPanel.setBackground(Color.WHITE);
+            mainPanel.setBackground(Color.WHITE);
+            menuButtonsPanel.setBackground(Color.WHITE);
+            employeeButton.setBackground(new Color(245, 245, 245));
+            moviesButton.setBackground(new Color(245, 245, 245));
+            buttonTitleMov.setForeground(fgColor);
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
-            dashboardLbl.setForeground(fgColor);
+            summaryLbl.setForeground(fgColor);
+            managementTitle.setForeground(fgColor);
+            buttonTitleMov.setForeground(fgColor);
+            buttonTitleEmp.setForeground(fgColor);
+
+            salesPanel.setBackground(Color.WHITE);
+
 
             moviesLbl.setForeground(fgColor);
+            numEmployees.setForeground(fgColor);
+            numMovies.setForeground(fgColor);
+            totalSales.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0xEDF2FA));
             menuButton.setForeground(fgColor);
-
-            moviesButton.setBackground(new Color(0xEDF2FA));
-            moviesButton.setForeground(fgColor);
 
             salesButton.setBackground(new Color(0xEDF2FA));
             salesButton.setForeground(fgColor);
@@ -228,22 +402,30 @@ public class AdminView extends JPanel {
 
             leftPanel.setBackground(new Color(0x1E2A47));
             menuPanel.setBackground(new Color(0x1C1C2E));
-            moviesPanel.setBackground(new Color(0x1C1C2E));
+            mainPanel.setBackground(new Color(0x1C1C2E));
+            menuButtonsPanel.setBackground(new Color(0x1C1C2E));
+
             salesPanel.setBackground(new Color(0x1C1C2E));
 
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
-            dashboardLbl.setForeground(fgColor);
 
+            //Menu
+            summaryLbl.setForeground(fgColor);
             moviesLbl.setForeground(fgColor);
+            numEmployees.setForeground(fgColor);
+            numMovies.setForeground(fgColor);
+            totalSales.setForeground(fgColor);
+            employeeButton.setBackground(new Color(0x2C2C3E));
+            moviesButton.setBackground(new Color(0x2C2C3E));
+            managementTitle.setForeground(fgColor);
+            buttonTitleMov.setForeground(fgColor);
+            buttonTitleEmp.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0x3A4E84));
             menuButton.setForeground(fgColor);
-
-            moviesButton.setBackground(new Color(0x3A4E84));
-            moviesButton.setForeground(fgColor);
 
             salesButton.setBackground(new Color(0x3A4E84));
             salesButton.setForeground(fgColor);
@@ -269,19 +451,5 @@ public class AdminView extends JPanel {
 
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
-    }
-
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-//        g.drawImage(logo, 20, 5, this);
-//
-//        Graphics2D g2 = (Graphics2D) g;
-//        Composite original = g2.getComposite(); //obtener la composicion original
-//
-//        g2.setColor(new Color(0, 0, 0, 50));
-//        g2.fillRoundRect(1078, 10, 300, 110, 15, 15);
-//
-//        g2.setComposite(original); //restablecer
     }
 }

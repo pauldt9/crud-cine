@@ -40,19 +40,22 @@ public class Controller implements ActionListener {
                 }
                 break;
             case "Salir":
-                System.out.println("el usuario ha hecho click en salir");
+                System.out.println("ha salido");
                 exit();
                 break;
             case "Menu":
-                System.out.println("el usuario quiere ingresar al menu");
+                System.out.println("menu");
                 showAdminPanel("menu");
                 break;
             case "Peliculas":
-                System.out.println("el usuario accedio a peliculas");
-                showAdminPanel("peliculas");
+                System.out.println("peliculas");
+                break;
+            case "Empleados":
+                System.out.println("empleados");
+                showAdminPanel("Empleados");
                 break;
             case "Ventas":
-                System.out.println("el usuario accedio a ventas");
+                System.out.println("ventas");
                 showAdminPanel("ventas");
                 break;
             case "Modo Oscuro":
