@@ -19,6 +19,9 @@ public class AdminView extends JPanel {
     private JButton addEmployee;
     private JButton moviesButton;
 
+    //paneles del menu
+    private JPanel employeePanel;
+
     //paneles
     private JPanel mainPanel;
     private JPanel leftPanel;
@@ -33,7 +36,7 @@ public class AdminView extends JPanel {
     private JLabel userTitle;
     private JLabel buttonTitleEmp;
     private JLabel managementTitle;
-    private JLabel moviesTitle;
+    private JLabel buttonTitleMov;
 
     private JLabel summaryLbl;
     private JLabel moviesLbl;
@@ -98,12 +101,16 @@ public class AdminView extends JPanel {
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
+        mainPanel.setBackground(Color.WHITE);
         add(mainPanel, BorderLayout.CENTER);
 
         menuPanel = new JPanel();
         salesPanel = new JPanel();
+        employeePanel = new JPanel();
+
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(salesPanel, "ventas");
+        mainPanel.add(employeePanel, "Empleados");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -195,8 +202,8 @@ public class AdminView extends JPanel {
         moviesButton.setActionCommand("Peliculas");
         menuButtonsPanel.add(moviesButton, c);
 
-        moviesTitle = createJLabel("Gestionar Peliculas", 15, true);
-        moviesTitle.setForeground(fgColor);
+        buttonTitleMov = createJLabel("Gestionar Peliculas", 15, true);
+        buttonTitleMov.setForeground(fgColor);
 
         c.gridy = 1;
         c.gridx = 2;
@@ -206,8 +213,12 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
 
-        menuButtonsPanel.add(moviesTitle, c);
-        
+        menuButtonsPanel.add(buttonTitleMov, c);
+
+        //Boton empleados
+        employeePanel.setOpaque(false);
+        employeePanel.setLayout(new BorderLayout());
+
 
         //Panel peliculas
         moviesLbl = createJLabel("Peliculas", 40, true);
@@ -292,15 +303,17 @@ public class AdminView extends JPanel {
 
             //Menu
             menuPanel.setBackground(Color.WHITE);
+            mainPanel.setBackground(Color.WHITE);
             menuButtonsPanel.setBackground(Color.WHITE);
             addEmployee.setBackground(new Color(245, 245, 245));
             moviesButton.setBackground(new Color(245, 245, 245));
-            moviesTitle.setForeground(fgColor);
+            buttonTitleMov.setForeground(fgColor);
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
             summaryLbl.setForeground(fgColor);
             managementTitle.setForeground(fgColor);
-
+            buttonTitleMov.setForeground(fgColor);
+            buttonTitleEmp.setForeground(fgColor);
 
             salesPanel.setBackground(Color.WHITE);
 
@@ -336,6 +349,7 @@ public class AdminView extends JPanel {
 
             leftPanel.setBackground(new Color(0x1E2A47));
             menuPanel.setBackground(new Color(0x1C1C2E));
+            mainPanel.setBackground(new Color(0x1C1C2E));
             menuButtonsPanel.setBackground(new Color(0x1C1C2E));
 
             salesPanel.setBackground(new Color(0x1C1C2E));
@@ -352,6 +366,8 @@ public class AdminView extends JPanel {
             addEmployee.setBackground(new Color(0x2C2C3E));
             moviesButton.setBackground(new Color(0x2C2C3E));
             managementTitle.setForeground(fgColor);
+            buttonTitleMov.setForeground(fgColor);
+            buttonTitleEmp.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
 
