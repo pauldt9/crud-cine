@@ -1,5 +1,8 @@
 package View;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +26,7 @@ public class AdminView extends JPanel {
     //botones de empleados
     private JButton addEmployee;
     private JButton deleteEmployee;
-    private JButton editButton;
+    private JButton editEmployee;
     private JButton backButton;
 
     //paneles del menu
@@ -83,6 +86,7 @@ public class AdminView extends JPanel {
 
         //botones de navegacion
         menuButton = createButton("Menu", 20, 150, 40);
+        menuButton.setActionCommand("Menu");
         menuButton.setBackground(bgColor);
         menuButton.setForeground(fgColor);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -90,6 +94,7 @@ public class AdminView extends JPanel {
         leftPanel.add(menuButton);
 
         salesButton = createButton("Ventas", 20, 150, 40);
+        salesButton.setActionCommand("Ventas");
         salesButton.setBackground(new Color(0xEDF2FA));
         salesButton.setForeground(fgColor);
         salesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -245,6 +250,24 @@ public class AdminView extends JPanel {
         empButtonPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
         employeePanel.add(empButtonPanel, BorderLayout.SOUTH);
 
+        addEmployee = createButton("Agregar", 15, 120, 40);
+        addEmployee.setActionCommand("Agregar empleado");
+        addEmployee.setBackground(new Color(245, 245, 245));
+        addEmployee.setForeground(fgColor);
+        empButtonPanel.add(addEmployee);
+
+        editEmployee = createButton("Editar", 15, 120, 40);
+        editEmployee.setActionCommand("Editar empleado");
+        editEmployee.setBackground(new Color(245, 245, 245));
+        editEmployee.setForeground(fgColor);
+        empButtonPanel.add(editEmployee);
+
+        deleteEmployee = createButton("Eliminar", 15, 120, 40);
+        deleteEmployee.setActionCommand("Eliminar empleado");
+        deleteEmployee.setBackground(new Color(245, 245, 245));
+        deleteEmployee.setForeground(fgColor);
+        empButtonPanel.add(deleteEmployee);
+
         JPanel emptyWest = new JPanel();
         emptyWest.setOpaque(false);
         emptyWest.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
@@ -291,6 +314,18 @@ public class AdminView extends JPanel {
             Image moviesIcon = ImageIO.read(getClass().getResource("/img/movies.png"));
             moviesIcon = moviesIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
             moviesButton.setIcon(new ImageIcon(moviesIcon));
+
+            Image addIcon = ImageIO.read(getClass().getResource("/img/add.png"));
+            addIcon = addIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            addEmployee.setIcon(new ImageIcon(addIcon));
+
+            Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
+            editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            editEmployee.setIcon(new ImageIcon(editIcon));
+
+            Image deleteIcon = ImageIO.read(getClass().getResource("/img/remove.png"));
+            deleteIcon = deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            deleteEmployee.setIcon(new ImageIcon(deleteIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
@@ -316,7 +351,7 @@ public class AdminView extends JPanel {
         moviesButton.addActionListener(listener);
         addEmployee.addActionListener(listener);
         deleteEmployee.addActionListener(listener);
-        editButton.addActionListener(listener);
+        editEmployee.addActionListener(listener);
         backButton.addActionListener(listener);
     }
 
@@ -330,7 +365,6 @@ public class AdminView extends JPanel {
         button.setPreferredSize(new Dimension(w, h));
         button.setMinimumSize(new Dimension(w, h));
         button.setMaximumSize(new Dimension(w, h));
-        button.setActionCommand(buttonName);
         return button;
     }
 
@@ -351,7 +385,6 @@ public class AdminView extends JPanel {
 
         if (action.equals("Modo Oscuro")){
             fgColor = new Color(0x2C3E50);
-
             leftPanel.setBackground(new Color(0xDCE9F9));
 
             //Menu
@@ -368,9 +401,17 @@ public class AdminView extends JPanel {
             buttonTitleMov.setForeground(fgColor);
             buttonTitleEmp.setForeground(fgColor);
 
+            //Empleados
+            empTitle.setForeground(fgColor);
+
+            editEmployee.setForeground(fgColor);
+            editEmployee.setBackground(bgColor);
+            deleteEmployee.setForeground(fgColor);
+            deleteEmployee.setBackground(bgColor);
+            addEmployee.setForeground(fgColor);
+            addEmployee.setBackground(bgColor);
+
             salesPanel.setBackground(Color.WHITE);
-
-
             moviesLbl.setForeground(fgColor);
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
@@ -393,13 +434,16 @@ public class AdminView extends JPanel {
                 Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
                 darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 darkMode.setIcon(new ImageIcon(darkIcon));
+
+                Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
+                editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                editEmployee.setIcon(new ImageIcon(editIcon));
             } catch (IOException e){
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }
 
         } else {
             fgColor = new Color(0xE0E0E0);
-
             leftPanel.setBackground(new Color(0x1E2A47));
             menuPanel.setBackground(new Color(0x1C1C2E));
             mainPanel.setBackground(new Color(0x1C1C2E));
@@ -422,6 +466,16 @@ public class AdminView extends JPanel {
             buttonTitleMov.setForeground(fgColor);
             buttonTitleEmp.setForeground(fgColor);
 
+            //Empleados
+            empTitle.setForeground(fgColor);
+
+            editEmployee.setForeground(fgColor);
+            editEmployee.setBackground(new Color(0x2C2C3E));
+            deleteEmployee.setForeground(fgColor);
+            deleteEmployee.setBackground(new Color(0x2C2C3E));
+            addEmployee.setForeground(fgColor);
+            addEmployee.setBackground(new Color(0x2C2C3E));
+
             salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0x3A4E84));
@@ -439,6 +493,10 @@ public class AdminView extends JPanel {
                 Image darkIcon = ImageIO.read(getClass().getResource("/img/brightness.png"));
                 darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 darkMode.setIcon(new ImageIcon(darkIcon));
+
+                Image editIcon = ImageIO.read(getClass().getResource("/img/editWhite.png"));
+                editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+                editEmployee.setIcon(new ImageIcon(editIcon));
             } catch (IOException e){
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }

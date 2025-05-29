@@ -10,7 +10,7 @@ public class App {
     public static void main(String[] args) {
         JFrame frame = new JFrame(); //ventana principal
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1400, 900);
+        frame.setSize(1300, 720);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setTitle("Ingresar credenciales");

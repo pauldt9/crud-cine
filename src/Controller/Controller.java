@@ -66,6 +66,15 @@ public class Controller implements ActionListener {
                 System.out.println("cambiar a claro");
                 adminView.setViewMode("Modo Oscuro");
                 break;
+            case "Eliminar empleado":
+                System.out.println("borrar empleado");
+                break;
+            case "Editar empleado":
+                System.out.println("editar empleado");
+                break;
+            case "Agregar empleado":
+                System.out.println("agregar empleado");
+                break;
         }
     }
 
