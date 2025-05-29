@@ -2,6 +2,7 @@ package View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -16,8 +17,14 @@ public class AdminView extends JPanel {
     private JButton darkMode;
 
     //botones del menu
-    private JButton addEmployee;
+    private JButton employeeButton;
     private JButton moviesButton;
+
+    //botones de empleados
+    private JButton addEmployee;
+    private JButton deleteEmployee;
+    private JButton editButton;
+    private JButton backButton;
 
     //paneles del menu
     private JPanel employeePanel;
@@ -31,22 +38,30 @@ public class AdminView extends JPanel {
 
     private JPanel salesPanel;
 
-    //labels
+    /*------------Labels------------*/
+    //Menu
     private JLabel title;
     private JLabel userTitle;
     private JLabel buttonTitleEmp;
     private JLabel managementTitle;
     private JLabel buttonTitleMov;
-
     private JLabel summaryLbl;
     private JLabel moviesLbl;
     private JLabel salesLbl;
-
     private JLabel numEmployees; //Label donde se mostrara la cantidad de empleados
     private JLabel numMovies; //numero de peliculas disponibles
     private JLabel totalSales; //ventas totales
 
-    //solo para los botones y labels
+    //Empleados
+    private JLabel empTitle;
+
+    /*----------Tablas----------*/
+    //Empleados
+    private JTable empTable;
+    private DefaultTableModel tableModelEmp;
+
+    /*----------Colores de botones y texto----------*/
+    //no muevan aqui paro
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColor = new Color(0xEDF2FA);
 
@@ -170,11 +185,11 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.NONE;
 
-        addEmployee = createButton(null, 1, 100, 100);
-        addEmployee.setBackground(new Color(245, 245, 245));
-        addEmployee.setActionCommand("Empleados");
+        employeeButton = createButton(null, 1, 100, 100);
+        employeeButton.setBackground(new Color(245, 245, 245));
+        employeeButton.setActionCommand("Empleados");
 
-        menuButtonsPanel.add(addEmployee, c);
+        menuButtonsPanel.add(employeeButton, c);
 
         buttonTitleEmp = createJLabel("Gestionar Empleados", 15, true);
         buttonTitleEmp.setForeground(fgColor);
@@ -215,9 +230,33 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(buttonTitleMov, c);
 
-        //Boton empleados
+        //----------Boton empleados
         employeePanel.setOpaque(false);
         employeePanel.setLayout(new BorderLayout());
+
+        empTitle = createJLabel("Empleados", 40, true);
+        empTitle.setForeground(fgColor);
+        empTitle.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        employeePanel.add(empTitle, BorderLayout.NORTH);
+
+        JPanel empButtonPanel = new JPanel();
+        empButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        empButtonPanel.setOpaque(false);
+        empButtonPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
+        employeePanel.add(empButtonPanel, BorderLayout.SOUTH);
+
+        JPanel emptyWest = new JPanel();
+        emptyWest.setOpaque(false);
+        emptyWest.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        employeePanel.add(emptyWest, BorderLayout.WEST);
+
+        JPanel emptyEast = new JPanel();
+        emptyEast.setOpaque(false);
+        emptyEast.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        employeePanel.add(emptyEast, BorderLayout.EAST);
+
+        initEmpTable();
+
 
 
         //Panel peliculas
@@ -247,7 +286,7 @@ public class AdminView extends JPanel {
 
             Image userIcon = ImageIO.read(getClass().getResource("/img/employee.png"));
             userIcon = userIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-            addEmployee.setIcon(new ImageIcon(userIcon));
+            employeeButton.setIcon(new ImageIcon(userIcon));
 
             Image moviesIcon = ImageIO.read(getClass().getResource("/img/movies.png"));
             moviesIcon = moviesIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
@@ -273,8 +312,12 @@ public class AdminView extends JPanel {
         menuButton.addActionListener(listener);
         salesButton.addActionListener(listener);
         darkMode.addActionListener(listener);
-        addEmployee.addActionListener(listener);
+        employeeButton.addActionListener(listener);
         moviesButton.addActionListener(listener);
+        addEmployee.addActionListener(listener);
+        deleteEmployee.addActionListener(listener);
+        editButton.addActionListener(listener);
+        backButton.addActionListener(listener);
     }
 
 
@@ -291,6 +334,16 @@ public class AdminView extends JPanel {
         return button;
     }
 
+    public void initEmpTable(){
+        String[] col = {"Nombre", "Apellido", "Tipo de Empleado", "Usuario"};
+        tableModelEmp = new DefaultTableModel();
+        tableModelEmp.setColumnIdentifiers(col);
+
+        empTable = new JTable(tableModelEmp);
+        JScrollPane scroll = new JScrollPane(empTable);
+        employeePanel.add(scroll, BorderLayout.CENTER);
+    }
+
     //Cambiar modos (dark mode)
     public void setViewMode(String action){
         this.action = action;
@@ -305,7 +358,7 @@ public class AdminView extends JPanel {
             menuPanel.setBackground(Color.WHITE);
             mainPanel.setBackground(Color.WHITE);
             menuButtonsPanel.setBackground(Color.WHITE);
-            addEmployee.setBackground(new Color(245, 245, 245));
+            employeeButton.setBackground(new Color(245, 245, 245));
             moviesButton.setBackground(new Color(245, 245, 245));
             buttonTitleMov.setForeground(fgColor);
             title.setForeground(fgColor);
@@ -363,7 +416,7 @@ public class AdminView extends JPanel {
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
             totalSales.setForeground(fgColor);
-            addEmployee.setBackground(new Color(0x2C2C3E));
+            employeeButton.setBackground(new Color(0x2C2C3E));
             moviesButton.setBackground(new Color(0x2C2C3E));
             managementTitle.setForeground(fgColor);
             buttonTitleMov.setForeground(fgColor);
@@ -398,19 +451,5 @@ public class AdminView extends JPanel {
 
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
-    }
-
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-//        g.drawImage(logo, 20, 5, this);
-//
-//        Graphics2D g2 = (Graphics2D) g;
-//        Composite original = g2.getComposite(); //obtener la composicion original
-//
-//        g2.setColor(new Color(0, 0, 0, 50));
-//        g2.fillRoundRect(1078, 10, 300, 110, 15, 15);
-//
-//        g2.setComposite(original); //restablecer
     }
 }
