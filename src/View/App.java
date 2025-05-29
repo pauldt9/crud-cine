@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import utils.MySQLConnection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,8 @@ public class App {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image icon = tk.getImage("src/img/logo.png");
         login.setIconImage(icon);
+
+        MySQLConnection.connect();
 
 
         new Controller(loginPanel, login, new AdminView(), new EmployeeView());
