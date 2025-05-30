@@ -589,6 +589,22 @@ public class AdminView extends JPanel {
         return mainPanel;
     }
 
+    public JTable getEmpTable(){
+        return empTable;
+    }
+
+    public JTable getMovTable(){
+        return movTable;
+    }
+
+    public void setMovTable(JTable movTable) {
+        this.movTable = movTable;
+    }
+
+    public void setEmpTable(JTable empTable) {
+        this.empTable = empTable;
+    }
+
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
