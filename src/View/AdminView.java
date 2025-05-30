@@ -27,10 +27,15 @@ public class AdminView extends JPanel {
     private JButton addEmployee;
     private JButton deleteEmployee;
     private JButton editEmployee;
-    private JButton backButton;
+
+    //botones de peliculas
+    private JButton addMov;
+    private JButton deleteMov;
+    private JButton editMov;
 
     //paneles del menu
     private JPanel employeePanel;
+    private JPanel moviesPanel;
 
     //paneles
     private JPanel mainPanel;
@@ -58,10 +63,15 @@ public class AdminView extends JPanel {
     //Empleados
     private JLabel empTitle;
 
+    //Peliculas
+
+
     /*----------Tablas----------*/
     //Empleados
     private JTable empTable;
     private DefaultTableModel tableModelEmp;
+    private JTable movTable;
+    private DefaultTableModel tmMovies;
 
     /*----------Colores de botones y texto----------*/
     //no muevan aqui paro
@@ -106,7 +116,7 @@ public class AdminView extends JPanel {
         darkMode.setBackground(new Color(0xEDF2FA));
         darkMode.setForeground(fgColor);
         darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(450));
+        leftPanel.add(Box.createVerticalStrut(350));
         leftPanel.add(darkMode);
 
         exitButton = createButton(null, 20, 150, 40);
@@ -127,10 +137,12 @@ public class AdminView extends JPanel {
         menuPanel = new JPanel();
         salesPanel = new JPanel();
         employeePanel = new JPanel();
+        moviesPanel = new JPanel();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(salesPanel, "ventas");
         mainPanel.add(employeePanel, "Empleados");
+        mainPanel.add(moviesPanel, "peliculas");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -235,7 +247,7 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(buttonTitleMov, c);
 
-        //----------Boton empleados
+        //----------Empleados
         employeePanel.setOpaque(false);
         employeePanel.setLayout(new BorderLayout());
 
@@ -244,10 +256,7 @@ public class AdminView extends JPanel {
         empTitle.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         employeePanel.add(empTitle, BorderLayout.NORTH);
 
-        JPanel empButtonPanel = new JPanel();
-        empButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        empButtonPanel.setOpaque(false);
-        empButtonPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
+        JPanel empButtonPanel = createButtonsPanel();
         employeePanel.add(empButtonPanel, BorderLayout.SOUTH);
 
         addEmployee = createButton("Agregar", 15, 120, 40);
@@ -268,25 +277,51 @@ public class AdminView extends JPanel {
         deleteEmployee.setForeground(fgColor);
         empButtonPanel.add(deleteEmployee);
 
-        JPanel emptyWest = new JPanel();
-        emptyWest.setOpaque(false);
-        emptyWest.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        JPanel emptyWest = createEmptyPanel();
         employeePanel.add(emptyWest, BorderLayout.WEST);
 
-        JPanel emptyEast = new JPanel();
-        emptyEast.setOpaque(false);
-        emptyEast.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        JPanel emptyEast = createEmptyPanel();
         employeePanel.add(emptyEast, BorderLayout.EAST);
 
         initEmpTable();
 
+        //-------------Peliculas
+        moviesPanel.setLayout(new BorderLayout());
+        moviesPanel.setOpaque(false);
 
-
-        //Panel peliculas
         moviesLbl = createJLabel("Peliculas", 40, true);
         moviesLbl.setForeground(fgColor);
-        moviesLbl.setHorizontalAlignment(SwingConstants.LEFT);
         moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        moviesPanel.add(moviesLbl, BorderLayout.NORTH);
+
+        JPanel emptyPanelMov = createEmptyPanel();
+        moviesPanel.add(emptyPanelMov, BorderLayout.EAST);
+
+        JPanel emptyPanelMov2 = createEmptyPanel();
+        moviesPanel.add(emptyPanelMov2, BorderLayout.WEST);
+
+        initMovTable();
+
+        JPanel movButtonPanel = createButtonsPanel();
+        moviesPanel.add(movButtonPanel, BorderLayout.SOUTH);
+
+        addMov = createButton("Agregar", 15, 120, 40);
+        addMov.setActionCommand("Agregar pelicula");
+        addMov.setBackground(new Color(245, 245, 245));
+        addMov.setForeground(fgColor);
+        movButtonPanel.add(addMov);
+
+        editMov = createButton("Editar", 15, 120, 40);
+        editMov.setActionCommand("Editar pelicula");
+        editMov.setBackground(new Color(245, 245, 245));
+        editMov.setForeground(fgColor);
+        movButtonPanel.add(editMov);
+
+        deleteMov = createButton("Eliminar", 15 , 120, 40);
+        deleteMov.setActionCommand("Eliminar pelicula");
+        deleteMov.setBackground(new Color(245, 245, 245));
+        deleteMov.setForeground(fgColor);
+        movButtonPanel.add(deleteMov);
 
         //Panel ventas
         salesPanel.setLayout(new BorderLayout());
@@ -318,17 +353,35 @@ public class AdminView extends JPanel {
             Image addIcon = ImageIO.read(getClass().getResource("/img/add.png"));
             addIcon = addIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             addEmployee.setIcon(new ImageIcon(addIcon));
+            addMov.setIcon(new ImageIcon(addIcon));
 
             Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
             editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             editEmployee.setIcon(new ImageIcon(editIcon));
+            editMov.setIcon(new ImageIcon(editIcon));
 
             Image deleteIcon = ImageIO.read(getClass().getResource("/img/remove.png"));
             deleteIcon = deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             deleteEmployee.setIcon(new ImageIcon(deleteIcon));
+            deleteMov.setIcon(new ImageIcon(deleteIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
+    }
+
+    public JPanel createEmptyPanel(){
+        JPanel empty = new JPanel();
+        empty.setOpaque(false);
+        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
+        return empty;
+    }
+
+    public JPanel createButtonsPanel(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panel.setOpaque(false);
+        panel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
+        return panel;
     }
 
     public JLabel createJLabel(String title, int fontSize, boolean bold){
@@ -352,9 +405,10 @@ public class AdminView extends JPanel {
         addEmployee.addActionListener(listener);
         deleteEmployee.addActionListener(listener);
         editEmployee.addActionListener(listener);
-        backButton.addActionListener(listener);
+        addMov.addActionListener(listener);
+        editMov.addActionListener(listener);
+        deleteMov.addActionListener(listener);
     }
-
 
     public JButton createButton(String buttonName, int fontSize, int w, int h){
         JButton button = new JButton(buttonName);
@@ -376,6 +430,16 @@ public class AdminView extends JPanel {
         empTable = new JTable(tableModelEmp);
         JScrollPane scroll = new JScrollPane(empTable);
         employeePanel.add(scroll, BorderLayout.CENTER);
+    }
+
+    public void initMovTable(){
+        String[] col = {"Titulo", "Duracion", "Genero", "Clasificacion"};
+        tmMovies = new DefaultTableModel();
+        tmMovies.setColumnIdentifiers(col);
+
+        movTable = new JTable(tmMovies);
+        JScrollPane scroll = new JScrollPane((movTable));
+        moviesPanel.add(scroll, BorderLayout.CENTER);
     }
 
     //Cambiar modos (dark mode)
@@ -411,8 +475,16 @@ public class AdminView extends JPanel {
             addEmployee.setForeground(fgColor);
             addEmployee.setBackground(bgColor);
 
-            salesPanel.setBackground(Color.WHITE);
+            //peliculas
             moviesLbl.setForeground(fgColor);
+            addMov.setBackground(bgColor);
+            addMov.setForeground(fgColor);
+            deleteMov.setForeground(fgColor);
+            deleteMov.setBackground(bgColor);
+            editMov.setBackground(bgColor);
+            editMov.setForeground(fgColor);
+
+            salesPanel.setBackground(Color.WHITE);
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
             totalSales.setForeground(fgColor);
@@ -438,6 +510,7 @@ public class AdminView extends JPanel {
                 Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
                 editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 editEmployee.setIcon(new ImageIcon(editIcon));
+                editMov.setIcon(new ImageIcon(editIcon));
             } catch (IOException e){
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }
@@ -456,7 +529,6 @@ public class AdminView extends JPanel {
 
             //Menu
             summaryLbl.setForeground(fgColor);
-            moviesLbl.setForeground(fgColor);
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
             totalSales.setForeground(fgColor);
@@ -475,6 +547,15 @@ public class AdminView extends JPanel {
             deleteEmployee.setBackground(new Color(0x2C2C3E));
             addEmployee.setForeground(fgColor);
             addEmployee.setBackground(new Color(0x2C2C3E));
+
+            //peliculas
+            moviesLbl.setForeground(fgColor);
+            addMov.setBackground(new Color(0x2C2C3E));
+            addMov.setForeground(fgColor);
+            deleteMov.setForeground(fgColor);
+            deleteMov.setBackground(new Color(0x2C2C3E));
+            editMov.setBackground(new Color(0x2C2C3E));
+            editMov.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
 
@@ -497,6 +578,7 @@ public class AdminView extends JPanel {
                 Image editIcon = ImageIO.read(getClass().getResource("/img/editWhite.png"));
                 editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
                 editEmployee.setIcon(new ImageIcon(editIcon));
+                editMov.setIcon(new ImageIcon(editIcon));
             } catch (IOException e){
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }

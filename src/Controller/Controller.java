@@ -49,6 +49,7 @@ public class Controller implements ActionListener {
                 break;
             case "Peliculas":
                 System.out.println("peliculas");
+                showAdminPanel("peliculas");
                 break;
             case "Empleados":
                 System.out.println("empleados");
@@ -74,6 +75,15 @@ public class Controller implements ActionListener {
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
+                break;
+            case "Eliminar pelicula":
+                System.out.println("eliminar pelicula");
+                break;
+            case "Editar pelicula":
+                System.out.println("editar pelicula");
+                break;
+            case "Agregar pelicula":
+                System.out.println("agregar pelicula");
                 break;
         }
     }

@@ -137,14 +137,14 @@ public class LoginPanel extends JPanel {
 
         Composite original = g2.getComposite();
         g2.setColor(new Color(0, 0, 0, 50));
-        g2.fillRoundRect(452, 140, 500, 600, 20, 20);
+        g2.fillRoundRect(407, 114, 500, 600, 20, 20);
         g2.setComposite(original);
 
         g2.setColor(Color.WHITE);
-        g2.fillRoundRect(442, 130, 500, 600, 20, 20);
+        g2.fillRoundRect(394, 100, 500, 600, 20, 20);
 
 
-        g2.drawImage(logo, 643, 180, this);
+        g2.drawImage(logo, 595, 140, this);
     }
 
     public String getUserField(){
