@@ -76,6 +76,7 @@ public class Controller implements ActionListener {
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
+
                 break;
             case "Eliminar pelicula":
                 System.out.println("eliminar pelicula");
@@ -88,6 +89,8 @@ public class Controller implements ActionListener {
                 break;
         }
     }
+
+
 
     public boolean validateLogin(){
         /*Aqui agregar validaciones del login*/
