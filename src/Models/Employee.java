@@ -15,6 +15,10 @@ public class Employee {
     private String username;
     private String password;
 
+    public Employee(){
+
+    }
+
     public Employee(int idEmployee, String firstName, String lastName, String employeeType, String username, String password) {
         this.idEmployee = idEmployee;
         this.firstName = firstName;

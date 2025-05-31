@@ -1,10 +1,10 @@
 package View;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
+import lib.TextPrompt;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -12,7 +12,9 @@ import java.io.IOException;
 
 public class AdminView extends JPanel {
     private String action;
+    private String newAction;
 
+    /*------------Botones------------*/
     //botones de navegacion
     private JButton exitButton;
     private JButton menuButton;
@@ -27,6 +29,8 @@ public class AdminView extends JPanel {
     private JButton addEmployee;
     private JButton deleteEmployee;
     private JButton editEmployee;
+    private JButton confirmEmp;
+    private JButton backEmpButton;
 
     //botones de peliculas
     private JButton addMov;
@@ -36,6 +40,7 @@ public class AdminView extends JPanel {
     //paneles del menu
     private JPanel employeePanel;
     private JPanel moviesPanel;
+    private JPanel addEmpPanel;
 
     //paneles
     private JPanel mainPanel;
@@ -62,6 +67,7 @@ public class AdminView extends JPanel {
 
     //Empleados
     private JLabel empTitle;
+    private JLabel addEmpTitle;
 
     //Peliculas
 
@@ -77,6 +83,21 @@ public class AdminView extends JPanel {
     //no muevan aqui paro
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColor = new Color(0xEDF2FA);
+
+    //para los botones
+    private Color bgColButtons = new Color(245, 245, 245);
+
+    /*----------Campos----------*/
+    //---Empleados
+    private JTextField addEmpName;
+    private JTextField addEmpLastName;
+    private JTextField addEmpUser;
+    private JPasswordField addEmpPass;
+    private JPasswordField addEmpConfirmPass;
+    private JComboBox<String> empType;
+
+    //---Peliculas
+
 
     public AdminView() {
         setLayout(new BorderLayout());
@@ -138,11 +159,13 @@ public class AdminView extends JPanel {
         salesPanel = new JPanel();
         employeePanel = new JPanel();
         moviesPanel = new JPanel();
+        addEmpPanel = new JPanel();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(salesPanel, "ventas");
         mainPanel.add(employeePanel, "Empleados");
         mainPanel.add(moviesPanel, "peliculas");
+        mainPanel.add(addEmpPanel, "agregar/editar empleado");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -203,7 +226,7 @@ public class AdminView extends JPanel {
         c.fill = GridBagConstraints.NONE;
 
         employeeButton = createButton(null, 1, 100, 100);
-        employeeButton.setBackground(new Color(245, 245, 245));
+        employeeButton.setBackground(bgColButtons);
         employeeButton.setActionCommand("Empleados");
 
         menuButtonsPanel.add(employeeButton, c);
@@ -261,19 +284,19 @@ public class AdminView extends JPanel {
 
         addEmployee = createButton("Agregar", 15, 120, 40);
         addEmployee.setActionCommand("Agregar empleado");
-        addEmployee.setBackground(new Color(245, 245, 245));
+        addEmployee.setBackground(bgColButtons);
         addEmployee.setForeground(fgColor);
         empButtonPanel.add(addEmployee);
 
         editEmployee = createButton("Editar", 15, 120, 40);
         editEmployee.setActionCommand("Editar empleado");
-        editEmployee.setBackground(new Color(245, 245, 245));
+        editEmployee.setBackground(bgColButtons);
         editEmployee.setForeground(fgColor);
         empButtonPanel.add(editEmployee);
 
         deleteEmployee = createButton("Eliminar", 15, 120, 40);
         deleteEmployee.setActionCommand("Eliminar empleado");
-        deleteEmployee.setBackground(new Color(245, 245, 245));
+        deleteEmployee.setBackground(bgColButtons);
         deleteEmployee.setForeground(fgColor);
         empButtonPanel.add(deleteEmployee);
 
@@ -284,6 +307,9 @@ public class AdminView extends JPanel {
         employeePanel.add(emptyEast, BorderLayout.EAST);
 
         initEmpTable();
+//        addEmpTitle = createJLabel("", 40, true);
+//        employeeForm("Agregar Empelado"); //formulario para editar al usuario
+        employeeForm();
 
         //-------------Peliculas
         moviesPanel.setLayout(new BorderLayout());
@@ -307,19 +333,19 @@ public class AdminView extends JPanel {
 
         addMov = createButton("Agregar", 15, 120, 40);
         addMov.setActionCommand("Agregar pelicula");
-        addMov.setBackground(new Color(245, 245, 245));
+        addMov.setBackground(bgColButtons);
         addMov.setForeground(fgColor);
         movButtonPanel.add(addMov);
 
         editMov = createButton("Editar", 15, 120, 40);
         editMov.setActionCommand("Editar pelicula");
-        editMov.setBackground(new Color(245, 245, 245));
+        editMov.setBackground(bgColButtons);
         editMov.setForeground(fgColor);
         movButtonPanel.add(editMov);
 
         deleteMov = createButton("Eliminar", 15 , 120, 40);
         deleteMov.setActionCommand("Eliminar pelicula");
-        deleteMov.setBackground(new Color(245, 245, 245));
+        deleteMov.setBackground(bgColButtons);
         deleteMov.setForeground(fgColor);
         movButtonPanel.add(deleteMov);
 
@@ -364,6 +390,10 @@ public class AdminView extends JPanel {
             deleteIcon = deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             deleteEmployee.setIcon(new ImageIcon(deleteIcon));
             deleteMov.setIcon(new ImageIcon(deleteIcon));
+
+            Image backIcon = ImageIO.read(getClass().getResource("/img/back.png"));
+            backIcon = backIcon.getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+            backEmpButton.setIcon(new ImageIcon(backIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
@@ -395,6 +425,38 @@ public class AdminView extends JPanel {
         return label;
     }
 
+    public JTextField createTextField(String placeHolder, int w, int h){
+        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
+        JTextField textField = new JTextField();
+
+        textField.setFont(font);
+        textField.setForeground(new Color(30, 30 , 30));
+        textField.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
+        textField.setMaximumSize(new Dimension(w, h));
+
+        TextPrompt ph = new TextPrompt(placeHolder, textField);
+        ph.setForeground(new Color(0x999999));
+        ph.setFont(font);
+
+        return textField;
+    }
+
+    public JPasswordField createPasswordField(String placeHolder, int w, int h){
+        JPasswordField pf = new JPasswordField();
+        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
+
+        pf.setForeground(new Color(30, 30, 30));
+        pf.setMaximumSize(new Dimension(w, h));
+        pf.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
+        pf.setFont(font);
+
+        TextPrompt ph = new TextPrompt(placeHolder, pf);
+        ph.setForeground(new Color(100, 100, 100));
+        ph.setFont(font);
+
+        return pf;
+    }
+
     public void setListeners(ActionListener listener){
         exitButton.addActionListener(listener);
         menuButton.addActionListener(listener);
@@ -408,6 +470,8 @@ public class AdminView extends JPanel {
         addMov.addActionListener(listener);
         editMov.addActionListener(listener);
         deleteMov.addActionListener(listener);
+        confirmEmp.addActionListener(listener);
+        backEmpButton.addActionListener(listener);
     }
 
     public JButton createButton(String buttonName, int fontSize, int w, int h){
@@ -420,6 +484,99 @@ public class AdminView extends JPanel {
         button.setMinimumSize(new Dimension(w, h));
         button.setMaximumSize(new Dimension(w, h));
         return button;
+    }
+
+    public void employeeForm(){
+        addEmpPanel.setLayout(new BorderLayout());
+        addEmpPanel.setOpaque(false);
+
+        JPanel topPanel = new JPanel();
+        topPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 170));
+        topPanel.setOpaque(false);
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        addEmpPanel.add(topPanel, BorderLayout.NORTH);
+
+        backEmpButton = createButton(null, 1, 45, 45);
+        backEmpButton.setActionCommand("Regresar empleado");
+        backEmpButton.setAlignmentX(Box.LEFT_ALIGNMENT);
+        backEmpButton.setBackground(bgColButtons);
+        topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
+        topPanel.add(backEmpButton);
+
+        //titulo
+        addEmpTitle = createJLabel("Agregar Empleado", 40, true);
+        addEmpTitle.setAlignmentX(Box.LEFT_ALIGNMENT);
+        addEmpTitle.setForeground(fgColor);
+        topPanel.add(Box.createHorizontalStrut(15));
+        topPanel.add(addEmpTitle);
+
+        JPanel emptyEast = new JPanel();
+        emptyEast.setOpaque(false);
+        emptyEast.setPreferredSize(new Dimension(300, Integer.MAX_VALUE));
+        addEmpPanel.add(emptyEast, BorderLayout.EAST);
+
+        JPanel emptyWest = createEmptyPanel();
+        addEmpPanel.add(emptyWest, BorderLayout.WEST);
+
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(4, 2, 30, 30));
+        formPanel.setOpaque(false);
+        addEmpPanel.add(formPanel, BorderLayout.CENTER);
+
+        addEmpName = createTextField("Ingresar nombre", 350, 50);
+        addEmpName.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addEmpName.setBorder(BorderFactory.createCompoundBorder(addEmpName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
+        addEmpName.setBackground(bgColButtons);
+        addEmpName.setForeground(fgColor);
+        formPanel.add(addEmpName);
+
+        addEmpLastName = createTextField("Ingresar Apellido", 350, 50);
+        addEmpLastName.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addEmpLastName.setBackground(bgColButtons);
+        addEmpLastName.setForeground(fgColor);
+        addEmpLastName.setBorder(BorderFactory.createCompoundBorder(addEmpLastName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
+        formPanel.add(addEmpLastName);
+
+        String[] types = {"-----Tipo de Empleado-----", "Taquillero", "Admin"};
+        empType = new JComboBox<String>(types);
+        empType.setAlignmentX(Component.LEFT_ALIGNMENT);
+        empType.setBackground(bgColButtons);
+        empType.setForeground(fgColor);
+        empType.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        empType.setMaximumSize(new Dimension(350, 50));
+
+        formPanel.add(empType);
+
+        addEmpUser = createTextField("Ingresar nombre de usuario", 350, 50);
+        addEmpUser.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addEmpUser.setBackground(bgColButtons);
+        addEmpUser.setForeground(fgColor);
+        addEmpUser.setBorder(BorderFactory.createCompoundBorder(addEmpUser.getBorder(), new EmptyBorder(0, 10, 0, 0)));
+        formPanel.add(addEmpUser);
+
+        addEmpPass = createPasswordField("Ingresar Contraseña", 350, 50);
+        addEmpPass.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addEmpPass.setBackground(bgColButtons);
+        addEmpPass.setBorder(BorderFactory.createCompoundBorder(addEmpPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
+        formPanel.add(addEmpPass);
+
+        addEmpConfirmPass = createPasswordField("Confirmar Contraseña", 350, 50);
+        addEmpConfirmPass.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addEmpConfirmPass.setBackground(bgColButtons);
+        addEmpConfirmPass.setBorder(BorderFactory.createCompoundBorder(addEmpConfirmPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
+        formPanel.add(addEmpConfirmPass);
+
+        confirmEmp = createButton("Confirmar", 15, 350, 50);
+        confirmEmp.setActionCommand("Confirmar empleado");
+        confirmEmp.setForeground(fgColor);
+        confirmEmp.setBackground(bgColButtons);
+        confirmEmp.setAlignmentX(Component.LEFT_ALIGNMENT);
+        formPanel.add(confirmEmp);
+
+        JPanel emptyBottom = new JPanel();
+        emptyBottom.setOpaque(false);
+        emptyBottom.setPreferredSize(new Dimension(Integer.MAX_VALUE, 250));
+        addEmpPanel.add(emptyBottom, BorderLayout.SOUTH);
     }
 
     public void initEmpTable(){
@@ -450,13 +607,14 @@ public class AdminView extends JPanel {
         if (action.equals("Modo Oscuro")){
             fgColor = new Color(0x2C3E50);
             leftPanel.setBackground(new Color(0xDCE9F9));
+            bgColButtons = new Color(245, 245, 245);
 
             //Menu
             menuPanel.setBackground(Color.WHITE);
             mainPanel.setBackground(Color.WHITE);
             menuButtonsPanel.setBackground(Color.WHITE);
-            employeeButton.setBackground(new Color(245, 245, 245));
-            moviesButton.setBackground(new Color(245, 245, 245));
+            employeeButton.setBackground(bgColButtons);
+            moviesButton.setBackground(bgColButtons);
             buttonTitleMov.setForeground(fgColor);
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
@@ -474,6 +632,24 @@ public class AdminView extends JPanel {
             deleteEmployee.setBackground(bgColor);
             addEmployee.setForeground(fgColor);
             addEmployee.setBackground(bgColor);
+            confirmEmp.setBackground(bgColButtons);
+            confirmEmp.setForeground(fgColor);
+            backEmpButton.setBackground(bgColButtons);
+
+            addEmpName.setBackground(bgColButtons);
+            addEmpLastName.setBackground(bgColButtons);
+            empType.setBackground(bgColButtons);
+            addEmpUser.setBackground(bgColButtons);
+            addEmpPass.setBackground(bgColButtons);
+            addEmpConfirmPass.setBackground(bgColButtons);
+
+            addEmpTitle.setForeground(fgColor);
+            addEmpName.setForeground(fgColor);
+            addEmpLastName.setForeground(fgColor);
+            empType.setForeground(fgColor);
+            addEmpUser.setForeground(fgColor);
+            addEmpPass.setForeground(fgColor);
+            addEmpConfirmPass.setForeground(fgColor);
 
             //peliculas
             moviesLbl.setForeground(fgColor);
@@ -517,6 +693,8 @@ public class AdminView extends JPanel {
 
         } else {
             fgColor = new Color(0xE0E0E0);
+            bgColButtons = new Color(0x2C2C3E);
+
             leftPanel.setBackground(new Color(0x1E2A47));
             menuPanel.setBackground(new Color(0x1C1C2E));
             mainPanel.setBackground(new Color(0x1C1C2E));
@@ -532,8 +710,8 @@ public class AdminView extends JPanel {
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
             totalSales.setForeground(fgColor);
-            employeeButton.setBackground(new Color(0x2C2C3E));
-            moviesButton.setBackground(new Color(0x2C2C3E));
+            employeeButton.setBackground(bgColButtons);
+            moviesButton.setBackground(bgColButtons);
             managementTitle.setForeground(fgColor);
             buttonTitleMov.setForeground(fgColor);
             buttonTitleEmp.setForeground(fgColor);
@@ -542,19 +720,39 @@ public class AdminView extends JPanel {
             empTitle.setForeground(fgColor);
 
             editEmployee.setForeground(fgColor);
-            editEmployee.setBackground(new Color(0x2C2C3E));
+            editEmployee.setBackground(bgColButtons);
             deleteEmployee.setForeground(fgColor);
-            deleteEmployee.setBackground(new Color(0x2C2C3E));
+            deleteEmployee.setBackground(bgColButtons);
             addEmployee.setForeground(fgColor);
-            addEmployee.setBackground(new Color(0x2C2C3E));
+            addEmployee.setBackground(bgColButtons);
+            confirmEmp.setBackground(bgColButtons);
+            confirmEmp.setForeground(fgColor);
+            backEmpButton.setBackground(bgColButtons);
+
+            addEmpName.setBackground(bgColButtons);
+            addEmpName.setForeground(fgColor);
+            addEmpLastName.setBackground(bgColButtons);
+            addEmpLastName.setForeground(fgColor);
+            empType.setBackground(bgColButtons);
+            empType.setForeground(fgColor);
+            addEmpUser.setBackground(bgColButtons);
+            addEmpUser.setForeground(fgColor);
+            addEmpPass.setForeground(fgColor);
+            addEmpPass.setBackground(bgColButtons);
+            addEmpConfirmPass.setForeground(fgColor);
+            addEmpConfirmPass.setBackground(bgColButtons);
+
+            addEmpPanel.setBackground(bgColButtons);
+            addEmpTitle.setForeground(fgColor);
+
 
             //peliculas
             moviesLbl.setForeground(fgColor);
-            addMov.setBackground(new Color(0x2C2C3E));
+            addMov.setBackground(bgColButtons);
             addMov.setForeground(fgColor);
             deleteMov.setForeground(fgColor);
-            deleteMov.setBackground(new Color(0x2C2C3E));
-            editMov.setBackground(new Color(0x2C2C3E));
+            deleteMov.setBackground(bgColButtons);
+            editMov.setBackground(bgColButtons);
             editMov.setForeground(fgColor);
 
             salesLbl.setForeground(fgColor);
@@ -583,6 +781,73 @@ public class AdminView extends JPanel {
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }
         }
+    }
+
+    public void setNewAction(String newAction){
+        this.newAction = newAction;
+        if (newAction.equals("Registrar")){
+            addEmpTitle.setText("Agregar Empleado");
+        } else {
+            addEmpTitle.setText("Actualizar Empleado");
+        }
+    }
+
+    public void clearFields(){
+        addEmpName.setText("");
+        addEmpLastName.setText("");
+        empType.setSelectedItem(0);
+        addEmpUser.setText("");
+        addEmpPass.setText("");
+        addEmpConfirmPass.setText("");
+    }
+
+    public void setAddEmpName(String name){
+        addEmpName.setText(name);
+    }
+
+    public void setAddEmpLastName(String lastName){
+        addEmpLastName.setText(lastName);
+    }
+
+    public void setEmpType(String type){
+        empType.setSelectedItem(type);
+    }
+
+    public void setAddEmpPass(String pass){
+        addEmpPass.setText(pass);
+    }
+
+    public void setAddEmpConfirmPass(String pass){
+        addEmpConfirmPass.setText(pass);
+    }
+
+    public String getEmpName(){
+        return addEmpName.getText();
+    }
+
+    public String getEmpLastName(){
+        return addEmpLastName.getText();
+    }
+
+    public JComboBox<String> getEmpType(){
+        return empType;
+    }
+
+    public String getEmpUser(){
+        return addEmpUser.getText();
+    }
+
+    public String getEmpPass(){
+        return new String(addEmpPass.getPassword());
+    }
+
+    public String getEmpPassConfirm(){
+        return new String(addEmpConfirmPass.getPassword());
+    }
+
+    //valida el campo contraseña y confirmar contraseña
+    public boolean validatePassField(){
+        return getEmpPass().equals(getEmpPassConfirm());
     }
 
     public JPanel getMainPanel() {
