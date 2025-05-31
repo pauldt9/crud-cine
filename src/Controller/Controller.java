@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.Employee;
 import View.EmployeeView;
 import View.LoginPanel;
 import View.AdminView;
@@ -14,12 +15,14 @@ public class Controller implements ActionListener {
     private JFrame frame;
     private AdminView adminView;
     private EmployeeView empView;
+    private Employee empModel;
 
-    public Controller(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView empView) {
+    public Controller(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView empView, Employee empModel) {
         this.loginPanel = loginPanel;
         this.frame = frame;
         this.adminView = adminView;
         this.empView = empView;
+        this.empModel = empModel;
         this.loginPanel.setListeners(this);
         this.adminView.setListeners(this);
     }
@@ -72,9 +75,13 @@ public class Controller implements ActionListener {
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
+                showAdminPanel("agregar/editar empleado");
+                adminView.setNewAction("Editar");
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
+                showAdminPanel("agregar/editar empleado");
+                adminView.setNewAction("Registrar");
                 break;
             case "Eliminar pelicula":
                 System.out.println("eliminar pelicula");
@@ -84,6 +91,19 @@ public class Controller implements ActionListener {
                 break;
             case "Agregar pelicula":
                 System.out.println("agregar pelicula");
+                break;
+            case "Confirmar empleado":
+                System.out.println("se ha agregado un usuario nuevo");
+                JOptionPane.showMessageDialog(frame, "Se ha agregado un empleado nuevo");
+
+                //Insertar la logica para agregar los datos del empleado....
+
+                showAdminPanel("Empleados");
+                adminView.clearFields();
+                break;
+            case "Regresar empleado":
+                System.out.println("El usuario se ha regresado al apartado empleado");
+                showAdminPanel("Empleados");
                 break;
         }
     }
@@ -97,6 +117,11 @@ public class Controller implements ActionListener {
             return false;
         }
         return true;
+    }
+
+    public boolean validateEmpInputs(){
+
+        return false;
     }
 
     public String camposVacios() {
@@ -156,4 +181,6 @@ public class Controller implements ActionListener {
         frame.revalidate();
         frame.setTitle("Inicio");
     }
+
+
 }
