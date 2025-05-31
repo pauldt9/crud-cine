@@ -1,5 +1,6 @@
 package Models;
 
+import org.mindrot.jbcrypt.BCrypt;
 import utils.MySQLConnection;
 
 import java.sql.*;
@@ -134,6 +135,8 @@ public class Employee {
                 + "VALUES (?,?,?,?,?)";
         int created = 0;
 
+        String hashedPassword = BCrypt.hashpw(employee.getPassword(), BCrypt.gensalt());
+
         try (Connection connection = MySQLConnection.connect();
              PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
@@ -141,7 +144,7 @@ public class Employee {
             pst.setString(2, employee.getLastName());
             pst.setString(3, employee.getEmployeeType());
             pst.setString(4, employee.getUsername());
-            pst.setString(5, employee.getPassword());
+            pst.setString(5, hashedPassword);
 
             created = pst.executeUpdate();
 

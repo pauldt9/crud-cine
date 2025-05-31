@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.Employee;
 import View.EmployeeView;
 import View.LoginPanel;
 import View.AdminView;
@@ -130,6 +131,15 @@ public class Controller implements ActionListener {
 
     public boolean isAdmin(){
         /*alguna validacion si el usuario es admin, pero algo para determinar que ventana abrir*/
+
+//        if(loginPanel.getUserField().trim().equals("admin")){
+//            return true;
+//        }
+//
+//        if(loginPanel.getPasswordField().trim().equals()){
+//
+//        }
+
         return true;
     }
 
