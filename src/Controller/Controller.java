@@ -1,14 +1,17 @@
 package Controller;
 
 import Models.Employee;
+import Models.EmployeeTableModel;
 import View.EmployeeView;
 import View.LoginPanel;
 import View.AdminView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Controller implements ActionListener {
     private LoginPanel loginPanel;
@@ -16,6 +19,8 @@ public class Controller implements ActionListener {
     private AdminView adminView;
     private EmployeeView empView;
     private Employee empModel;
+    private ArrayList<Employee> employees;
+    private EmployeeTableModel empTable;
 
     public Controller(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView empView, Employee empModel) {
         this.loginPanel = loginPanel;
@@ -25,6 +30,10 @@ public class Controller implements ActionListener {
         this.empModel = empModel;
         this.loginPanel.setListeners(this);
         this.adminView.setListeners(this);
+
+        empTable = adminView.getTableModelEmp();
+
+        employees = new ArrayList<>();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -102,6 +111,10 @@ public class Controller implements ActionListener {
                 showAdminPanel("Empleados");
                 adminView.clearFields();
                 break;
+            case "Confirmar cambios":
+                System.out.println("se ha efectuado los cambios");
+                JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
+                break;
             case "Regresar empleado":
                 System.out.println("El usuario se ha regresado al apartado empleado");
                 showAdminPanel("Empleados");
@@ -109,6 +122,45 @@ public class Controller implements ActionListener {
         }
     }
 
+    public Employee createEmployee() {
+        String name = adminView.getEmpName();
+        String lastName = adminView.getEmpLastName();
+        String employeeType = (String)adminView.getEmpType().getSelectedItem();
+        String empUsername = adminView.getEmpUser();
+        String empPassword = adminView.getEmpPass();
+
+        return new Employee(adminView.getIdUser(),name,lastName,employeeType,empUsername,empPassword);
+    }
+
+    public void addUser(){
+        if(!validateForm()) return;
+
+            Employee emp = createEmployee();
+            int idUser = Employee.addEmployee(emp);
+
+            if(idUser > 0) {
+                emp.setIdEmployee(idUser);
+                employees.add(emp);
+                empTable.addRow(emp);
+                showAdminPanel("Empleados");
+            }else{
+                JOptionPane.showMessageDialog(frame, "No se pudo crear el empleado");
+            }
+    }
+
+    public boolean validateForm(){
+        if (adminView.getEmpName().isBlank() ||
+            adminView.getEmpLastName().isBlank()||
+            adminView.getEmpType().getSelectedIndex() == 0 ||
+            adminView.getEmpUser().isBlank() ||
+            adminView.getEmpPass().isBlank() ||
+            adminView.getEmpPassConfirm().isBlank()) {
+            JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
+                    "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
 
     public boolean validateLogin(){

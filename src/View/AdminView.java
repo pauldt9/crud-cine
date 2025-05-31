@@ -1,5 +1,6 @@
 package View;
 
+import Models.EmployeeTableModel;
 import lib.TextPrompt;
 
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ import java.io.IOException;
 public class AdminView extends JPanel {
     private String action;
     private String newAction;
+    private int idUser;
 
     /*------------Botones------------*/
     //botones de navegacion
@@ -75,7 +77,7 @@ public class AdminView extends JPanel {
     /*----------Tablas----------*/
     //Empleados
     private JTable empTable;
-    private DefaultTableModel tableModelEmp;
+    private EmployeeTableModel tableModelEmp;
     private JTable movTable;
     private DefaultTableModel tmMovies;
 
@@ -580,11 +582,6 @@ public class AdminView extends JPanel {
     }
 
     public void initEmpTable(){
-        String[] col = {"Nombre", "Apellido", "Tipo de Empleado", "Usuario"};
-        tableModelEmp = new DefaultTableModel();
-        tableModelEmp.setColumnIdentifiers(col);
-
-        empTable = new JTable(tableModelEmp);
         JScrollPane scroll = new JScrollPane(empTable);
         employeePanel.add(scroll, BorderLayout.CENTER);
     }
@@ -789,6 +786,7 @@ public class AdminView extends JPanel {
             addEmpTitle.setText("Agregar Empleado");
         } else {
             addEmpTitle.setText("Actualizar Empleado");
+            confirmEmp.setActionCommand("Confirmar cambios");
         }
     }
 
@@ -819,6 +817,10 @@ public class AdminView extends JPanel {
 
     public void setAddEmpConfirmPass(String pass){
         addEmpConfirmPass.setText(pass);
+    }
+
+    public int getIdUser(){
+        return idUser;
     }
 
     public String getEmpName(){
@@ -856,6 +858,10 @@ public class AdminView extends JPanel {
 
     public JTable getEmpTable(){
         return empTable;
+    }
+
+    public DefaultTableModel getTableModelEmp(){
+        return tableModelEmp;
     }
 
     public JTable getMovTable(){
