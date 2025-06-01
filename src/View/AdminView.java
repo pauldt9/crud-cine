@@ -789,6 +789,7 @@ public class AdminView extends JPanel {
         this.newAction = newAction;
         if (newAction.equals("Registrar")){
             addEmpTitle.setText("Agregar Empleado");
+            confirmEmp.setActionCommand("Confirmar empleado");
         } else {
             addEmpTitle.setText("Actualizar Empleado");
             confirmEmp.setActionCommand("Confirmar cambios de empleado");
@@ -798,7 +799,7 @@ public class AdminView extends JPanel {
     public void clearFields(){
         addEmpName.setText("");
         addEmpLastName.setText("");
-        empType.setSelectedItem(0);
+        empType.setSelectedIndex(0);
         addEmpUser.setText("");
         addEmpPass.setText("");
         addEmpConfirmPass.setText("");

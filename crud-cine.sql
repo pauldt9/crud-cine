@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: crud_cine
+-- Host: localhost    Database: crud_cine
 -- ------------------------------------------------------
 -- Server version	8.0.42
 
@@ -28,9 +28,10 @@ CREATE TABLE `employees` (
   `lastName` varchar(45) NOT NULL,
   `employeeType` varchar(45) NOT NULL,
   `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  PRIMARY KEY (`idEmployee`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `password` varchar(100) NOT NULL,
+  PRIMARY KEY (`idEmployee`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +40,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
+INSERT INTO `employees` VALUES (1,'when','hola','Taquillero','but','$2a$10$FWH22OBeOZtGKuStcqWdGusVzGKsQZOCoSghRv13bx8gC5puUSISO'),(4,'but','but','Taquillero','when','$2a$10$WdJcJt7yrVmFAseQAH7seeg/H5AizGrehpzASQqgwhQR/2/x9DyNu'),(6,'brr brr','patapim','Taquillero','brrpata','$2a$10$wymJW6GJlV.05FQG811ggeWRbITUzwRlUOKztqFaaSx4w1eEONLAm');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,4 +190,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-28 23:55:56
+-- Dump completed on 2025-05-31 22:45:41

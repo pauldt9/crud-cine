@@ -496,3 +496,133 @@ java.sql.SQLSyntaxErrorException: Unknown database 'crud_cine'
 	at Controller.AdminController.<init>(AdminController.java:44)
 	at View.App.main(App.java:36)
 
+May 31, 2025 10:04:40 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:04:59 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:04:59 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:05:07 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:05:08 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:05:29 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:05:29 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:05:54 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:06:18 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:07:05 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:07:19 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:08:02 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:08:02 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:08:29 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:08:31 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:09:00 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:09:22 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:10:02 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:10:14 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:10:19 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:10:26 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:11:15 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:11:23 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:15:12 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:15:36 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:15:40 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:15:41 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:15:58 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:16:02 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:16:19 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:16:47 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:29:14 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:29:33 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:29:33 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:29:50 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:29:51 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:34:22 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:34:34 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:34:36 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:35:05 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:35:05 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:35:24 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:35:25 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:36:42 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:36:42 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:37:02 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:37:09 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:37:12 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:37:42 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:37:49 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:07 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:09 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:17 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:22 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:24 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:47 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:47 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:58 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:38:59 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:39:10 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:39:11 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:40:14 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:40:15 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:41:01 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+May 31, 2025 10:41:02 PM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos

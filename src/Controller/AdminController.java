@@ -82,7 +82,6 @@ public class AdminController implements ActionListener {
                 adminView.clearFields();
                 showAdminPanel("agregar/editar empleado");
                 adminView.setNewAction("Registrar");
-
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
@@ -113,14 +112,12 @@ public class AdminController implements ActionListener {
                 break;
             case "Confirmar empleado":
                 System.out.println("se ha agregado un usuario nuevo");
-                JOptionPane.showMessageDialog(frame, "Se ha agregado un empleado nuevo");
-
+                adminView.setNewAction("Registrar");
                 addEmployee();
-
-                showAdminPanel("Empleados");
                 adminView.clearFields();
                 break;
             case "Confirmar cambios de empleado":
+                adminView.setNewAction("Editar");
                 saveChanges();
                 loadEmployees();
                 break;
@@ -251,6 +248,7 @@ public class AdminController implements ActionListener {
             employees.add(emp);
             empTable.addRow(emp);
             showAdminPanel("Empleados");
+            JOptionPane.showMessageDialog(frame, "Se ha agregado un empleado nuevo");
         }else{
             JOptionPane.showMessageDialog(frame, "No se pudo crear el empleado");
         }
@@ -267,7 +265,6 @@ public class AdminController implements ActionListener {
     //carga los empleados en la tabla
     private void loadEmployees() {
         employees = Employee.getEmployees();
-
         showEmployees();
     }
 
