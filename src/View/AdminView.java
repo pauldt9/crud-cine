@@ -1,5 +1,6 @@
 package View;
 
+import Models.EmployeeTableModel;
 import lib.TextPrompt;
 
 import javax.imageio.ImageIO;
@@ -8,11 +9,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class AdminView extends JPanel {
     private String action;
     private String newAction;
+    private int idEmployee;
 
     /*------------Botones------------*/
     //botones de navegacion
@@ -75,7 +78,7 @@ public class AdminView extends JPanel {
     /*----------Tablas----------*/
     //Empleados
     private JTable empTable;
-    private DefaultTableModel tableModelEmp;
+    private EmployeeTableModel tableModelEmp;
     private JTable movTable;
     private DefaultTableModel tmMovies;
 
@@ -101,6 +104,13 @@ public class AdminView extends JPanel {
 
     public AdminView() {
         setLayout(new BorderLayout());
+
+        //aqui wa iniciar las tablas w luego le mueves, shi?, es que me perdi en todo el codigo w es que esta bien grande jajaja we ya bajale a las lineas we no ma-
+        tableModelEmp = new EmployeeTableModel();
+        empTable = new JTable(tableModelEmp);
+
+
+
 
         /*-----------Panel izquierdo-----------*/
         leftPanel = new JPanel();
@@ -308,7 +318,7 @@ public class AdminView extends JPanel {
 
         initEmpTable();
 //        addEmpTitle = createJLabel("", 40, true);
-//        employeeForm("Agregar Empelado"); //formulario para editar al usuario
+//        employeeForm("Agregar Empleado"); //formulario para editar al usuario
         employeeForm();
 
         //-------------Peliculas
@@ -580,11 +590,6 @@ public class AdminView extends JPanel {
     }
 
     public void initEmpTable(){
-        String[] col = {"Nombre", "Apellido", "Tipo de Empleado", "Usuario"};
-        tableModelEmp = new DefaultTableModel();
-        tableModelEmp.setColumnIdentifiers(col);
-
-        empTable = new JTable(tableModelEmp);
         JScrollPane scroll = new JScrollPane(empTable);
         employeePanel.add(scroll, BorderLayout.CENTER);
     }
@@ -789,6 +794,7 @@ public class AdminView extends JPanel {
             addEmpTitle.setText("Agregar Empleado");
         } else {
             addEmpTitle.setText("Actualizar Empleado");
+            confirmEmp.setActionCommand("Confirmar cambios de empleado");
         }
     }
 
@@ -813,12 +819,24 @@ public class AdminView extends JPanel {
         empType.setSelectedItem(type);
     }
 
+    public void setEmpUser(String user){
+        addEmpUser.setText(user);
+    }
+
     public void setAddEmpPass(String pass){
         addEmpPass.setText(pass);
     }
 
     public void setAddEmpConfirmPass(String pass){
         addEmpConfirmPass.setText(pass);
+    }
+
+    public int getIdEmployee(){
+        return this.idEmployee;
+    }
+
+    public void setIdEmployee(int id){
+        this.idEmployee = id;
     }
 
     public String getEmpName(){
@@ -858,8 +876,20 @@ public class AdminView extends JPanel {
         return empTable;
     }
 
+    public EmployeeTableModel getTableModelEmp(){
+        return tableModelEmp;
+    }
+
     public JTable getMovTable(){
         return movTable;
+    }
+
+    public void tableListener(KeyListener listener) {
+        empTable.addKeyListener(listener);
+    }
+
+    public void removeTableSelection() {
+        empTable.clearSelection();
     }
 
     public void setMovTable(JTable movTable) {
