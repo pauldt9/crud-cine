@@ -109,9 +109,6 @@ public class AdminView extends JPanel {
         tableModelEmp = new EmployeeTableModel();
         empTable = new JTable(tableModelEmp);
 
-
-
-
         /*-----------Panel izquierdo-----------*/
         leftPanel = new JPanel();
         leftPanel.setBackground(new Color(0xDCE9F9));
