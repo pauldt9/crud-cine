@@ -5,12 +5,16 @@ import Models.EmployeeTableModel;
 import View.EmployeeView;
 import View.LoginPanel;
 import View.AdminView;
+import utils.PasswordUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.security.Guard;
 import java.util.ArrayList;
 
 public class Controller implements ActionListener {
@@ -33,7 +37,17 @@ public class Controller implements ActionListener {
 
         empTable = adminView.getTableModelEmp();
 
+        adminView.tableListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    adminView.removeTableSelection();
+                }
+            }
+        });
+
         employees = new ArrayList<>();
+        loadEmployees();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -81,11 +95,21 @@ public class Controller implements ActionListener {
                 break;
             case "Eliminar empleado":
                 System.out.println("borrar empleado");
+
+                deleteEmployee();
+                loadEmployees();
+
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
+                if (adminView.getEmpTable().getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(adminView, "Por favor selecciona una fila");
+                    break;
+                }
+
                 showAdminPanel("agregar/editar empleado");
                 adminView.setNewAction("Editar");
+                fillFieldsEmp();
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
@@ -106,14 +130,16 @@ public class Controller implements ActionListener {
                 System.out.println("se ha agregado un usuario nuevo");
                 JOptionPane.showMessageDialog(frame, "Se ha agregado un empleado nuevo");
 
-                //Insertar la logica para agregar los datos del empleado....
+                addEmployee();
 
                 showAdminPanel("Empleados");
                 adminView.clearFields();
                 break;
-            case "Confirmar cambios":
-                System.out.println("se ha efectuado los cambios");
+            case "Confirmar cambios de empleado":
+                System.out.println("se han efectuado los cambios");
                 JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
+
+                saveChanges();
                 break;
             case "Regresar empleado":
                 System.out.println("El usuario se ha regresado al apartado empleado");
@@ -122,20 +148,94 @@ public class Controller implements ActionListener {
         }
     }
 
+    private void deleteEmployee() {
+        int selectedRow = adminView.getEmpTable().getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(adminView, "Debes seleccionar un usuario de la tabla");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                adminView,
+                "Esta seguro de que desea eliminar este usuario?",
+                "Confirmar eliminacion",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int id = employees.get(selectedRow).getIdEmployee();
+
+            boolean deleted = Employee.deleteEmployee(id);
+            if (deleted) {
+                JOptionPane.showMessageDialog(adminView, "Usuario eliminado correctamente");
+                showEmployees();
+            } else {
+                JOptionPane.showMessageDialog(adminView, "No se pudo eliminar el usuario");
+            }
+        }
+    }
+
+    //esto no jala w
+    private void saveChanges() {
+        if (!validateForm()) return;
+
+        try {
+            Employee employee = createEmployee();
+            employee.setPassword(PasswordUtils.hashPassword(employee.getPassword()));
+
+            System.out.println("ID: "+ employee.getIdEmployee());
+
+            if(Employee.updateEmployee(employee)) {
+                empTable.setRowData(employee.getIdEmployee(), employee);
+            }else {
+                JOptionPane.showMessageDialog(frame, "No se pudo registrar el usuario");
+            }
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage());
+        }
+
+    }
+
+    public void fillFieldsEmp(){
+        Employee employee = empTable.getRowData(adminView.getEmpTable().getSelectedRow());
+        adminView.setIdEmployee(employee.getIdEmployee());
+        adminView.setAddEmpName(employee.getFirstName());
+        adminView.setAddEmpLastName(employee.getLastName());
+        adminView.setEmpType(employee.getEmployeeType());
+        adminView.setEmpUser(employee.getUsername());
+        adminView.setAddEmpPass(employee.getPassword());
+        adminView.setAddEmpConfirmPass(employee.getPassword());
+    }
+
+    //crea el objeto empleado que se usara en el metodo addUser
     public Employee createEmployee() {
         String name = adminView.getEmpName();
         String lastName = adminView.getEmpLastName();
         String employeeType = (String)adminView.getEmpType().getSelectedItem();
         String empUsername = adminView.getEmpUser();
+
+        // Este metodo esta medio tonto we
+        while (!Employee.isUsernameAvailable(empUsername)) {
+            JOptionPane.showMessageDialog(frame, "El nombre de usuario ya existe. Intenta con otro.");
+            adminView.setEmpUser("");
+            return null;
+        }
+
+
         String empPassword = adminView.getEmpPass();
 
-        return new Employee(adminView.getIdUser(),name,lastName,employeeType,empUsername,empPassword);
+
+        return new Employee(adminView.getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
     }
 
-    public void addUser(){
+    //agrega al empleado a la base de datos y a la tabla
+    public void addEmployee(){
         if(!validateForm()) return;
 
             Employee emp = createEmployee();
+
+            emp.setPassword(PasswordUtils.hashPassword(emp.getPassword()));
+
             int idUser = Employee.addEmployee(emp);
 
             if(idUser > 0) {
@@ -148,6 +248,25 @@ public class Controller implements ActionListener {
             }
     }
 
+    //obtiene los empleados
+    private void showEmployees() {
+        empTable.cleanTable();
+        for (Employee e : employees) {
+            empTable.addRow(e);
+        }
+    }
+
+    //carga los empleados en la tabla
+    private void loadEmployees() {
+        employees = Employee.getEmployees();
+
+        showEmployees();
+    }
+
+
+
+
+    //valida que los campos esten llenos
     public boolean validateForm(){
         if (adminView.getEmpName().isBlank() ||
             adminView.getEmpLastName().isBlank()||
@@ -157,6 +276,9 @@ public class Controller implements ActionListener {
             adminView.getEmpPassConfirm().isBlank()) {
             JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
                     "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } else if (!adminView.validatePassField()) {
+            JOptionPane.showMessageDialog(frame, "Los campos de contraseña no coinciden.");
             return false;
         }
         return true;

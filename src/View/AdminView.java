@@ -9,12 +9,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class AdminView extends JPanel {
     private String action;
     private String newAction;
-    private int idUser;
+    private int idEmployee;
 
     /*------------Botones------------*/
     //botones de navegacion
@@ -103,6 +104,13 @@ public class AdminView extends JPanel {
 
     public AdminView() {
         setLayout(new BorderLayout());
+
+        //aqui wa iniciar las tablas w luego le mueves, shi?, es que me perdi en todo el codigo w es que esta bien grande jajaja we ya bajale a las lineas we no ma-
+        tableModelEmp = new EmployeeTableModel();
+        empTable = new JTable(tableModelEmp);
+
+
+
 
         /*-----------Panel izquierdo-----------*/
         leftPanel = new JPanel();
@@ -786,7 +794,7 @@ public class AdminView extends JPanel {
             addEmpTitle.setText("Agregar Empleado");
         } else {
             addEmpTitle.setText("Actualizar Empleado");
-            confirmEmp.setActionCommand("Confirmar cambios");
+            confirmEmp.setActionCommand("Confirmar cambios de empleado");
         }
     }
 
@@ -811,6 +819,10 @@ public class AdminView extends JPanel {
         empType.setSelectedItem(type);
     }
 
+    public void setEmpUser(String user){
+        addEmpUser.setText(user);
+    }
+
     public void setAddEmpPass(String pass){
         addEmpPass.setText(pass);
     }
@@ -819,8 +831,12 @@ public class AdminView extends JPanel {
         addEmpConfirmPass.setText(pass);
     }
 
-    public int getIdUser(){
-        return idUser;
+    public int getIdEmployee(){
+        return idEmployee;
+    }
+
+    public void setIdEmployee(int id){
+        this.idEmployee = idEmployee;
     }
 
     public String getEmpName(){
@@ -860,12 +876,20 @@ public class AdminView extends JPanel {
         return empTable;
     }
 
-    public DefaultTableModel getTableModelEmp(){
+    public EmployeeTableModel getTableModelEmp(){
         return tableModelEmp;
     }
 
     public JTable getMovTable(){
         return movTable;
+    }
+
+    public void tableListener(KeyListener listener) {
+        empTable.addKeyListener(listener);
+    }
+
+    public void removeTableSelection() {
+        empTable.clearSelection();
     }
 
     public void setMovTable(JTable movTable) {
