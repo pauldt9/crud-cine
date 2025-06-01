@@ -30,8 +30,6 @@ public class EmployeeTableModel extends AbstractTableModel {
         return column[columnIndex];
     }
 
-
-
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Employee employee = data.get(rowIndex);

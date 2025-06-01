@@ -27,7 +27,6 @@ public class App {
         Image icon = tk.getImage("src/img/logo.png");
         frame.setIconImage(icon);
 
-
         configPath = "config.properties";
 
         new Controller(loginPanel, frame, new AdminView(), new EmployeeView(), new Employee());

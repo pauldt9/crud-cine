@@ -8,13 +8,11 @@ import View.AdminView;
 import utils.PasswordUtils;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.security.Guard;
 import java.util.ArrayList;
 
 public class Controller implements ActionListener {
@@ -93,11 +91,11 @@ public class Controller implements ActionListener {
                 System.out.println("cambiar a claro");
                 adminView.setViewMode("Modo Oscuro");
                 break;
-            case "Eliminar empleado":
-                System.out.println("borrar empleado");
-
-                deleteEmployee();
-                loadEmployees();
+            case "Agregar empleado":
+                System.out.println("agregar empleado");
+                adminView.clearFields();
+                showAdminPanel("agregar/editar empleado");
+                adminView.setNewAction("Registrar");
 
                 break;
             case "Editar empleado":
@@ -111,10 +109,11 @@ public class Controller implements ActionListener {
                 adminView.setNewAction("Editar");
                 fillFieldsEmp();
                 break;
-            case "Agregar empleado":
-                System.out.println("agregar empleado");
-                showAdminPanel("agregar/editar empleado");
-                adminView.setNewAction("Registrar");
+            case "Eliminar empleado":
+                System.out.println("borrar empleado");
+
+                deleteEmployee();
+                loadEmployees();
 
                 break;
             case "Eliminar pelicula":
@@ -136,10 +135,8 @@ public class Controller implements ActionListener {
                 adminView.clearFields();
                 break;
             case "Confirmar cambios de empleado":
-                System.out.println("se han efectuado los cambios");
-                JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
-
                 saveChanges();
+                loadEmployees();
                 break;
             case "Regresar empleado":
                 System.out.println("El usuario se ha regresado al apartado empleado");
@@ -157,7 +154,7 @@ public class Controller implements ActionListener {
 
         int confirm = JOptionPane.showConfirmDialog(
                 adminView,
-                "Esta seguro de que desea eliminar este usuario?",
+                "¿Esta seguro de que desea eliminar este usuario?",
                 "Confirmar eliminacion",
                 JOptionPane.YES_NO_OPTION
         );
@@ -175,23 +172,41 @@ public class Controller implements ActionListener {
         }
     }
 
-    //esto no jala w
     private void saveChanges() {
         if (!validateForm()) return;
 
         try {
-            Employee employee = createEmployee();
-            employee.setPassword(PasswordUtils.hashPassword(employee.getPassword()));
+            Employee employee = createEmployeeForEdit();
+
+            String plainPassword = adminView.getEmpPass();
+
+            int rowIndex = empTable.getRowById(employee.getIdEmployee());
+            if (rowIndex == -1) {
+                JOptionPane.showMessageDialog(frame, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Employee original = empTable.getRowData(rowIndex);
+            String currentHashedPassword = original.getPassword();
 
             System.out.println("ID: "+ employee.getIdEmployee());
+            if (PasswordUtils.checkPassword(plainPassword,currentHashedPassword )) {
 
-            if(Employee.updateEmployee(employee)) {
-                empTable.setRowData(employee.getIdEmployee(), employee);
-            }else {
-                JOptionPane.showMessageDialog(frame, "No se pudo registrar el usuario");
+                employee.setPassword(PasswordUtils.hashPassword(plainPassword));
+
+                if (Employee.updateEmployee(employee)) {
+                    empTable.setRowData(rowIndex, employee);
+                    adminView.clearFields();
+                    System.out.println("se han efectuado los cambios");
+                    JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No se pudo actualizar el usuario");
+                }
+            }else{
+                JOptionPane.showMessageDialog(frame, "Contraseña incorrecta","Error",JOptionPane.ERROR_MESSAGE);
             }
         }catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage());
+            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -203,30 +218,40 @@ public class Controller implements ActionListener {
         adminView.setAddEmpLastName(employee.getLastName());
         adminView.setEmpType(employee.getEmployeeType());
         adminView.setEmpUser(employee.getUsername());
-        adminView.setAddEmpPass(employee.getPassword());
-        adminView.setAddEmpConfirmPass(employee.getPassword());
+//        adminView.setAddEmpPass(employee.getPassword());
+//        adminView.setAddEmpConfirmPass(employee.getPassword());
     }
 
-    //crea el objeto empleado que se usara en el metodo addUser
+    // Crea el objeto empleado que se usara en el metodo addEmployee
     public Employee createEmployee() {
         String name = adminView.getEmpName();
         String lastName = adminView.getEmpLastName();
         String employeeType = (String)adminView.getEmpType().getSelectedItem();
         String empUsername = adminView.getEmpUser();
 
-        // Este metodo esta medio tonto we
-        while (!Employee.isUsernameAvailable(empUsername)) {
+        if (!Employee.isUsernameAvailable(empUsername)) {
             JOptionPane.showMessageDialog(frame, "El nombre de usuario ya existe. Intenta con otro.");
             adminView.setEmpUser("");
             return null;
         }
 
-
         String empPassword = adminView.getEmpPass();
-
 
         return new Employee(adminView.getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
     }
+
+    // Crea un empleado sin validar el nombre de usuario (para edición)
+    public Employee createEmployeeForEdit() {
+
+        String name = adminView.getEmpName();
+        String lastName = adminView.getEmpLastName();
+        String employeeType = (String)adminView.getEmpType().getSelectedItem();
+        String empUsername = adminView.getEmpUser();
+        String empPassword = adminView.getEmpPass();
+
+        return new Employee(adminView.getIdEmployee(), name, lastName, employeeType, empUsername, empPassword);
+    }
+
 
     //agrega al empleado a la base de datos y a la tabla
     public void addEmployee(){
@@ -263,9 +288,6 @@ public class Controller implements ActionListener {
         showEmployees();
     }
 
-
-
-
     //valida que los campos esten llenos
     public boolean validateForm(){
         if (adminView.getEmpName().isBlank() ||
@@ -287,7 +309,7 @@ public class Controller implements ActionListener {
 
     public boolean validateLogin(){
         /*Aqui agregar validaciones del login*/
-        String mensajeCamposVacios = camposVacios();
+        String mensajeCamposVacios = emptyFields();
 
         if (!mensajeCamposVacios.isBlank()) {
             JOptionPane.showMessageDialog(null, mensajeCamposVacios, "Campos vacíos", JOptionPane.ERROR_MESSAGE);
@@ -296,12 +318,7 @@ public class Controller implements ActionListener {
         return true;
     }
 
-    public boolean validateEmpInputs(){
-
-        return false;
-    }
-
-    public String camposVacios() {
+    public String emptyFields() {
         StringBuilder faltantes = new StringBuilder();
 
         if (loginPanel.getUserField().trim().isEmpty()) {
@@ -316,6 +333,11 @@ public class Controller implements ActionListener {
         }
 
         return "Los siguientes parámetros están vacíos: " + faltantes.substring(0, faltantes.length() - 2);
+    }
+
+    public boolean validateEmpInputs(){
+
+        return false;
     }
 
     public void exit(){

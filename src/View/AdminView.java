@@ -318,7 +318,7 @@ public class AdminView extends JPanel {
 
         initEmpTable();
 //        addEmpTitle = createJLabel("", 40, true);
-//        employeeForm("Agregar Empelado"); //formulario para editar al usuario
+//        employeeForm("Agregar Empleado"); //formulario para editar al usuario
         employeeForm();
 
         //-------------Peliculas
@@ -832,11 +832,11 @@ public class AdminView extends JPanel {
     }
 
     public int getIdEmployee(){
-        return idEmployee;
+        return this.idEmployee;
     }
 
     public void setIdEmployee(int id){
-        this.idEmployee = idEmployee;
+        this.idEmployee = id;
     }
 
     public String getEmpName(){
