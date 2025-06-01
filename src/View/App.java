@@ -1,7 +1,7 @@
 package View;
 
-import Controller.Controller;
-import Models.Employee;
+import Controller.AdminController;
+import Controller.LoginController;
 import utils.MySQLConnection;
 
 import javax.swing.*;
@@ -26,6 +26,10 @@ public class App {
 
         MySQLConnection.connect();
 
-        new Controller(loginPanel, frame, new AdminView(), new EmployeeView(), new Employee());
+        AdminView adminView = new AdminView();
+        EmployeeView employeeView = new EmployeeView();
+
+        new LoginController(loginPanel, frame, adminView, employeeView);
+        new AdminController(loginPanel, frame, adminView);
     }
 }
