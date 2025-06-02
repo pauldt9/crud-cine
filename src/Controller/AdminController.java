@@ -289,7 +289,7 @@ public class AdminController implements ActionListener {
     }
 
     public void exit(){
-        int answer = JOptionPane.showConfirmDialog(frame, "Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
+        int answer = JOptionPane.showConfirmDialog(frame, "¿Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
 
         if (answer == JOptionPane.YES_OPTION){
             frame.remove(adminView);
