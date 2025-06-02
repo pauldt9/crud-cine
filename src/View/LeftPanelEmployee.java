@@ -30,7 +30,7 @@ public class LeftPanelEmployee extends JPanel {
         add(userTitle);
 
         homeButton = createButton("Inicio", 20, 150, 40);
-        homeButton.setActionCommand("Inicio Empleado");
+        homeButton.setActionCommand("Inicio empleado");
         homeButton.setBackground(buttonColor);
         homeButton.setForeground(fgCol);
         homeButton.setAlignmentX(Component.CENTER_ALIGNMENT);

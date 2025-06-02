@@ -45,13 +45,13 @@ INSERT INTO `employees` VALUES (1,'when','hola','Taquillero','but','$2a$10$FWH22
 UNLOCK TABLES;
 
 --
--- Table structure for table `functions`
+-- Table structure for table `movieShowtimes`
 --
 
-DROP TABLE IF EXISTS `functions`;
+DROP TABLE IF EXISTS `movieShowtimes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `functions` (
+CREATE TABLE `movieShowtimes` (
   `idFunction` int NOT NULL AUTO_INCREMENT,
   `idMovie` int NOT NULL,
   `idRoom` int NOT NULL,
@@ -65,12 +65,12 @@ CREATE TABLE `functions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `functions`
+-- Dumping data for table `movieShowtimes`
 --
 
-LOCK TABLES `functions` WRITE;
-/*!40000 ALTER TABLE `functions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `functions` ENABLE KEYS */;
+LOCK TABLES `movieShowtimes` WRITE;
+/*!40000 ALTER TABLE `movieShowtimes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `movieShowtimes` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -167,7 +167,7 @@ CREATE TABLE `tickets` (
   PRIMARY KEY (`idTicket`),
   KEY `fk_idFunction_tickets_idx` (`idFunction`),
   KEY `fk_idSeats_tickets_idx` (`idSeat`),
-  CONSTRAINT `fk_idFunction_tickets` FOREIGN KEY (`idFunction`) REFERENCES `functions` (`idFunction`),
+  CONSTRAINT `fk_idFunction_tickets` FOREIGN KEY (`idFunction`) REFERENCES `movieShowtimes` (`idFunction`),
   CONSTRAINT `fk_idSeats_tickets` FOREIGN KEY (`idSeat`) REFERENCES `seats` (`idSeat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class EmployeeView extends JPanel {
     //colores principales
@@ -9,24 +10,40 @@ public class EmployeeView extends JPanel {
     private Color panelColor = Color.WHITE;
 
     private JPanel mainPanel;
-    private Catalag catalagView;
+    private Catalog catalogView;
+    private LeftPanelEmployee leftPanelEmployee;
+    private SelectHour selectHourPanel;
 
     public EmployeeView(){
         setLayout(new BorderLayout());
-        add(new LeftPanelEmployee(), BorderLayout.WEST);
+        setBackground(Color.WHITE);
+        leftPanelEmployee = new LeftPanelEmployee(); //panel izquierdo
+
+        add(leftPanelEmployee, BorderLayout.WEST);
 
         //Aqui se encuentran todos los paneles
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
         mainPanel.setBackground(panelColor);
 
-        catalagView = new Catalag();
+        catalogView = new Catalog();
+        selectHourPanel = new SelectHour();
 
-        mainPanel.add(catalagView, "catalogo");
+        mainPanel.add(catalogView, "catalogo");
+        mainPanel.add(selectHourPanel, "seleccionar hora");
 
         add(mainPanel, BorderLayout.CENTER);
 
+    }
 
+    public void setListeners(ActionListener listener){
+        leftPanelEmployee.setListeners(listener);
+        selectHourPanel.setListeners(listener);
+        catalogView.setListeners(listener);
+    }
+
+    public JPanel getMainPanel(){
+        return mainPanel;
     }
 
 }

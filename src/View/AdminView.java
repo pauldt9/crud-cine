@@ -79,8 +79,8 @@ public class AdminView extends JPanel {
     //Empleados
     private JTable empTable;
     private EmployeeTableModel tableModelEmp;
-    private JTable movTable;
-    private DefaultTableModel tmMovies;
+
+
 
     /*----------Colores de botones y texto----------*/
     //no muevan aqui paro
@@ -106,8 +106,7 @@ public class AdminView extends JPanel {
         setLayout(new BorderLayout());
 
         //aqui wa iniciar las tablas w luego le mueves, shi?, es que me perdi en todo el codigo w es que esta bien grande jajaja we ya bajale a las lineas we no ma-
-        tableModelEmp = new EmployeeTableModel();
-        empTable = new JTable(tableModelEmp);
+        initEmpTable();
 
         /*-----------Panel izquierdo-----------*/
         leftPanel = new JPanel();
@@ -313,9 +312,6 @@ public class AdminView extends JPanel {
         JPanel emptyEast = createEmptyPanel();
         employeePanel.add(emptyEast, BorderLayout.EAST);
 
-        initEmpTable();
-//        addEmpTitle = createJLabel("", 40, true);
-//        employeeForm("Agregar Empleado"); //formulario para editar al usuario
         employeeForm();
 
         //-------------Peliculas
@@ -587,18 +583,12 @@ public class AdminView extends JPanel {
     }
 
     public void initEmpTable(){
-        JScrollPane scroll = new JScrollPane(empTable);
-        employeePanel.add(scroll, BorderLayout.CENTER);
+        tableModelEmp = new EmployeeTableModel();
+        empTable = new JTable(tableModelEmp);
     }
 
     public void initMovTable(){
-        String[] col = {"Titulo", "Duracion", "Genero", "Clasificacion"};
-        tmMovies = new DefaultTableModel();
-        tmMovies.setColumnIdentifiers(col);
 
-        movTable = new JTable(tmMovies);
-        JScrollPane scroll = new JScrollPane((movTable));
-        moviesPanel.add(scroll, BorderLayout.CENTER);
     }
 
     //Cambiar modos (dark mode)
@@ -878,20 +868,12 @@ public class AdminView extends JPanel {
         return tableModelEmp;
     }
 
-    public JTable getMovTable(){
-        return movTable;
-    }
-
     public void tableListener(KeyListener listener) {
         empTable.addKeyListener(listener);
     }
 
     public void removeTableSelection() {
         empTable.clearSelection();
-    }
-
-    public void setMovTable(JTable movTable) {
-        this.movTable = movTable;
     }
 
     public void setEmpTable(JTable empTable) {

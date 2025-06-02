@@ -5,34 +5,34 @@ import utils.MySQLConnection;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class Function {
-    private int idFunction; //Primary Key
+public class MovieShowtimes {
+    private int idShowtime; //Primary Key
     private Movie movie; //Foreign Key
     private int idMovie = movie.getIdMovie();
     private Room room; //Foreign Key
     private int idRoom = room.getIdRoom();
     private String showTime;
 
-    public Function(int id, Movie movie, Room room, String showTime) {
-        this.idFunction = id;
+    public MovieShowtimes(int id, Movie movie, Room room, String showTime) {
+        this.idShowtime = id;
         this.movie = movie;
         this.room = room;
         this.showTime = showTime;
     }
 
-    public Function(int idFunction, int idMovie, int idRoom, String showTime) {
-        this.idFunction = idFunction;
+    public MovieShowtimes(int idShowtime, int idMovie, int idRoom, String showTime) {
+        this.idShowtime = idShowtime;
         this.idMovie = idMovie;
         this.idRoom = idRoom;
         this.showTime = showTime;
     }
 
-    public int getIdFunction() {
-        return idFunction;
+    public int getIdShowtime() {
+        return idShowtime;
     }
 
-    public void setIdFunction(int id) {
-        this.idFunction = id;
+    public void setIdShowtime(int id) {
+        this.idShowtime = id;
     }
 
     public Movie getMovie() {
@@ -59,8 +59,8 @@ public class Function {
         this.showTime = showTime;
     }
 
-    public static ArrayList<Function> getFunctions() {
-        ArrayList<Function> functions = new ArrayList<>();
+    public static ArrayList<MovieShowtimes> getFunctions() {
+        ArrayList<MovieShowtimes> movieShowtimes = new ArrayList<>();
         String query = "SELECT * FROM functions";
 
         try (
@@ -70,7 +70,7 @@ public class Function {
         ) {
 
             while (rs.next()) {
-                functions.add(new Function(
+                movieShowtimes.add(new MovieShowtimes(
                         rs.getInt("idFunction"),
                         rs.getInt("idMovie"),
                         rs.getInt("idRoom"),
@@ -82,11 +82,11 @@ public class Function {
             ex.printStackTrace();
         }
 
-        return functions;
+        return movieShowtimes;
     }
 
-    public static Function getFunction(int id) {
-        Function function = null;
+    public static MovieShowtimes getFunction(int id) {
+        MovieShowtimes movieShowtimes = null;
         String query = "SELECT * FROM functions WHERE idFunction = " + id;
 
         try (
@@ -96,7 +96,7 @@ public class Function {
         ) {
 
             if (rs.next()) {
-                function = new Function(
+                movieShowtimes = new MovieShowtimes(
                         rs.getInt("idFunction"),
                         rs.getInt("idMovie"),
                         rs.getInt("idRoom"),
@@ -108,10 +108,10 @@ public class Function {
             ex.printStackTrace();
         }
 
-        return function;
+        return movieShowtimes;
     }
 
-    public static int addFunction(Function function) {
+    public static int addFunction(MovieShowtimes movieShowtimes) {
 
         int id = 0;
         String query = "INSERT INTO functions " + "(showTime))"
@@ -121,7 +121,7 @@ public class Function {
         try (Connection connection = MySQLConnection.connect();
              PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
-            pst.setString(1, function.getShowTime());
+            pst.setString(1, movieShowtimes.getShowTime());
 
             created = pst.executeUpdate();
 
@@ -136,7 +136,7 @@ public class Function {
         return id;
     }
 
-    public static boolean updateFunction(Function function) {
+    public static boolean updateFunction(MovieShowtimes movieShowtimes) {
         String query = "UPDATE functions SET showTime = ? WHERE idFunction = ?";
         int updated = 0;
 
@@ -144,8 +144,8 @@ public class Function {
                 Connection connection = MySQLConnection.connect();
                 PreparedStatement pst = connection.prepareStatement(query)
         ) {
-            pst.setString(1, function.getShowTime());
-            pst.setInt(2, function.getIdFunction());
+            pst.setString(1, movieShowtimes.getShowTime());
+            pst.setInt(2, movieShowtimes.getIdShowtime());
 
             updated = pst.executeUpdate();
             return updated > 0;

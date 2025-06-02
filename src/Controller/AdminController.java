@@ -120,11 +120,13 @@ public class AdminController implements ActionListener {
                 adminView.setNewAction("Editar");
                 saveChanges();
                 loadEmployees();
+                showAdminPanel("Empleados");
                 break;
             case "Regresar empleado":
                 System.out.println("El usuario se ha regresado al apartado empleado");
                 showAdminPanel("Empleados");
                 break;
+
         }
     }
 
@@ -186,10 +188,10 @@ public class AdminController implements ActionListener {
                     JOptionPane.showMessageDialog(frame, "No se pudo actualizar el usuario");
                 }
             }else{
-                JOptionPane.showMessageDialog(frame, "Contraseña incorrecta","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Contraseña incorrecta","Error", JOptionPane.ERROR_MESSAGE);
             }
         }catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }

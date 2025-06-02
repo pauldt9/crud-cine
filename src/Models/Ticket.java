@@ -8,15 +8,15 @@ import java.util.ArrayList;
 public class Ticket {
 
     private int idTicket; //Primary Key
-    private Function function; //Foreign Key
-    private int idFunction = function.getIdFunction();
+    private MovieShowtimes movieShowtimes; //Foreign Key
+    private int idFunction = movieShowtimes.getIdShowtime();
     private Seat seat; //Foreign Key
     private int idSeat = seat.getIdSeat();
     private int price;
 
-    public Ticket(int idTicket, Function function, Seat seat, int price, int idFunction, int idSeat) {
+    public Ticket(int idTicket, MovieShowtimes movieShowtimes, Seat seat, int price, int idFunction, int idSeat) {
         this.idTicket = idTicket;
-        this.function = function;
+        this.movieShowtimes = movieShowtimes;
         this.idFunction = idFunction;
         this.seat = seat;
         this.idSeat = idSeat;
@@ -36,12 +36,12 @@ public class Ticket {
         this.idTicket = idTicket;
     }
 
-    public Function getFunction() {
-        return function;
+    public MovieShowtimes getFunction() {
+        return movieShowtimes;
     }
 
-    public void setFunction(Function function) {
-        this.function = function;
+    public void setFunction(MovieShowtimes movieShowtimes) {
+        this.movieShowtimes = movieShowtimes;
     }
 
     public Seat getSeat() {

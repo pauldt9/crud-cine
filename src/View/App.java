@@ -1,8 +1,8 @@
 package View;
 
 import Controller.AdminController;
+import Controller.EmployeeController;
 import Controller.LoginController;
-import utils.MySQLConnection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,5 +34,6 @@ public class App {
 
         new LoginController(loginPanel, frame, adminView, employeeView);
         new AdminController(loginPanel, frame, adminView);
+        new EmployeeController(frame, employeeView, loginPanel);
     }
 }

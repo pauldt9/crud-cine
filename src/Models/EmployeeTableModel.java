@@ -46,9 +46,11 @@ public class EmployeeTableModel extends AbstractTableModel {
         }
         return null;
     }
+
+    //lo puse en false para evitar que puedan editar en la tabla misma
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
+        return false;
     }
 
     @Override
