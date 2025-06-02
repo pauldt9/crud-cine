@@ -1,9 +1,12 @@
 package View;
 
+import Models.MoviesTableModel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class MoviesViewAdmin extends JPanel {
@@ -15,6 +18,11 @@ public class MoviesViewAdmin extends JPanel {
     private JButton addMov;
     private JButton deleteMov;
     private JButton editMov;
+
+    private JTable moviesTable;
+    private MoviesTableModel moviesTableModel;
+
+    private int idMovie; //Primary Key
 
     public MoviesViewAdmin(){
         setLayout(new BorderLayout());
@@ -112,12 +120,48 @@ public class MoviesViewAdmin extends JPanel {
     }
 
     public void initMovTable(){
+        moviesTableModel = new MoviesTableModel();
+        moviesTable = new JTable(moviesTableModel);
 
+        JScrollPane scroll = new JScrollPane(moviesTable);
+        add(scroll, BorderLayout.CENTER);
     }
 
     public void setListeners(ActionListener listener){
         addMov.addActionListener(listener);
         deleteMov.addActionListener(listener);
         editMov.addActionListener(listener);
+    }
+
+    public JTable getMoviesTable(){
+        return moviesTable;
+    }
+
+    public void setMoviesTable(JTable moviesTable) {
+        this.moviesTable = moviesTable;
+    }
+
+    public MoviesTableModel getMoviesTableModel() {
+        return moviesTableModel;
+    }
+
+    public void setMoviesTableModel(MoviesTableModel moviesTableModel) {
+        this.moviesTableModel = moviesTableModel;
+    }
+
+    public int getIdMovie() {
+        return idMovie;
+    }
+
+    public void setIdMovie(int idMovie) {
+        this.idMovie = idMovie;
+    }
+
+    public void tableListener(KeyListener listener){
+        moviesTable.addKeyListener(listener);
+    }
+
+    public void removeTableSelection(){
+        moviesTable.clearSelection();
     }
 }

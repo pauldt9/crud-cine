@@ -10,9 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class AddEmployeeForm extends JPanel {
-    private String newAction;
-
-    private int idEmployee;
+    private String action;
 
     private JButton confirmEmp;
     private JButton backButton;
@@ -197,9 +195,9 @@ public class AddEmployeeForm extends JPanel {
         backButton.addActionListener(listener);
     }
 
-    public void setNewAction(String newAction){
-        this.newAction = newAction;
-        if (newAction.equals("Registrar")){
+    public void setAction(String action){
+        this.action = action;
+        if (action.equals("Registrar")){
             addEmpTitle.setText("Agregar Empleado");
             confirmEmp.setActionCommand("Confirmar empleado");
         } else {

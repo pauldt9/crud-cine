@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class AdminView extends JPanel {
     private String action;
-    private MoviesViewAdmin moviesPanel;
 
     /*------------Botones------------*/
     //botones de navegacion
@@ -23,9 +22,11 @@ public class AdminView extends JPanel {
     private JButton employeeButton;
     private JButton moviesButton;
 
-    //paneles del menu
+    //Vistas
     private EmployeeManagement employeePanel;
     private AddEmployeeForm addEmployeePanel;
+    private MoviesViewAdmin moviesPanel;
+    private AddMovieForm movieForm;
 
     //paneles
     private JPanel mainPanel;
@@ -121,12 +122,14 @@ public class AdminView extends JPanel {
         employeePanel = new EmployeeManagement();
         moviesPanel = new MoviesViewAdmin();
         addEmployeePanel = new AddEmployeeForm();
+        movieForm = new AddMovieForm();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(salesPanel, "ventas");
         mainPanel.add(employeePanel, "empleados");
         mainPanel.add(moviesPanel, "peliculas");
         mainPanel.add(addEmployeePanel, "agregar/editar empleado");
+        mainPanel.add(movieForm, "agregar/editar pelicula");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -276,6 +279,7 @@ public class AdminView extends JPanel {
         moviesPanel.setListeners(listener);
         employeePanel.setListeners(listener);
         addEmployeePanel.setListeners(listener);
+        movieForm.setListeners(listener);
     }
 
     public JButton createButton(String buttonName, int fontSize, int w, int h){
@@ -404,6 +408,10 @@ public class AdminView extends JPanel {
 
     public EmployeeManagement getEmployeePanel(){
         return employeePanel;
+    }
+
+    public AddMovieForm getMovieForm(){
+        return movieForm;
     }
 
     public void setMainPanel(JPanel mainPanel) {

@@ -2,11 +2,9 @@ package Controller;
 
 import Models.Employee;
 import Models.EmployeeTableModel;
-import View.EmployeeView;
 import View.LoginPanel;
 import View.AdminView;
 import utils.PasswordUtils;
-import View.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +27,7 @@ public class AdminController implements ActionListener {
         this.adminView = adminView;
         this.adminView.setListeners(this);
 
-        empTable = adminView.getEmployeePanel().getTableModelEmp();
+        empTable = adminView.getEmployeePanel().getTableModelEmployees();
 
         adminView.getEmployeePanel().tableListener(new KeyAdapter() {
             @Override
@@ -81,17 +79,17 @@ public class AdminController implements ActionListener {
                 System.out.println("agregar empleado");
                 adminView.getAddEmployeePanel().clearFields();
                 showAdminPanel("agregar/editar empleado");
-                adminView.getAddEmployeePanel().setNewAction("Registrar");
+                adminView.getAddEmployeePanel().setAction("Registrar");
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
-                if (adminView.getEmployeePanel().getEmpTable().getSelectedRow() == -1) {
+                if (adminView.getEmployeePanel().getEmployeesTable().getSelectedRow() == -1) {
                     JOptionPane.showMessageDialog(adminView, "Por favor selecciona una fila");
                     break;
                 }
 
                 showAdminPanel("agregar/editar empleado");
-                adminView.getAddEmployeePanel().setNewAction("Editar");
+                adminView.getAddEmployeePanel().setAction("Editar");
                 fillFieldsEmp();
                 break;
             case "Eliminar empleado":
@@ -101,23 +99,49 @@ public class AdminController implements ActionListener {
                 loadEmployees();
 
                 break;
+            case "Regresar pelicula":
+                System.out.println("se ha regresado a pelicula");
+                showAdminPanel("peliculas");
+                break;
             case "Eliminar pelicula":
                 System.out.println("eliminar pelicula");
                 break;
             case "Editar pelicula":
                 System.out.println("editar pelicula");
+                adminView.getMovieForm().setAction("Editar");
+                showAdminPanel("agregar/editar pelicula");
+
                 break;
             case "Agregar pelicula":
                 System.out.println("agregar pelicula");
+                adminView.getMovieForm().setAction("Agregar");
+                showAdminPanel("agregar/editar pelicula");
+
+
+                break;
+            case "Agregar imagen":
+                System.out.println("se ha agregado una imagen");
+                break;
+            case "Confirmar pelicula":
+                System.out.println("se ha agregado una pelicula");
+                adminView.getMovieForm().setAction("Agregar");
+
+                showAdminPanel("peliculas");
+                break;
+            case "Confirmar cambios de pelicula":
+                System.out.println("se ha editado la pelicula");
+                adminView.getMovieForm().setAction("Editar");
+
+                showAdminPanel("peliculas");
                 break;
             case "Confirmar empleado":
                 System.out.println("se ha agregado un usuario nuevo");
-                adminView.getAddEmployeePanel().setNewAction("Registrar");
+                adminView.getAddEmployeePanel().setAction("Registrar");
                 addEmployee();
                 adminView.getAddEmployeePanel().clearFields();
                 break;
             case "Confirmar cambios de empleado":
-                adminView.getAddEmployeePanel().setNewAction("Editar");
+                adminView.getAddEmployeePanel().setAction("Editar");
                 saveChanges();
                 loadEmployees();
                 showAdminPanel("Empleados");
@@ -131,7 +155,7 @@ public class AdminController implements ActionListener {
     }
 
     private void deleteEmployee() {
-        int selectedRow = adminView.getEmployeePanel().getEmpTable().getSelectedRow();
+        int selectedRow = adminView.getEmployeePanel().getEmployeesTable().getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(adminView, "Debes seleccionar un usuario de la tabla");
             return;
@@ -197,14 +221,12 @@ public class AdminController implements ActionListener {
     }
 
     public void fillFieldsEmp(){
-        Employee employee = empTable.getRowData(adminView.getEmployeePanel().getEmpTable().getSelectedRow());
+        Employee employee = empTable.getRowData(adminView.getEmployeePanel().getEmployeesTable().getSelectedRow());
         adminView.getEmployeePanel().setIdEmployee(employee.getIdEmployee());
         adminView.getAddEmployeePanel().setAddEmpName(employee.getFirstName());
         adminView.getAddEmployeePanel().setAddEmpLastName(employee.getLastName());
         adminView.getAddEmployeePanel().setEmpType(employee.getEmployeeType());
         adminView.getAddEmployeePanel().setEmpUser(employee.getUsername());
-//        adminView.setAddEmpPass(employee.getPassword());
-//        adminView.setAddEmpConfirmPass(employee.getPassword());
     }
 
     // Crea el objeto empleado que se usara en el metodo addEmployee

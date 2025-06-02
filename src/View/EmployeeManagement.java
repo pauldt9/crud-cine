@@ -13,7 +13,7 @@ public class EmployeeManagement extends JPanel {
     private Color bgColButtons = new Color(245, 245, 245);
     private Color fgColor = new Color(0x2C3E50);
 
-    private int idEmployee;
+    private int idEmployee; //Primary Key
 
     private JButton addEmployee;
     private JButton deleteEmployee;
@@ -21,9 +21,8 @@ public class EmployeeManagement extends JPanel {
 
     private JLabel empTitle;
 
-
-    private JTable empTable;
-    private EmployeeTableModel tableModelEmp;
+    private JTable employeesTable;
+    private EmployeeTableModel tableModelEmployees;
 
     public EmployeeManagement(){
         setLayout(new BorderLayout());
@@ -106,10 +105,10 @@ public class EmployeeManagement extends JPanel {
     }
 
     public void initEmpTable(){
-        tableModelEmp = new EmployeeTableModel();
-        empTable = new JTable(tableModelEmp);
+        tableModelEmployees = new EmployeeTableModel();
+        employeesTable = new JTable(tableModelEmployees);
 
-        JScrollPane scroll = new JScrollPane(empTable);
+        JScrollPane scroll = new JScrollPane(employeesTable);
         add(scroll, BorderLayout.CENTER);
     }
 
@@ -137,24 +136,24 @@ public class EmployeeManagement extends JPanel {
         editEmployee.addActionListener(listener);
     }
 
-    public JTable getEmpTable(){
-        return empTable;
+    public JTable getEmployeesTable(){
+        return employeesTable;
     }
 
-    public EmployeeTableModel getTableModelEmp(){
-        return tableModelEmp;
+    public EmployeeTableModel getTableModelEmployees(){
+        return tableModelEmployees;
     }
 
     public void tableListener(KeyListener listener) {
-        empTable.addKeyListener(listener);
+        employeesTable.addKeyListener(listener);
     }
 
     public void removeTableSelection() {
-        empTable.clearSelection();
+        employeesTable.clearSelection();
     }
 
-    public void setEmpTable(JTable empTable) {
-        this.empTable = empTable;
+    public void setEmployeesTable(JTable employeesTable) {
+        this.employeesTable = employeesTable;
     }
 
     public int getIdEmployee(){
