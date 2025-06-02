@@ -5,22 +5,22 @@ import utils.MySQLConnection;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class MovieShowtimes {
+public class MovieShowtime {
     private int idShowtime; //Primary Key
     private Movie movie; //Foreign Key
-    private int idMovie = movie.getIdMovie();
+    private int idMovie;
     private Room room; //Foreign Key
-    private int idRoom = room.getIdRoom();
+    private int idRoom;
     private String showTime;
 
-    public MovieShowtimes(int id, Movie movie, Room room, String showTime) {
+    public MovieShowtime(int id, Movie movie, Room room, String showTime) {
         this.idShowtime = id;
         this.movie = movie;
         this.room = room;
         this.showTime = showTime;
     }
 
-    public MovieShowtimes(int idShowtime, int idMovie, int idRoom, String showTime) {
+    public MovieShowtime(int idShowtime, int idMovie, int idRoom, String showTime) {
         this.idShowtime = idShowtime;
         this.idMovie = idMovie;
         this.idRoom = idRoom;
@@ -59,8 +59,8 @@ public class MovieShowtimes {
         this.showTime = showTime;
     }
 
-    public static ArrayList<MovieShowtimes> getFunctions() {
-        ArrayList<MovieShowtimes> movieShowtimes = new ArrayList<>();
+    public static ArrayList<MovieShowtime> getFunctions() {
+        ArrayList<MovieShowtime> movieShowtimes = new ArrayList<>();
         String query = "SELECT * FROM functions";
 
         try (
@@ -70,7 +70,7 @@ public class MovieShowtimes {
         ) {
 
             while (rs.next()) {
-                movieShowtimes.add(new MovieShowtimes(
+                movieShowtimes.add(new MovieShowtime(
                         rs.getInt("idFunction"),
                         rs.getInt("idMovie"),
                         rs.getInt("idRoom"),
@@ -85,8 +85,8 @@ public class MovieShowtimes {
         return movieShowtimes;
     }
 
-    public static MovieShowtimes getFunction(int id) {
-        MovieShowtimes movieShowtimes = null;
+    public static MovieShowtime getFunction(int id) {
+        MovieShowtime movieShowtime = null;
         String query = "SELECT * FROM functions WHERE idFunction = " + id;
 
         try (
@@ -96,7 +96,7 @@ public class MovieShowtimes {
         ) {
 
             if (rs.next()) {
-                movieShowtimes = new MovieShowtimes(
+                movieShowtime = new MovieShowtime(
                         rs.getInt("idFunction"),
                         rs.getInt("idMovie"),
                         rs.getInt("idRoom"),
@@ -108,10 +108,10 @@ public class MovieShowtimes {
             ex.printStackTrace();
         }
 
-        return movieShowtimes;
+        return movieShowtime;
     }
 
-    public static int addFunction(MovieShowtimes movieShowtimes) {
+    public static int addFunction(MovieShowtime movieShowtime) {
 
         int id = 0;
         String query = "INSERT INTO functions " + "(showTime))"
@@ -121,7 +121,7 @@ public class MovieShowtimes {
         try (Connection connection = MySQLConnection.connect();
              PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
-            pst.setString(1, movieShowtimes.getShowTime());
+            pst.setString(1, movieShowtime.getShowTime());
 
             created = pst.executeUpdate();
 
@@ -136,7 +136,7 @@ public class MovieShowtimes {
         return id;
     }
 
-    public static boolean updateFunction(MovieShowtimes movieShowtimes) {
+    public static boolean updateFunction(MovieShowtime movieShowtime) {
         String query = "UPDATE functions SET showTime = ? WHERE idFunction = ?";
         int updated = 0;
 
@@ -144,8 +144,8 @@ public class MovieShowtimes {
                 Connection connection = MySQLConnection.connect();
                 PreparedStatement pst = connection.prepareStatement(query)
         ) {
-            pst.setString(1, movieShowtimes.getShowTime());
-            pst.setInt(2, movieShowtimes.getIdShowtime());
+            pst.setString(1, movieShowtime.getShowTime());
+            pst.setInt(2, movieShowtime.getIdShowtime());
 
             updated = pst.executeUpdate();
             return updated > 0;
