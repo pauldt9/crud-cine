@@ -28,7 +28,7 @@ public class LoginController implements ActionListener {
 
         if (command.equals("Ingresar")) {
             if (validateLogin()) {
-                if (isAdmin()) {
+                if (!isAdmin()) {
                     openAdminView();
 
                 } else {
