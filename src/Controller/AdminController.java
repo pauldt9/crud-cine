@@ -29,13 +29,13 @@ public class AdminController implements ActionListener {
         this.adminView = adminView;
         this.adminView.setListeners(this);
 
-        empTable = adminView.getTableModelEmp();
+        empTable = adminView.getEmployeePanel().getTableModelEmp();
 
-        adminView.tableListener(new KeyAdapter() {
+        adminView.getEmployeePanel().tableListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    adminView.removeTableSelection();
+                    adminView.getEmployeePanel().removeTableSelection();
                 }
             }
         });
@@ -63,7 +63,7 @@ public class AdminController implements ActionListener {
                 break;
             case "Empleados":
                 System.out.println("empleados");
-                showAdminPanel("Empleados");
+                showAdminPanel("empleados");
                 break;
             case "Ventas":
                 System.out.println("ventas");
@@ -79,19 +79,19 @@ public class AdminController implements ActionListener {
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
-                adminView.clearFields();
+                adminView.getAddEmployeePanel().clearFields();
                 showAdminPanel("agregar/editar empleado");
-                adminView.setNewAction("Registrar");
+                adminView.getAddEmployeePanel().setNewAction("Registrar");
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
-                if (adminView.getEmpTable().getSelectedRow() == -1) {
+                if (adminView.getEmployeePanel().getEmpTable().getSelectedRow() == -1) {
                     JOptionPane.showMessageDialog(adminView, "Por favor selecciona una fila");
                     break;
                 }
 
                 showAdminPanel("agregar/editar empleado");
-                adminView.setNewAction("Editar");
+                adminView.getAddEmployeePanel().setNewAction("Editar");
                 fillFieldsEmp();
                 break;
             case "Eliminar empleado":
@@ -112,26 +112,26 @@ public class AdminController implements ActionListener {
                 break;
             case "Confirmar empleado":
                 System.out.println("se ha agregado un usuario nuevo");
-                adminView.setNewAction("Registrar");
+                adminView.getAddEmployeePanel().setNewAction("Registrar");
                 addEmployee();
-                adminView.clearFields();
+                adminView.getAddEmployeePanel().clearFields();
                 break;
             case "Confirmar cambios de empleado":
-                adminView.setNewAction("Editar");
+                adminView.getAddEmployeePanel().setNewAction("Editar");
                 saveChanges();
                 loadEmployees();
                 showAdminPanel("Empleados");
                 break;
             case "Regresar empleado":
                 System.out.println("El usuario se ha regresado al apartado empleado");
-                showAdminPanel("Empleados");
+                showAdminPanel("empleados");
                 break;
 
         }
     }
 
     private void deleteEmployee() {
-        int selectedRow = adminView.getEmpTable().getSelectedRow();
+        int selectedRow = adminView.getEmployeePanel().getEmpTable().getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(adminView, "Debes seleccionar un usuario de la tabla");
             return;
@@ -163,7 +163,7 @@ public class AdminController implements ActionListener {
         try {
             Employee employee = createEmployeeForEdit();
 
-            String plainPassword = adminView.getEmpPass();
+            String plainPassword = adminView.getAddEmployeePanel().getEmpPass();
 
             int rowIndex = empTable.getRowById(employee.getIdEmployee());
             if (rowIndex == -1) {
@@ -181,7 +181,7 @@ public class AdminController implements ActionListener {
 
                 if (Employee.updateEmployee(employee)) {
                     empTable.setRowData(rowIndex, employee);
-                    adminView.clearFields();
+                    adminView.getAddEmployeePanel().clearFields();
                     System.out.println("se han efectuado los cambios");
                     JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
                 } else {
@@ -197,43 +197,43 @@ public class AdminController implements ActionListener {
     }
 
     public void fillFieldsEmp(){
-        Employee employee = empTable.getRowData(adminView.getEmpTable().getSelectedRow());
-        adminView.setIdEmployee(employee.getIdEmployee());
-        adminView.setAddEmpName(employee.getFirstName());
-        adminView.setAddEmpLastName(employee.getLastName());
-        adminView.setEmpType(employee.getEmployeeType());
-        adminView.setEmpUser(employee.getUsername());
+        Employee employee = empTable.getRowData(adminView.getEmployeePanel().getEmpTable().getSelectedRow());
+        adminView.getEmployeePanel().setIdEmployee(employee.getIdEmployee());
+        adminView.getAddEmployeePanel().setAddEmpName(employee.getFirstName());
+        adminView.getAddEmployeePanel().setAddEmpLastName(employee.getLastName());
+        adminView.getAddEmployeePanel().setEmpType(employee.getEmployeeType());
+        adminView.getAddEmployeePanel().setEmpUser(employee.getUsername());
 //        adminView.setAddEmpPass(employee.getPassword());
 //        adminView.setAddEmpConfirmPass(employee.getPassword());
     }
 
     // Crea el objeto empleado que se usara en el metodo addEmployee
     public Employee createEmployee() {
-        String name = adminView.getEmpName();
-        String lastName = adminView.getEmpLastName();
-        String employeeType = (String)adminView.getEmpType().getSelectedItem();
-        String empUsername = adminView.getEmpUser();
+        String name = adminView.getAddEmployeePanel().getEmpName();
+        String lastName = adminView.getAddEmployeePanel().getEmpLastName();
+        String employeeType = (String)adminView.getAddEmployeePanel().getEmpType().getSelectedItem();
+        String empUsername = adminView.getAddEmployeePanel().getEmpUser();
 
         if (!Employee.isUsernameAvailable(empUsername)) {
             JOptionPane.showMessageDialog(frame, "El nombre de usuario ya existe. Intenta con otro.");
-            adminView.setEmpUser("");
+            adminView.getAddEmployeePanel().setEmpUser("");
             return null;
         }
 
-        String empPassword = adminView.getEmpPass();
+        String empPassword = adminView.getAddEmployeePanel().getEmpPass();
 
-        return new Employee(adminView.getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
+        return new Employee(adminView.getEmployeePanel().getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
     }
 
     // Crea un empleado sin validar el nombre de usuario (para edición)
     public Employee createEmployeeForEdit() {
-        String name = adminView.getEmpName();
-        String lastName = adminView.getEmpLastName();
-        String employeeType = (String)adminView.getEmpType().getSelectedItem();
-        String empUsername = adminView.getEmpUser();
-        String empPassword = adminView.getEmpPass();
+        String name = adminView.getAddEmployeePanel().getEmpName();
+        String lastName = adminView.getAddEmployeePanel().getEmpLastName();
+        String employeeType = (String)adminView.getAddEmployeePanel().getEmpType().getSelectedItem();
+        String empUsername = adminView.getAddEmployeePanel().getEmpUser();
+        String empPassword = adminView.getAddEmployeePanel().getEmpPass();
 
-        return new Employee(adminView.getIdEmployee(), name, lastName, employeeType, empUsername, empPassword);
+        return new Employee(adminView.getEmployeePanel().getIdEmployee(), name, lastName, employeeType, empUsername, empPassword);
     }
 
 
@@ -272,16 +272,16 @@ public class AdminController implements ActionListener {
 
     //valida que los campos esten llenos
     public boolean validateForm(){
-        if (adminView.getEmpName().isBlank() ||
-            adminView.getEmpLastName().isBlank()||
-            adminView.getEmpType().getSelectedIndex() == 0 ||
-            adminView.getEmpUser().isBlank() ||
-            adminView.getEmpPass().isBlank() ||
-            adminView.getEmpPassConfirm().isBlank()) {
+        if (adminView.getAddEmployeePanel().getEmpName().isBlank() ||
+            adminView.getAddEmployeePanel().getEmpLastName().isBlank()||
+            adminView.getAddEmployeePanel().getEmpType().getSelectedIndex() == 0 ||
+            adminView.getAddEmployeePanel().getEmpUser().isBlank() ||
+            adminView.getAddEmployeePanel().getEmpPass().isBlank() ||
+            adminView.getAddEmployeePanel().getEmpPassConfirm().isBlank()) {
             JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
                     "Campos vacíos", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (!adminView.validatePassField()) {
+        } else if (!adminView.getAddEmployeePanel().validatePassField()) {
             JOptionPane.showMessageDialog(frame, "Los campos de contraseña no coinciden.");
             return false;
         }

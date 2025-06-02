@@ -1,21 +1,16 @@
 package View;
 
-import Models.EmployeeTableModel;
 import lib.TextPrompt;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class AdminView extends JPanel {
     private String action;
-    private String newAction;
-    private int idEmployee;
+    private MoviesViewAdmin moviesPanel;
 
     /*------------Botones------------*/
     //botones de navegacion
@@ -28,22 +23,9 @@ public class AdminView extends JPanel {
     private JButton employeeButton;
     private JButton moviesButton;
 
-    //botones de empleados
-    private JButton addEmployee;
-    private JButton deleteEmployee;
-    private JButton editEmployee;
-    private JButton confirmEmp;
-    private JButton backEmpButton;
-
-    //botones de peliculas
-    private JButton addMov;
-    private JButton deleteMov;
-    private JButton editMov;
-
     //paneles del menu
-    private JPanel employeePanel;
-    private JPanel moviesPanel;
-    private JPanel addEmpPanel;
+    private EmployeeManagement employeePanel;
+    private AddEmployeeForm addEmployeePanel;
 
     //paneles
     private JPanel mainPanel;
@@ -62,23 +44,9 @@ public class AdminView extends JPanel {
     private JLabel managementTitle;
     private JLabel buttonTitleMov;
     private JLabel summaryLbl;
-    private JLabel moviesLbl;
     private JLabel numEmployees; //Label donde se mostrara la cantidad de empleados
     private JLabel numMovies; //numero de peliculas disponibles
     private JLabel totalSales; //ventas totales
-
-    //Empleados
-    private JLabel empTitle;
-    private JLabel addEmpTitle;
-
-    //Peliculas
-
-
-    /*----------Tablas----------*/
-    //Empleados
-    private JTable empTable;
-    private EmployeeTableModel tableModelEmp;
-
 
     /*----------Colores de botones y texto----------*/
     //no muevan aqui paro
@@ -87,15 +55,6 @@ public class AdminView extends JPanel {
 
     //para los botones
     private Color bgColButtons = new Color(245, 245, 245);
-
-    /*----------Campos----------*/
-    //---Empleados
-    private JTextField addEmpName;
-    private JTextField addEmpLastName;
-    private JTextField addEmpUser;
-    private JPasswordField addEmpPass;
-    private JPasswordField addEmpConfirmPass;
-    private JComboBox<String> empType;
 
     //---Peliculas
 
@@ -159,15 +118,15 @@ public class AdminView extends JPanel {
 
         menuPanel = new JPanel();
         salesPanel = new SalesPanel();
-        employeePanel = new JPanel();
-        moviesPanel = new JPanel();
-        addEmpPanel = new JPanel();
+        employeePanel = new EmployeeManagement();
+        moviesPanel = new MoviesViewAdmin();
+        addEmployeePanel = new AddEmployeeForm();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(salesPanel, "ventas");
-        mainPanel.add(employeePanel, "Empleados");
+        mainPanel.add(employeePanel, "empleados");
         mainPanel.add(moviesPanel, "peliculas");
-        mainPanel.add(addEmpPanel, "agregar/editar empleado");
+        mainPanel.add(addEmployeePanel, "agregar/editar empleado");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -272,86 +231,6 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(buttonTitleMov, c);
 
-        //----------Empleados
-        employeePanel.setOpaque(false);
-        employeePanel.setLayout(new BorderLayout());
-
-        empTitle = createJLabel("Empleados", 40, true);
-        empTitle.setForeground(fgColor);
-        empTitle.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        employeePanel.add(empTitle, BorderLayout.NORTH);
-
-        JPanel empButtonPanel = createButtonsPanel();
-        employeePanel.add(empButtonPanel, BorderLayout.SOUTH);
-
-        addEmployee = createButton("Agregar", 15, 120, 40);
-        addEmployee.setActionCommand("Agregar empleado");
-        addEmployee.setBackground(bgColButtons);
-        addEmployee.setForeground(fgColor);
-        empButtonPanel.add(addEmployee);
-
-        editEmployee = createButton("Editar", 15, 120, 40);
-        editEmployee.setActionCommand("Editar empleado");
-        editEmployee.setBackground(bgColButtons);
-        editEmployee.setForeground(fgColor);
-        empButtonPanel.add(editEmployee);
-
-        deleteEmployee = createButton("Eliminar", 15, 120, 40);
-        deleteEmployee.setActionCommand("Eliminar empleado");
-        deleteEmployee.setBackground(bgColButtons);
-        deleteEmployee.setForeground(fgColor);
-        empButtonPanel.add(deleteEmployee);
-
-        JPanel emptyWest = createEmptyPanel();
-        employeePanel.add(emptyWest, BorderLayout.WEST);
-
-        JPanel emptyEast = createEmptyPanel();
-        employeePanel.add(emptyEast, BorderLayout.EAST);
-
-        initEmpTable();
-        employeeForm();
-
-        //-------------Peliculas
-        moviesPanel.setLayout(new BorderLayout());
-        moviesPanel.setOpaque(false);
-
-        moviesLbl = createJLabel("Peliculas", 40, true);
-        moviesLbl.setForeground(fgColor);
-        moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        moviesPanel.add(moviesLbl, BorderLayout.NORTH);
-
-        JPanel emptyPanelMov = createEmptyPanel();
-        moviesPanel.add(emptyPanelMov, BorderLayout.EAST);
-
-        JPanel emptyPanelMov2 = createEmptyPanel();
-        moviesPanel.add(emptyPanelMov2, BorderLayout.WEST);
-
-        initMovTable();
-
-        JPanel movButtonPanel = createButtonsPanel();
-        moviesPanel.add(movButtonPanel, BorderLayout.SOUTH);
-
-        addMov = createButton("Agregar", 15, 120, 40);
-        addMov.setActionCommand("Agregar pelicula");
-        addMov.setBackground(bgColButtons);
-        addMov.setForeground(fgColor);
-        movButtonPanel.add(addMov);
-
-        editMov = createButton("Editar", 15, 120, 40);
-        editMov.setActionCommand("Editar pelicula");
-        editMov.setBackground(bgColButtons);
-        editMov.setForeground(fgColor);
-        movButtonPanel.add(editMov);
-
-        deleteMov = createButton("Eliminar", 15 , 120, 40);
-        deleteMov.setActionCommand("Eliminar pelicula");
-        deleteMov.setBackground(bgColButtons);
-        deleteMov.setForeground(fgColor);
-        movButtonPanel.add(deleteMov);
-
-        //Panel ventas
-
-
         //Iconos en botones
         try {
             Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
@@ -370,42 +249,9 @@ public class AdminView extends JPanel {
             moviesIcon = moviesIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
             moviesButton.setIcon(new ImageIcon(moviesIcon));
 
-            Image addIcon = ImageIO.read(getClass().getResource("/img/add.png"));
-            addIcon = addIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            addEmployee.setIcon(new ImageIcon(addIcon));
-            addMov.setIcon(new ImageIcon(addIcon));
-
-            Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
-            editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            editEmployee.setIcon(new ImageIcon(editIcon));
-            editMov.setIcon(new ImageIcon(editIcon));
-
-            Image deleteIcon = ImageIO.read(getClass().getResource("/img/remove.png"));
-            deleteIcon = deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            deleteEmployee.setIcon(new ImageIcon(deleteIcon));
-            deleteMov.setIcon(new ImageIcon(deleteIcon));
-
-            Image backIcon = ImageIO.read(getClass().getResource("/img/back.png"));
-            backIcon = backIcon.getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-            backEmpButton.setIcon(new ImageIcon(backIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
-    }
-
-    public JPanel createButtonsPanel(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.setOpaque(false);
-        panel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
-        return panel;
     }
 
     public JLabel createJLabel(String title, int fontSize, boolean bold){
@@ -419,38 +265,6 @@ public class AdminView extends JPanel {
         return label;
     }
 
-    public JTextField createTextField(String placeHolder, int w, int h){
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-        JTextField textField = new JTextField();
-
-        textField.setFont(font);
-        textField.setForeground(new Color(30, 30 , 30));
-        textField.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        textField.setMaximumSize(new Dimension(w, h));
-
-        TextPrompt ph = new TextPrompt(placeHolder, textField);
-        ph.setForeground(new Color(0x999999));
-        ph.setFont(font);
-
-        return textField;
-    }
-
-    public JPasswordField createPasswordField(String placeHolder, int w, int h){
-        JPasswordField pf = new JPasswordField();
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-
-        pf.setForeground(new Color(30, 30, 30));
-        pf.setMaximumSize(new Dimension(w, h));
-        pf.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        pf.setFont(font);
-
-        TextPrompt ph = new TextPrompt(placeHolder, pf);
-        ph.setForeground(new Color(100, 100, 100));
-        ph.setFont(font);
-
-        return pf;
-    }
-
     public void setListeners(ActionListener listener){
         exitButton.addActionListener(listener);
         menuButton.addActionListener(listener);
@@ -458,14 +272,10 @@ public class AdminView extends JPanel {
         darkMode.addActionListener(listener);
         employeeButton.addActionListener(listener);
         moviesButton.addActionListener(listener);
-        addEmployee.addActionListener(listener);
-        deleteEmployee.addActionListener(listener);
-        editEmployee.addActionListener(listener);
-        addMov.addActionListener(listener);
-        editMov.addActionListener(listener);
-        deleteMov.addActionListener(listener);
-        confirmEmp.addActionListener(listener);
-        backEmpButton.addActionListener(listener);
+
+        moviesPanel.setListeners(listener);
+        employeePanel.setListeners(listener);
+        addEmployeePanel.setListeners(listener);
     }
 
     public JButton createButton(String buttonName, int fontSize, int w, int h){
@@ -478,111 +288,6 @@ public class AdminView extends JPanel {
         button.setMinimumSize(new Dimension(w, h));
         button.setMaximumSize(new Dimension(w, h));
         return button;
-    }
-
-    public void employeeForm(){
-        addEmpPanel.setLayout(new BorderLayout());
-        addEmpPanel.setOpaque(false);
-
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 170));
-        topPanel.setOpaque(false);
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-        addEmpPanel.add(topPanel, BorderLayout.NORTH);
-
-        backEmpButton = createButton(null, 1, 45, 45);
-        backEmpButton.setActionCommand("Regresar empleado");
-        backEmpButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backEmpButton.setBackground(bgColButtons);
-        topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
-        topPanel.add(backEmpButton);
-
-        //titulo
-        addEmpTitle = createJLabel("Agregar Empleado", 40, true);
-        addEmpTitle.setAlignmentX(Box.LEFT_ALIGNMENT);
-        addEmpTitle.setForeground(fgColor);
-        topPanel.add(Box.createHorizontalStrut(15));
-        topPanel.add(addEmpTitle);
-
-        JPanel emptyEast = new JPanel();
-        emptyEast.setOpaque(false);
-        emptyEast.setPreferredSize(new Dimension(300, Integer.MAX_VALUE));
-        addEmpPanel.add(emptyEast, BorderLayout.EAST);
-
-        JPanel emptyWest = createEmptyPanel();
-        addEmpPanel.add(emptyWest, BorderLayout.WEST);
-
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(4, 2, 30, 30));
-        formPanel.setOpaque(false);
-        addEmpPanel.add(formPanel, BorderLayout.CENTER);
-
-        addEmpName = createTextField("Ingresar nombre", 350, 50);
-        addEmpName.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpName.setBorder(BorderFactory.createCompoundBorder(addEmpName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        addEmpName.setBackground(bgColButtons);
-        addEmpName.setForeground(fgColor);
-        formPanel.add(addEmpName);
-
-        addEmpLastName = createTextField("Ingresar Apellido", 350, 50);
-        addEmpLastName.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpLastName.setBackground(bgColButtons);
-        addEmpLastName.setForeground(fgColor);
-        addEmpLastName.setBorder(BorderFactory.createCompoundBorder(addEmpLastName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        formPanel.add(addEmpLastName);
-
-        String[] types = {"-----Tipo de Empleado-----", "Taquillero", "Admin"};
-        empType = new JComboBox<String>(types);
-        empType.setAlignmentX(Component.LEFT_ALIGNMENT);
-        empType.setBackground(bgColButtons);
-        empType.setForeground(fgColor);
-        empType.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
-        empType.setMaximumSize(new Dimension(350, 50));
-
-        formPanel.add(empType);
-
-        addEmpUser = createTextField("Ingresar nombre de usuario", 350, 50);
-        addEmpUser.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpUser.setBackground(bgColButtons);
-        addEmpUser.setForeground(fgColor);
-        addEmpUser.setBorder(BorderFactory.createCompoundBorder(addEmpUser.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        formPanel.add(addEmpUser);
-
-        addEmpPass = createPasswordField("Ingresar Contraseña", 350, 50);
-        addEmpPass.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpPass.setBackground(bgColButtons);
-        addEmpPass.setBorder(BorderFactory.createCompoundBorder(addEmpPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        formPanel.add(addEmpPass);
-
-        addEmpConfirmPass = createPasswordField("Confirmar Contraseña", 350, 50);
-        addEmpConfirmPass.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpConfirmPass.setBackground(bgColButtons);
-        addEmpConfirmPass.setBorder(BorderFactory.createCompoundBorder(addEmpConfirmPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        formPanel.add(addEmpConfirmPass);
-
-        confirmEmp = createButton("Confirmar", 15, 350, 50);
-        confirmEmp.setActionCommand("Confirmar empleado");
-        confirmEmp.setForeground(fgColor);
-        confirmEmp.setBackground(bgColButtons);
-        confirmEmp.setAlignmentX(Component.LEFT_ALIGNMENT);
-        formPanel.add(confirmEmp);
-
-        JPanel emptyBottom = new JPanel();
-        emptyBottom.setOpaque(false);
-        emptyBottom.setPreferredSize(new Dimension(Integer.MAX_VALUE, 250));
-        addEmpPanel.add(emptyBottom, BorderLayout.SOUTH);
-    }
-
-    public void initEmpTable(){
-        tableModelEmp = new EmployeeTableModel();
-        empTable = new JTable(tableModelEmp);
-
-        JScrollPane scroll = new JScrollPane(empTable);
-        employeePanel.add(scroll, BorderLayout.CENTER);
-    }
-
-    public void initMovTable(){
-
     }
 
     //Cambiar modos (dark mode)
@@ -609,42 +314,7 @@ public class AdminView extends JPanel {
             buttonTitleMov.setForeground(fgColor);
             buttonTitleEmp.setForeground(fgColor);
 
-            //Empleados
-            empTitle.setForeground(fgColor);
-
-            editEmployee.setForeground(fgColor);
-            editEmployee.setBackground(bgColor);
-            deleteEmployee.setForeground(fgColor);
-            deleteEmployee.setBackground(bgColor);
-            addEmployee.setForeground(fgColor);
-            addEmployee.setBackground(bgColor);
-            confirmEmp.setBackground(bgColButtons);
-            confirmEmp.setForeground(fgColor);
-            backEmpButton.setBackground(bgColButtons);
-
-            addEmpName.setBackground(bgColButtons);
-            addEmpLastName.setBackground(bgColButtons);
-            empType.setBackground(bgColButtons);
-            addEmpUser.setBackground(bgColButtons);
-            addEmpPass.setBackground(bgColButtons);
-            addEmpConfirmPass.setBackground(bgColButtons);
-
-            addEmpTitle.setForeground(fgColor);
-            addEmpName.setForeground(fgColor);
-            addEmpLastName.setForeground(fgColor);
-            empType.setForeground(fgColor);
-            addEmpUser.setForeground(fgColor);
-            addEmpPass.setForeground(fgColor);
-            addEmpConfirmPass.setForeground(fgColor);
-
             //peliculas
-            moviesLbl.setForeground(fgColor);
-            addMov.setBackground(bgColor);
-            addMov.setForeground(fgColor);
-            deleteMov.setForeground(fgColor);
-            deleteMov.setBackground(bgColor);
-            editMov.setBackground(bgColor);
-            editMov.setForeground(fgColor);
 
             salesPanel.setBackground(Color.WHITE);
             numEmployees.setForeground(fgColor);
@@ -669,8 +339,6 @@ public class AdminView extends JPanel {
 
                 Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
                 editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                editEmployee.setIcon(new ImageIcon(editIcon));
-                editMov.setIcon(new ImageIcon(editIcon));
             } catch (IOException e){
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }
@@ -700,44 +368,7 @@ public class AdminView extends JPanel {
             buttonTitleMov.setForeground(fgColor);
             buttonTitleEmp.setForeground(fgColor);
 
-            //Empleados
-            empTitle.setForeground(fgColor);
-
-            editEmployee.setForeground(fgColor);
-            editEmployee.setBackground(bgColButtons);
-            deleteEmployee.setForeground(fgColor);
-            deleteEmployee.setBackground(bgColButtons);
-            addEmployee.setForeground(fgColor);
-            addEmployee.setBackground(bgColButtons);
-            confirmEmp.setBackground(bgColButtons);
-            confirmEmp.setForeground(fgColor);
-            backEmpButton.setBackground(bgColButtons);
-
-            addEmpName.setBackground(bgColButtons);
-            addEmpName.setForeground(fgColor);
-            addEmpLastName.setBackground(bgColButtons);
-            addEmpLastName.setForeground(fgColor);
-            empType.setBackground(bgColButtons);
-            empType.setForeground(fgColor);
-            addEmpUser.setBackground(bgColButtons);
-            addEmpUser.setForeground(fgColor);
-            addEmpPass.setForeground(fgColor);
-            addEmpPass.setBackground(bgColButtons);
-            addEmpConfirmPass.setForeground(fgColor);
-            addEmpConfirmPass.setBackground(bgColButtons);
-
-            addEmpPanel.setBackground(bgColButtons);
-            addEmpTitle.setForeground(fgColor);
-
-
             //peliculas
-            moviesLbl.setForeground(fgColor);
-            addMov.setBackground(bgColButtons);
-            addMov.setForeground(fgColor);
-            deleteMov.setForeground(fgColor);
-            deleteMov.setBackground(bgColButtons);
-            editMov.setBackground(bgColButtons);
-            editMov.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0x3A4E84));
             menuButton.setForeground(fgColor);
@@ -757,117 +388,22 @@ public class AdminView extends JPanel {
 
                 Image editIcon = ImageIO.read(getClass().getResource("/img/editWhite.png"));
                 editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                editEmployee.setIcon(new ImageIcon(editIcon));
-                editMov.setIcon(new ImageIcon(editIcon));
             } catch (IOException e){
                 System.out.println("error al cargar imagen: " + e.getMessage());
             }
         }
     }
 
-    public void setNewAction(String newAction){
-        this.newAction = newAction;
-        if (newAction.equals("Registrar")){
-            addEmpTitle.setText("Agregar Empleado");
-            confirmEmp.setActionCommand("Confirmar empleado");
-        } else {
-            addEmpTitle.setText("Actualizar Empleado");
-            confirmEmp.setActionCommand("Confirmar cambios de empleado");
-        }
-    }
-
-    public void clearFields(){
-        addEmpName.setText("");
-        addEmpLastName.setText("");
-        empType.setSelectedIndex(0);
-        addEmpUser.setText("");
-        addEmpPass.setText("");
-        addEmpConfirmPass.setText("");
-    }
-
-    public void setAddEmpName(String name){
-        addEmpName.setText(name);
-    }
-
-    public void setAddEmpLastName(String lastName){
-        addEmpLastName.setText(lastName);
-    }
-
-    public void setEmpType(String type){
-        empType.setSelectedItem(type);
-    }
-
-    public void setEmpUser(String user){
-        addEmpUser.setText(user);
-    }
-
-    public void setAddEmpPass(String pass){
-        addEmpPass.setText(pass);
-    }
-
-    public void setAddEmpConfirmPass(String pass){
-        addEmpConfirmPass.setText(pass);
-    }
-
-    public int getIdEmployee(){
-        return this.idEmployee;
-    }
-
-    public void setIdEmployee(int id){
-        this.idEmployee = id;
-    }
-
-    public String getEmpName(){
-        return addEmpName.getText();
-    }
-
-    public String getEmpLastName(){
-        return addEmpLastName.getText();
-    }
-
-    public JComboBox<String> getEmpType(){
-        return empType;
-    }
-
-    public String getEmpUser(){
-        return addEmpUser.getText();
-    }
-
-    public String getEmpPass(){
-        return new String(addEmpPass.getPassword());
-    }
-
-    public String getEmpPassConfirm(){
-        return new String(addEmpConfirmPass.getPassword());
-    }
-
-    //valida el campo contraseña y confirmar contraseña
-    public boolean validatePassField(){
-        return getEmpPass().equals(getEmpPassConfirm());
-    }
-
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
-    public JTable getEmpTable(){
-        return empTable;
+    public AddEmployeeForm getAddEmployeePanel(){
+        return addEmployeePanel;
     }
 
-    public EmployeeTableModel getTableModelEmp(){
-        return tableModelEmp;
-    }
-
-    public void tableListener(KeyListener listener) {
-        empTable.addKeyListener(listener);
-    }
-
-    public void removeTableSelection() {
-        empTable.clearSelection();
-    }
-
-    public void setEmpTable(JTable empTable) {
-        this.empTable = empTable;
+    public EmployeeManagement getEmployeePanel(){
+        return employeePanel;
     }
 
     public void setMainPanel(JPanel mainPanel) {
