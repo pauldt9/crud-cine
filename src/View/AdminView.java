@@ -52,7 +52,7 @@ public class AdminView extends JPanel {
     private JPanel menuPanel;
     private JPanel menuButtonsPanel;
 
-    private JPanel salesPanel;
+    private SalesPanel salesPanel;
 
     /*------------Labels------------*/
     //Menu
@@ -63,7 +63,6 @@ public class AdminView extends JPanel {
     private JLabel buttonTitleMov;
     private JLabel summaryLbl;
     private JLabel moviesLbl;
-    private JLabel salesLbl;
     private JLabel numEmployees; //Label donde se mostrara la cantidad de empleados
     private JLabel numMovies; //numero de peliculas disponibles
     private JLabel totalSales; //ventas totales
@@ -79,7 +78,6 @@ public class AdminView extends JPanel {
     //Empleados
     private JTable empTable;
     private EmployeeTableModel tableModelEmp;
-
 
 
     /*----------Colores de botones y texto----------*/
@@ -104,9 +102,7 @@ public class AdminView extends JPanel {
 
     public AdminView() {
         setLayout(new BorderLayout());
-
         //aqui wa iniciar las tablas w luego le mueves, shi?, es que me perdi en todo el codigo w es que esta bien grande jajaja we ya bajale a las lineas we no ma-
-        initEmpTable();
 
         /*-----------Panel izquierdo-----------*/
         leftPanel = new JPanel();
@@ -162,7 +158,7 @@ public class AdminView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
 
         menuPanel = new JPanel();
-        salesPanel = new JPanel();
+        salesPanel = new SalesPanel();
         employeePanel = new JPanel();
         moviesPanel = new JPanel();
         addEmpPanel = new JPanel();
@@ -312,6 +308,7 @@ public class AdminView extends JPanel {
         JPanel emptyEast = createEmptyPanel();
         employeePanel.add(emptyEast, BorderLayout.EAST);
 
+        initEmpTable();
         employeeForm();
 
         //-------------Peliculas
@@ -353,13 +350,7 @@ public class AdminView extends JPanel {
         movButtonPanel.add(deleteMov);
 
         //Panel ventas
-        salesPanel.setLayout(new BorderLayout());
 
-        salesLbl = createJLabel("Ventas", 40, true);
-        salesLbl.setForeground(fgColor);
-        salesLbl.setHorizontalAlignment(SwingConstants.LEFT);
-        salesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        salesPanel.add(salesLbl, BorderLayout.NORTH);
 
         //Iconos en botones
         try {
@@ -585,6 +576,9 @@ public class AdminView extends JPanel {
     public void initEmpTable(){
         tableModelEmp = new EmployeeTableModel();
         empTable = new JTable(tableModelEmp);
+
+        JScrollPane scroll = new JScrollPane(empTable);
+        employeePanel.add(scroll, BorderLayout.CENTER);
     }
 
     public void initMovTable(){
@@ -656,8 +650,6 @@ public class AdminView extends JPanel {
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
             totalSales.setForeground(fgColor);
-
-            salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0xEDF2FA));
             menuButton.setForeground(fgColor);
@@ -746,8 +738,6 @@ public class AdminView extends JPanel {
             deleteMov.setBackground(bgColButtons);
             editMov.setBackground(bgColButtons);
             editMov.setForeground(fgColor);
-
-            salesLbl.setForeground(fgColor);
 
             menuButton.setBackground(new Color(0x3A4E84));
             menuButton.setForeground(fgColor);
