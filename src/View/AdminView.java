@@ -506,4 +506,9 @@ public class AdminView extends JPanel {
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
     }
+
+    public MoviesViewAdmin getMoviesViewAdminPanel(){
+        return moviesPanel;
+    }
+
 }

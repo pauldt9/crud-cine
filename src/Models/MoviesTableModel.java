@@ -5,7 +5,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
 public class MoviesTableModel extends AbstractTableModel {
-    private ArrayList<MovieShowtime> data = new ArrayList<MovieShowtime>();
+    private ArrayList<Movie> data = new ArrayList<Movie>();
     private String column[] = {"Titulo", "Duracion", "Genero", "Clasificacion"};
 
     @Override
@@ -25,9 +25,7 @@ public class MoviesTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        MovieShowtime showtime = data.get(rowIndex);
-        Movie movie = data.get(rowIndex).getMovie();
-        Room room = data.get(rowIndex).getRoom();
+        Movie movie = data.get(rowIndex);
 
         switch(columnIndex) {
             case 0:
@@ -44,12 +42,9 @@ public class MoviesTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        MovieShowtime showtime = data.get(rowIndex);
+        Movie movie = data.get(rowIndex);
         try {
             switch(columnIndex) {
-                case 4:
-                    showtime.setShowTime(String.valueOf(value));
-                    break;
             }
             fireTableCellUpdated(rowIndex, columnIndex);
         }catch(IllegalArgumentException ex) {
@@ -57,8 +52,8 @@ public class MoviesTableModel extends AbstractTableModel {
         }
     }
 
-    public void addRow(MovieShowtime movieShowtime) {
-        data.add(movieShowtime);
+    public void addRow(Movie movie) {
+        data.add(movie);
         fireTableRowsInserted(data.size() - 1, data.size() - 1);
     }
 
@@ -67,22 +62,22 @@ public class MoviesTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
-    public MovieShowtime getRowData(int row) {
+    public Movie getRowData(int row) {
         return data.get(row);
     }
 
-    public void setRowData(int id, MovieShowtime MS) {
+    public void setRowData(int id, Movie M) {
         int index = getRowById(id);
         if(index == -1) {
             return;
         }
-        data.set(index, MS);
+        data.set(index, M);
         fireTableRowsUpdated(index, index);
     }
 
     public int getRowById(int id) {
         for(int i = 0; i < data.size(); i++) {
-            if(data.get(i).getIdShowtime() == id) {
+            if(data.get(i).getIdMovie() == id) {
                 return i;
             }
         }

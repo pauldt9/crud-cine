@@ -215,6 +215,14 @@ public class MovieForm extends JPanel {
         addDuration.setText(duration);
     }
 
+    public void setAddGenre(String genre) {
+        addGenre.setSelectedItem(genre);
+    }
+
+    public void setAddClassification(String classification) {
+        addClassification.setSelectedItem(classification);
+    }
+
     public JTextField getAddMovieTitle() {
         return addMovieTitle;
     }
@@ -231,4 +239,19 @@ public class MovieForm extends JPanel {
         return addClassification;
     }
 
+    public String getMovieTitle() {
+        return addMovieTitle.getText();
+    }
+
+    public int getDuration() {
+        return Integer.parseInt(addDuration.getText());
+    }
+
+    public JComboBox getGenre() {
+        return addGenre;
+    }
+
+    public JComboBox getClassification() {
+        return addClassification;
+    }
 }

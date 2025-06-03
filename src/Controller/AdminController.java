@@ -2,8 +2,11 @@ package Controller;
 
 import Models.Employee;
 import Models.EmployeeTableModel;
+import Models.Movie;
+import Models.MoviesTableModel;
 import View.LoginPanel;
 import View.AdminView;
+import View.MoviesViewAdmin;
 import utils.PasswordUtils;
 
 import javax.swing.*;
@@ -18,8 +21,13 @@ public class AdminController implements ActionListener {
     private LoginPanel loginPanel;
     private JFrame frame;
     private AdminView adminView;
+    private MoviesViewAdmin moviesViewAdmin;
+
     private ArrayList<Employee> employees;
     private EmployeeTableModel empTable;
+
+    private ArrayList<Movie> movies;
+    private MoviesTableModel movTable;
 
     public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
         this.loginPanel = loginPanel;
@@ -28,6 +36,7 @@ public class AdminController implements ActionListener {
         this.adminView.setListeners(this);
 
         empTable = adminView.getEmployeePanel().getTableModelEmployees();
+        movTable = adminView.getMoviesViewAdminPanel().getMoviesTableModel();
 
         adminView.getEmployeePanel().tableListener(new KeyAdapter() {
             @Override
@@ -38,8 +47,19 @@ public class AdminController implements ActionListener {
             }
         });
 
+        adminView.getMoviesViewAdminPanel().tableListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    adminView.getMoviesViewAdminPanel().removeTableSelection();
+                }
+            }
+        });
+
         employees = new ArrayList<>();
+        movies = new ArrayList<>();
         loadEmployees();
+        loadMovies();
     }
 
     @Override
@@ -104,7 +124,7 @@ public class AdminController implements ActionListener {
                 break;
             case "Confirmar cambios de empleado":
                 adminView.getEmployeeFormPanel().setAction("Editar");
-                saveChanges();
+                saveChangesEmployee();
                 loadEmployees();
                 showAdminPanel("empleados");
                 break;
@@ -123,11 +143,18 @@ public class AdminController implements ActionListener {
                 break;
             case "Eliminar pelicula":
                 System.out.println("eliminar pelicula");
+                deleteMovie();
+                loadMovies();
                 break;
             case "Editar pelicula":
                 System.out.println("editar pelicula");
+                if (adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(adminView, "Por favor selecciona una fila");
+                    break;
+                }
                 adminView.getMovieForm().setAction("Editar");
                 showAdminPanel("agregar/editar pelicula");
+                fillFieldsMovie();
 
                 break;
             case "Agregar pelicula":
@@ -143,14 +170,15 @@ public class AdminController implements ActionListener {
             case "Confirmar pelicula":
                 System.out.println("se ha agregado una pelicula");
                 adminView.getMovieForm().setAction("Agregar");
-
+                addMovie();
                 showAdminPanel("peliculas");
                 break;
             case "Confirmar cambios de pelicula":
                 System.out.println("se ha editado la pelicula");
                 adminView.getMovieForm().setAction("Editar");
-
+                saveChangesMovie();
                 showAdminPanel("peliculas");
+                loadMovies();
                 break;
             case "Funciones":
                 System.out.println("funciones..");
@@ -177,6 +205,7 @@ public class AdminController implements ActionListener {
                 System.out.println("funcion agregada");
                 adminView.getShowtimesFormPanel().setAction("Agregar");
                 showAdminPanel("funciones");
+
                 break;
             case "Confirmar cambios de funcion":
                 System.out.println("cambios guardados de funcion");
@@ -217,6 +246,117 @@ public class AdminController implements ActionListener {
         }
     }
 
+    public void fillFieldsMovie(){
+        Movie movie = movTable.getRowData(adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow());
+        adminView.getMoviesViewAdminPanel().setIdMovie(movie.getIdMovie());
+        adminView.getMovieForm().setAddMovieTitle(movie.getTitle());
+        adminView.getMovieForm().setAddDuration(String.valueOf(movie.getDuration()));
+        adminView.getMovieForm().setAddGenre(movie.getGenre());
+        adminView.getMovieForm().setAddClassification(movie.getClassification());
+    }
+
+    private void deleteMovie() {
+        int selectedRow = adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(adminView, "Debes seleccionar una pelicula de la tabla");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                adminView,
+                "¿Esta seguro de que desea eliminar esta pelicula?",
+                "Confirmar eliminacion",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int id = movies.get(selectedRow).getIdMovie();
+
+            boolean deleted = Movie.deleteMovie(id);
+            if (deleted) {
+                JOptionPane.showMessageDialog(adminView, "Pelicula eliminada correctamente");
+                showMovies();
+            } else {
+                JOptionPane.showMessageDialog(adminView, "No se pudo eliminar la pelicula");
+            }
+        }
+    }
+
+    private void saveChangesMovie() {
+        if (!validateFormMovie()) return;
+
+        try {
+            Movie movie = createMovie();
+
+            int rowIndex = movTable.getRowById(movie.getIdMovie());
+            System.out.println("ID: " + movie.getIdMovie());
+            if (rowIndex == -1) {
+                JOptionPane.showMessageDialog(frame, "pelicula no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (Movie.updateMovie(movie)) {
+                movTable.setRowData(rowIndex, movie);
+                adminView.getMovieForm().clearFields();
+                System.out.println("se han efectuado los cambios");
+                JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
+            } else {
+                JOptionPane.showMessageDialog(frame, "No se pudo actualizar la pelicula");
+            }
+
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + "La pelicula ya existe. Intenta con otra.","Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void showMovies() {
+        movTable.cleanTable();
+        for (Movie m : movies) {
+            movTable.addRow(m);
+        }
+    }
+
+
+    private void loadMovies() {
+        movies = Movie.getMovies();
+        showMovies();
+    }
+
+
+    public Movie createMovie() {
+        String title = adminView.getMovieForm().getAddMovieTitle().getText();
+        int duration = Integer.parseInt(adminView.getMovieForm().getAddDuration().getText());
+        String genre = (String)adminView.getMovieForm().getAddGenre().getSelectedItem();
+        String classification = (String)adminView.getMovieForm().getAddClassification().getSelectedItem();
+
+        return new Movie(adminView.getMoviesViewAdminPanel().getIdMovie(),title,duration,genre,classification);
+    }
+
+    public void addMovie() {
+        if (!validateFormMovie()) return;
+
+        Movie movie = createMovie();
+        try {
+            int idMovie = Movie.addMovie(movie);
+
+            if (idMovie > 0) {
+                movie.setIdMovie(idMovie);
+                movies.add(movie);
+                movTable.addRow(movie);
+                showAdminPanel("Peliculas");
+                JOptionPane.showMessageDialog(frame, "Se ha agregado una pelicula nueva");
+            } else {
+                JOptionPane.showMessageDialog(frame, "No se pudo crear la pelicula");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame,
+                    "La pelicula ya existe. Intenta con otra.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void deleteEmployee() {
         int selectedRow = adminView.getEmployeePanel().getEmployeesTable().getSelectedRow();
         if (selectedRow == -1) {
@@ -244,8 +384,8 @@ public class AdminController implements ActionListener {
         }
     }
 
-    private void saveChanges() {
-        if (!validateForm()) return;
+    private void saveChangesEmployee() {
+        if (!validateFormEmployee()) return;
 
         try {
             Employee employee = createEmployee();
@@ -309,7 +449,7 @@ public class AdminController implements ActionListener {
 
     //agrega al empleado a la base de datos y a la tabla
     public void addEmployee() {
-        if (!validateForm()) return;
+        if (!validateFormEmployee()) return;
 
         Employee emp = createEmployee();
         try {
@@ -348,7 +488,7 @@ public class AdminController implements ActionListener {
     }
 
     //valida que los campos esten llenos
-    public boolean validateForm(){
+    public boolean validateFormEmployee(){
         if (adminView.getEmployeeFormPanel().getEmpName().isBlank() ||
             adminView.getEmployeeFormPanel().getEmpLastName().isBlank()||
             adminView.getEmployeeFormPanel().getEmpType().getSelectedIndex() == 0 ||
@@ -364,6 +504,38 @@ public class AdminController implements ActionListener {
         }
         return true;
     }
+
+    public boolean validateFormMovie() {
+
+        String durationField = adminView.getMovieForm().getAddDuration().getText();
+        try {
+            int duration = Integer.parseInt(durationField);
+            if (duration <= 0) {
+                JOptionPane.showMessageDialog(frame, "La duración debe ser mayor a cero", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Se llego");
+                return false;
+
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "El campo duración debe ser numérico", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Se llego");
+            return false;
+        }
+
+
+        if (adminView.getMovieForm().getMovieTitle().isBlank() ||
+            adminView.getMovieForm().getDuration() == 0 ||
+            adminView.getMovieForm().getGenre().getSelectedIndex() == 0 ||
+            adminView.getMovieForm().getClassification().getSelectedIndex() == 0) {
+
+            JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
+                    "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+
+    }
+
 
     public void exit(){
         int answer = JOptionPane.showConfirmDialog(frame, "¿Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
