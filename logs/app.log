@@ -1630,3 +1630,5 @@ jun 02, 2025 10:13:22 P.M. utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
 jun 03, 2025 12:48:01 A.M. utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
+Jun 03, 2025 1:03:15 AM utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
