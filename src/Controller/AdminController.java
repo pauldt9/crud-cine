@@ -186,7 +186,7 @@ public class AdminController implements ActionListener {
         if (!validateForm()) return;
 
         try {
-            Employee employee = createEmployeeForEdit();
+            Employee employee = createEmployee();
 
             String plainPassword = adminView.getAddEmployeePanel().getEmpPass();
 
@@ -218,7 +218,9 @@ public class AdminController implements ActionListener {
                 adminView.getAddEmployeePanel().setAddEmpConfirmPass("");
             }
         }catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + "El nombre de usuario ya existe. Intenta con otro.","Error", JOptionPane.ERROR_MESSAGE);
+            adminView.getAddEmployeePanel().setAddEmpPass("");
+            adminView.getAddEmployeePanel().setAddEmpConfirmPass("");
         }
     }
 
@@ -237,47 +239,37 @@ public class AdminController implements ActionListener {
         String lastName = adminView.getAddEmployeePanel().getEmpLastName();
         String employeeType = (String)adminView.getAddEmployeePanel().getEmpType().getSelectedItem();
         String empUsername = adminView.getAddEmployeePanel().getEmpUser();
-
-        if (!Employee.isUsernameAvailable(empUsername)) {
-            JOptionPane.showMessageDialog(frame, "El nombre de usuario ya existe. Intenta con otro.");
-            adminView.getAddEmployeePanel().setEmpUser("");
-            return null;
-        }
-
         String empPassword = adminView.getAddEmployeePanel().getEmpPass();
 
         return new Employee(adminView.getEmployeePanel().getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
     }
 
-    // Crea un empleado sin validar el nombre de usuario (para edición)
-    public Employee createEmployeeForEdit() {
-        String name = adminView.getAddEmployeePanel().getEmpName();
-        String lastName = adminView.getAddEmployeePanel().getEmpLastName();
-        String employeeType = (String)adminView.getAddEmployeePanel().getEmpType().getSelectedItem();
-        String empUsername = adminView.getAddEmployeePanel().getEmpUser();
-        String empPassword = adminView.getAddEmployeePanel().getEmpPass();
-
-        return new Employee(adminView.getEmployeePanel().getIdEmployee(), name, lastName, employeeType, empUsername, empPassword);
-    }
-
 
     //agrega al empleado a la base de datos y a la tabla
-    public void addEmployee(){
-        if(!validateForm()) return;
+    public void addEmployee() {
+        if (!validateForm()) return;
+
         Employee emp = createEmployee();
+        try {
+            int idUser = Employee.addEmployee(emp);
 
-        int idUser = Employee.addEmployee(emp);
+            if (idUser > 0) {
+                emp.setIdEmployee(idUser);
+                employees.add(emp);
+                empTable.addRow(emp);
+                showAdminPanel("Empleados");
+                JOptionPane.showMessageDialog(frame, "Se ha agregado un empleado nuevo");
+            } else {
+                JOptionPane.showMessageDialog(frame, "No se pudo crear el empleado");
+            }
 
-        if(idUser > 0) {
-            emp.setIdEmployee(idUser);
-            employees.add(emp);
-            empTable.addRow(emp);
-            showAdminPanel("Empleados");
-            JOptionPane.showMessageDialog(frame, "Se ha agregado un empleado nuevo");
-        }else{
-            JOptionPane.showMessageDialog(frame, "No se pudo crear el empleado");
+        } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame,
+                        "El nombre de usuario ya existe. Intenta con otro.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
-    }
 
     //obtiene los empleados
     private void showEmployees() {
@@ -328,4 +320,8 @@ public class AdminController implements ActionListener {
         CardLayout card = (CardLayout) (adminView.getMainPanel().getLayout());
         card.show(adminView.getMainPanel(), namePanel);
     }
+
+
+
+
 }

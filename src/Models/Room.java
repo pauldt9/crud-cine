@@ -61,7 +61,7 @@ public class Room {
     public void setSeats(Seat[][] seats) {
         this.seats = seats;
     }
-    
+
     public String getRoomType() {
         return roomType;
     }
@@ -168,4 +168,52 @@ public class Room {
             throw new RuntimeException(e);
         }
     }
+
+    public void generateAndSaveSeats(int rows, int columns) {
+        String query = "INSERT INTO Seats (seatName, seatNumber, isOccupied, idRoom) VALUES (?, ?, ?, ?)";
+        seats = new Seat[rows][columns];
+        Connection connection = null;
+        PreparedStatement pst = null;
+        try {
+            connection = MySQLConnection.connect();
+            pst = connection.prepareStatement(query);
+
+            for (int i = 0; i < rows; i++) {
+                char rowLetter = (char) ('A' + i);
+
+                for (int j = 0; j < columns; j++) {
+                    String seatName = rowLetter + String.valueOf(j + 1);
+
+                    Seat seat = new Seat();
+                    seat.setSeatName(seatName);
+                    seat.setSeatNumber(j + 1);
+                    seat.setOccupied(false);
+                    seat.setRoom(this);
+
+                    seats[i][j] = seat;
+
+
+                    pst.setString(1, seatName);
+                    pst.setInt(2, seat.getSeatNumber());
+                    pst.setBoolean(3, false);
+                    pst.setInt(4, this.idRoom);
+                    pst.addBatch();
+                }
+            }
+
+            pst.executeBatch();
+            System.out.println("Asientos generados y guardados correctamente.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) pst.close();
+                if (connection != null) connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 }

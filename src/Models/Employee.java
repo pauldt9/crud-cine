@@ -207,26 +207,26 @@ public class Employee {
 
     }
 
-    //este metodo verifica si hay alguna coincidencia de nombre de usuario en la base de datos
-    public static boolean isUsernameAvailable(String username) {
-        String query = "SELECT COUNT(*) FROM employees WHERE username = ?";
-
-        try (
-                Connection connection = MySQLConnection.connect();
-                PreparedStatement stmt = connection.prepareStatement(query);
-        ) {
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count == 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
+//    //este metodo verifica si hay alguna coincidencia de nombre de usuario en la base de datos
+//    public static boolean isUsernameAvailable(String username) {
+//        String query = "SELECT COUNT(*) FROM employees WHERE username = ?";
+//
+//        try (
+//                Connection connection = MySQLConnection.connect();
+//                PreparedStatement stmt = connection.prepareStatement(query);
+//        ) {
+//            stmt.setString(1, username);
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                int count = rs.getInt(1);
+//                return count == 0;
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return false;
+//    }
 
 
 

@@ -26,7 +26,7 @@ public class AddMovieForm extends JPanel {
     private JTextField addDuration;
     private JComboBox<String> addGenre;
     private JComboBox<String> addClassification;
-    private JTextField addShowtime;
+//    private JTextField addShowtime;
 
     public AddMovieForm(){
         setLayout(new BorderLayout());
@@ -105,12 +105,12 @@ public class AddMovieForm extends JPanel {
         addClassification.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addClassification);
 
-        addShowtime = createTextField("Ingresar Horario", 350, 50);
-        addShowtime.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addShowtime.setBorder(BorderFactory.createCompoundBorder(addShowtime.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        addShowtime.setBackground(bgColButtons);
-        addShowtime.setForeground(fgColor);
-        formPanel.add(addShowtime);
+//        addShowtime = createTextField("Ingresar Horario", 350, 50);
+//        addShowtime.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        addShowtime.setBorder(BorderFactory.createCompoundBorder(addShowtime.getBorder(), new EmptyBorder(0, 10, 0, 0)));
+//        addShowtime.setBackground(bgColButtons);
+//        addShowtime.setForeground(fgColor);
+//        formPanel.add(addShowtime);
 
         addImage = createButton("Agregar Imagen", 15, 350, 50);
         addImage.setActionCommand("Agregar imagen");

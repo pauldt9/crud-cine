@@ -31,6 +31,10 @@ public class Seat {
         this.isOccupied = isOccupied;
     }
 
+    public Seat() {
+
+    }
+
     public int getIdSeat() {
         return idSeat;
     }
