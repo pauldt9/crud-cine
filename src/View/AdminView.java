@@ -129,7 +129,7 @@ public class AdminView extends JPanel {
         mainPanel.add(employeePanel, "empleados");
         mainPanel.add(moviesPanel, "peliculas");
         mainPanel.add(addEmployeePanel, "agregar/editar empleado");
-        mainPanel.add(movieForm, "agregar/editar pelicula");
+        mainPanel.add(movieForm, "agregar/editar funcion");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));

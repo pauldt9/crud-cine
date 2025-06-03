@@ -118,35 +118,35 @@ public class AdminController implements ActionListener {
                 showAdminPanel("peliculas");
                 break;
             case "Regresar pelicula":
-                System.out.println("se ha regresado a pelicula");
+                System.out.println("se ha regresado a funcion");
                 showAdminPanel("peliculas");
                 break;
-            case "Eliminar pelicula":
-                System.out.println("eliminar pelicula");
+            case "Eliminar funcion":
+                System.out.println("eliminar funcion");
                 break;
-            case "Editar pelicula":
+            case "Editar funcion":
                 System.out.println("editar pelicula");
                 adminView.getMovieForm().setAction("Editar");
-                showAdminPanel("agregar/editar pelicula");
+                showAdminPanel("agregar/editar funcion");
 
                 break;
-            case "Agregar pelicula":
+            case "Agregar funcion":
                 System.out.println("agregar pelicula");
                 adminView.getMovieForm().setAction("Agregar");
-                showAdminPanel("agregar/editar pelicula");
+                showAdminPanel("agregar/editar funcion");
 
 
                 break;
             case "Agregar imagen":
                 System.out.println("se ha agregado una imagen");
                 break;
-            case "Confirmar pelicula":
+            case "Confirmar funcion":
                 System.out.println("se ha agregado una pelicula");
                 adminView.getMovieForm().setAction("Agregar");
 
                 showAdminPanel("peliculas");
                 break;
-            case "Confirmar cambios de pelicula":
+            case "Confirmar cambios de funcion":
                 System.out.println("se ha editado la pelicula");
                 adminView.getMovieForm().setAction("Editar");
 

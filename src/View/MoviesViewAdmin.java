@@ -47,19 +47,19 @@ public class MoviesViewAdmin extends JPanel {
         add(movButtonPanel, BorderLayout.SOUTH);
 
         addMov = createButton("Agregar", 15, 120, 40);
-        addMov.setActionCommand("Agregar pelicula");
+        addMov.setActionCommand("Agregar funcion");
         addMov.setBackground(bgColButtons);
         addMov.setForeground(fgColor);
         movButtonPanel.add(addMov);
 
         editMov = createButton("Editar", 15, 120, 40);
-        editMov.setActionCommand("Editar pelicula");
+        editMov.setActionCommand("Editar funcion");
         editMov.setBackground(bgColButtons);
         editMov.setForeground(fgColor);
         movButtonPanel.add(editMov);
 
         deleteMov = createButton("Eliminar", 15 , 120, 40);
-        deleteMov.setActionCommand("Eliminar pelicula");
+        deleteMov.setActionCommand("Eliminar funcion");
         deleteMov.setBackground(bgColButtons);
         deleteMov.setForeground(fgColor);
         movButtonPanel.add(deleteMov);

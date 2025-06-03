@@ -46,7 +46,7 @@ public class AddMovieForm extends JPanel {
         topPanel.add(backButton);
 
         //titulo
-        panelTitle = createJLabel("Agregar Empleado", 40, true);
+        panelTitle = createJLabel("Agregar Funcion", 40, true);
         panelTitle.setAlignmentX(Box.LEFT_ALIGNMENT);
         panelTitle.setForeground(fgColor);
         topPanel.add(Box.createHorizontalStrut(15));
@@ -86,7 +86,7 @@ public class AddMovieForm extends JPanel {
         addDuration.setForeground(fgColor);
         formPanel.add(addDuration);
 
-        String[] genres = {"-----Generos-----", "Accion", "Aventura", "Comedia", "Drama", "Terror", "Ciencia ficción",
+        String[] genres = {"-----Genero-----", "Accion", "Aventura", "Comedia", "Drama", "Terror", "Ciencia ficción",
         "Fantasia", "Suspenso", "Animacion", "Romance", "Musical", "Documental"};
         addGenre = new JComboBox<String>(genres);
         addGenre.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -120,7 +120,7 @@ public class AddMovieForm extends JPanel {
         formPanel.add(addImage);
 
         confirmEmp = createButton("Confirmar", 15, 350, 50);
-        confirmEmp.setActionCommand("Confirmar pelicula");
+        confirmEmp.setActionCommand("Confirmar funcion");
         confirmEmp.setForeground(fgColor);
         confirmEmp.setBackground(bgColButtons);
         confirmEmp.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -192,11 +192,11 @@ public class AddMovieForm extends JPanel {
     public void setAction(String action){
         this.action = action;
         if (action.equals("Agregar")){
-            panelTitle.setText("Agregar Pelicula");
-            confirmEmp.setActionCommand("Confirmar pelicula");
+            panelTitle.setText("Agregar Funcion");
+            confirmEmp.setActionCommand("Confirmar funcion");
         } else {
-            panelTitle.setText("Actualizar Pelicula");
-            confirmEmp.setActionCommand("Confirmar cambios de pelicula");
+            panelTitle.setText("Actualizar Funcion");
+            confirmEmp.setActionCommand("Confirmar cambios de funcion");
         }
     }
 }
