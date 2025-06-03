@@ -4,10 +4,10 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class MovieShowtimeTableModel extends AbstractTableModel {
+public class MoviesTableModel extends AbstractTableModel {
     private ArrayList<MovieShowtime> data = new ArrayList<MovieShowtime>();
-  private String column[] = {"Titulo", "Duracion", "Genero", "Clasificacion"};
-    //,"Horario", "Sala"
+    private String column[] = {"Titulo", "Duracion", "Genero", "Clasificacion"};
+
     @Override
     public int getRowCount() {
         return data.size();
@@ -38,10 +38,6 @@ public class MovieShowtimeTableModel extends AbstractTableModel {
                 return movie.getGenre();
             case 3:
                 return movie.getClassification();
-//            case 4:
-//                return showtime.getShowTime();
-//            case 5:
-//                return room.getRoomName();
         }
         return null;
     }
@@ -51,9 +47,9 @@ public class MovieShowtimeTableModel extends AbstractTableModel {
         MovieShowtime showtime = data.get(rowIndex);
         try {
             switch(columnIndex) {
-//                case 4:
-//                    showtime.setShowTime(String.valueOf(value));
-//                    break;
+                case 4:
+                    showtime.setShowTime(String.valueOf(value));
+                    break;
             }
             fireTableCellUpdated(rowIndex, columnIndex);
         }catch(IllegalArgumentException ex) {

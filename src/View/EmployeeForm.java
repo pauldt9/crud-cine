@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class AddEmployeeForm extends JPanel {
+public class EmployeeForm extends JPanel {
     private String action;
 
     private JButton confirmEmp;
@@ -27,7 +27,7 @@ public class AddEmployeeForm extends JPanel {
     private JPasswordField addEmpConfirmPass;
     private JComboBox<String> empType;
 
-    public AddEmployeeForm(){
+    public EmployeeForm(){
         setLayout(new BorderLayout());
         setOpaque(false);
 
