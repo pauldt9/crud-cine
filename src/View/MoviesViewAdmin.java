@@ -28,7 +28,7 @@ public class MoviesViewAdmin extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
-        moviesLbl = createJLabel("Peliculas", 40, true);
+        moviesLbl = createJLabel("Funciones", 40, true);
         moviesLbl.setForeground(fgColor);
         moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         add(moviesLbl, BorderLayout.NORTH);
