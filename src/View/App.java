@@ -10,6 +10,8 @@ import java.awt.*;
 public class App {
 
     public static String configPath;
+    //$10$OM9VIM3cjj6ypH9TCfJi2ulAcpcYab4oia9rjPAH3Y7uwC.oO2QiK
+    //$10$OM9VIM3cjj6ypH9TCfJi2ulAcpcYab4oia9rjPAH3Y7uwC.oO2QiK
 
     public static void main(String[] args) {
         JFrame frame = new JFrame(); //ventana principal
