@@ -1,37 +1,34 @@
 package View;
 
-import Models.MoviesTableModel;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 
-public class MoviesViewAdmin extends JPanel {
-    private JLabel moviesLbl;
+public class RoomsView extends JPanel {
+    private JLabel titleLbl;
 
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColButtons = new Color(245, 245, 245);
 
-    private JButton addMov;
-    private JButton deleteMov;
-    private JButton editMov;
+    private JButton addRoom;
+    private JButton deleteRoom;
+    private JButton editRoom;
 
-    private JTable moviesTable;
-    private MoviesTableModel moviesTableModel;
+    private JTable roomsTable;
 
-    private int idMovie; //Primary Key
+    private int idRoom; //primary key
 
-    public MoviesViewAdmin(){
-        setLayout(new BorderLayout());
+    public RoomsView(){
         setOpaque(false);
+        setLayout(new BorderLayout());
 
-        moviesLbl = createJLabel("Peliculas", 40, true);
-        moviesLbl.setForeground(fgColor);
-        moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        add(moviesLbl, BorderLayout.NORTH);
+        //titulo
+        titleLbl = createJLabel("Salas", 40, true);
+        titleLbl.setForeground(fgColor);
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        add(titleLbl, BorderLayout.NORTH);
 
         //Paneles vacios
         JPanel emptyEast = createEmptyPanel();
@@ -40,42 +37,42 @@ public class MoviesViewAdmin extends JPanel {
         JPanel emptyWest = createEmptyPanel();
         add(emptyWest, BorderLayout.WEST);
 
-        initMovTable(); //tabla
+        initRoomsTable(); //tabla
 
         //Aqui van los botones
         JPanel movButtonPanel = createButtonsPanel();
         add(movButtonPanel, BorderLayout.SOUTH);
 
-        addMov = createButton("Agregar", 15, 120, 40);
-        addMov.setActionCommand("Agregar pelicula");
-        addMov.setBackground(bgColButtons);
-        addMov.setForeground(fgColor);
-        movButtonPanel.add(addMov);
+        addRoom = createButton("Agregar", 15, 120, 40);
+        addRoom.setActionCommand("Agregar sala");
+        addRoom.setBackground(bgColButtons);
+        addRoom.setForeground(fgColor);
+        movButtonPanel.add(addRoom);
 
-        editMov = createButton("Editar", 15, 120, 40);
-        editMov.setActionCommand("Editar pelicula");
-        editMov.setBackground(bgColButtons);
-        editMov.setForeground(fgColor);
-        movButtonPanel.add(editMov);
+        editRoom = createButton("Editar", 15, 120, 40);
+        editRoom.setActionCommand("Editar sala");
+        editRoom.setBackground(bgColButtons);
+        editRoom.setForeground(fgColor);
+        movButtonPanel.add(editRoom);
 
-        deleteMov = createButton("Eliminar", 15 , 120, 40);
-        deleteMov.setActionCommand("Eliminar pelicula");
-        deleteMov.setBackground(bgColButtons);
-        deleteMov.setForeground(fgColor);
-        movButtonPanel.add(deleteMov);
+        deleteRoom = createButton("Eliminar", 15 , 120, 40);
+        deleteRoom.setActionCommand("Eliminar sala");
+        deleteRoom.setBackground(bgColButtons);
+        deleteRoom.setForeground(fgColor);
+        movButtonPanel.add(deleteRoom);
 
         try {
             Image deleteIcon = ImageIO.read(getClass().getResource("/img/remove.png"));
             deleteIcon = deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            deleteMov.setIcon(new ImageIcon(deleteIcon));
+            deleteRoom.setIcon(new ImageIcon(deleteIcon));
 
             Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
             editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            editMov.setIcon(new ImageIcon(editIcon));
+            editRoom.setIcon(new ImageIcon(editIcon));
 
             Image addIcon = ImageIO.read(getClass().getResource("/img/add.png"));
             addIcon = addIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            addMov.setIcon(new ImageIcon(addIcon));
+            addRoom.setIcon(new ImageIcon(addIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
@@ -119,49 +116,21 @@ public class MoviesViewAdmin extends JPanel {
         return button;
     }
 
-    public void initMovTable(){
-        moviesTableModel = new MoviesTableModel();
-        moviesTable = new JTable(moviesTableModel);
+    public void initRoomsTable(){
 
-        JScrollPane scroll = new JScrollPane(moviesTable);
-        add(scroll, BorderLayout.CENTER);
     }
 
     public void setListeners(ActionListener listener){
-        addMov.addActionListener(listener);
-        deleteMov.addActionListener(listener);
-        editMov.addActionListener(listener);
+        addRoom.addActionListener(listener);
+        editRoom.addActionListener(listener);
+        deleteRoom.addActionListener(listener);
     }
 
-    public JTable getMoviesTable(){
-        return moviesTable;
+    public int getIdRoom() {
+        return idRoom;
     }
 
-    public void setMoviesTable(JTable moviesTable) {
-        this.moviesTable = moviesTable;
-    }
-
-    public MoviesTableModel getMoviesTableModel() {
-        return moviesTableModel;
-    }
-
-    public void setMoviesTableModel(MoviesTableModel moviesTableModel) {
-        this.moviesTableModel = moviesTableModel;
-    }
-
-    public int getIdMovie() {
-        return idMovie;
-    }
-
-    public void setIdMovie(int idMovie) {
-        this.idMovie = idMovie;
-    }
-
-    public void tableListener(KeyListener listener){
-        moviesTable.addKeyListener(listener);
-    }
-
-    public void removeTableSelection(){
-        moviesTable.clearSelection();
+    public void setIdRoom(int idRoom) {
+        this.idRoom = idRoom;
     }
 }

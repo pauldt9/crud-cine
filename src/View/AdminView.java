@@ -1,7 +1,5 @@
 package View;
 
-import lib.TextPrompt;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -21,12 +19,19 @@ public class AdminView extends JPanel {
     //botones del menu
     private JButton employeeButton;
     private JButton moviesButton;
+    private JButton showtimesButton;
+    private JButton roomsButton;
 
     //Vistas
     private EmployeeManagement employeePanel;
-    private AddEmployeeForm addEmployeePanel;
+    private EmployeeForm employeeFormPanel;
     private MoviesViewAdmin moviesPanel;
-    private AddMovieForm movieForm;
+    private MovieForm movieForm;
+    private ShowtimesView showtimesPanel;
+    private SalesPanel salesPanel;
+    private ShowtimesForm showtimesFormPanel;
+    private RoomsView roomsPanel;
+    private RoomsForm roomsFormPanel;
 
     //paneles
     private JPanel mainPanel;
@@ -35,7 +40,6 @@ public class AdminView extends JPanel {
     private JPanel menuPanel;
     private JPanel menuButtonsPanel;
 
-    private SalesPanel salesPanel;
 
     /*------------Labels------------*/
     //Menu
@@ -44,6 +48,8 @@ public class AdminView extends JPanel {
     private JLabel buttonTitleEmp;
     private JLabel managementTitle;
     private JLabel buttonTitleMov;
+    private JLabel buttonTitleShowtime;
+    private JLabel buttonTitleRooms;
     private JLabel summaryLbl;
     private JLabel numEmployees; //Label donde se mostrara la cantidad de empleados
     private JLabel numMovies; //numero de peliculas disponibles
@@ -121,15 +127,23 @@ public class AdminView extends JPanel {
         salesPanel = new SalesPanel();
         employeePanel = new EmployeeManagement();
         moviesPanel = new MoviesViewAdmin();
-        addEmployeePanel = new AddEmployeeForm();
-        movieForm = new AddMovieForm();
+        employeeFormPanel = new EmployeeForm();
+        movieForm = new MovieForm();
+        showtimesPanel = new ShowtimesView();
+        showtimesFormPanel = new ShowtimesForm();
+        roomsPanel = new RoomsView();
+        roomsFormPanel = new RoomsForm();
 
         mainPanel.add(menuPanel, "menu");
         mainPanel.add(salesPanel, "ventas");
         mainPanel.add(employeePanel, "empleados");
         mainPanel.add(moviesPanel, "peliculas");
-        mainPanel.add(addEmployeePanel, "agregar/editar empleado");
-        mainPanel.add(movieForm, "agregar/editar funcion");
+        mainPanel.add(employeeFormPanel, "agregar/editar empleado");
+        mainPanel.add(movieForm, "agregar/editar pelicula");
+        mainPanel.add(showtimesPanel, "funciones");
+        mainPanel.add(showtimesFormPanel, "agregar/editar funcion");
+        mainPanel.add(roomsPanel, "salas");
+        mainPanel.add(roomsFormPanel, "agregar/editar sala");
 
         //Panel menu
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
@@ -168,7 +182,7 @@ public class AdminView extends JPanel {
         managementTitle = createJLabel("Gestion", 20, true);
         managementTitle.setForeground(fgColor);
         managementTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-        managementTitle.setBorder(BorderFactory.createEmptyBorder(40, 40, 0, 0));
+        managementTitle.setBorder(BorderFactory.createEmptyBorder(50, 40, 0, 0));
         menuPanel.add(managementTitle);
 
         //Aqui estan otros botones del menu
@@ -189,7 +203,7 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.NONE;
 
-        employeeButton = createButton(null, 1, 100, 100);
+        employeeButton = createButton("", 1, 100, 100);
         employeeButton.setBackground(bgColButtons);
         employeeButton.setActionCommand("Empleados");
 
@@ -216,12 +230,12 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.NONE;
 
-        moviesButton = createButton(null, 1, 100, 100);
-        moviesButton.setBackground(new Color(245, 245, 245));
+        moviesButton = createButton("", 1, 100, 100);
+        moviesButton.setBackground(bgColButtons);
         moviesButton.setActionCommand("Peliculas");
         menuButtonsPanel.add(moviesButton, c);
 
-        buttonTitleMov = createJLabel("Gestionar Peliculas", 15, true);
+        buttonTitleMov = createJLabel("Agregar Peliculas", 15, true);
         buttonTitleMov.setForeground(fgColor);
 
         c.gridy = 1;
@@ -233,6 +247,61 @@ public class AdminView extends JPanel {
         c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(buttonTitleMov, c);
+
+        showtimesButton = createButton("", 1, 100, 100);
+        showtimesButton.setBackground(bgColButtons);
+        showtimesButton.setActionCommand("Funciones");
+
+        c.gridy = 2;
+        c.gridx = 0;
+        c.weightx = 0;
+        c.weighty = 0;
+        c.insets = new Insets(0, 40, 0, 10);
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.fill = GridBagConstraints.NONE;
+
+        menuButtonsPanel.add(showtimesButton, c);
+
+        buttonTitleShowtime = createJLabel("Gestionar Funciones", 15, true);
+        buttonTitleShowtime.setForeground(fgColor);
+
+        c.gridy = 2;
+        c.gridx = 1;
+        c.weightx = 1;
+        c.weighty = 0;
+        c.insets = new Insets(0, 10, 0, 10);
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+
+        menuButtonsPanel.add(buttonTitleShowtime, c);
+
+        roomsButton = createButton("", 1, 100, 100);
+        roomsButton.setBackground(bgColButtons);
+        roomsButton.setActionCommand("Salas");
+
+        c.gridy = 2;
+        c.gridx = 2;
+        c.weightx = 0;
+        c.weighty = 0;
+        c.insets = new Insets(0, 30, 0, 10);
+        c.anchor = GridBagConstraints.NORTHWEST;
+        c.fill = GridBagConstraints.NONE;
+
+        menuButtonsPanel.add(roomsButton, c);
+
+        buttonTitleRooms = createJLabel("Gestionar Salas", 15, true);
+        buttonTitleRooms.setForeground(fgColor);
+
+        c.gridy = 2;
+        c.gridx = 3;
+        c.weightx = 1;
+        c.weighty = 0;
+        c.insets = new Insets(0, -420, 0, 10);
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+
+        menuButtonsPanel.add(buttonTitleRooms, c);
+
 
         //Iconos en botones
         try {
@@ -252,6 +321,13 @@ public class AdminView extends JPanel {
             moviesIcon = moviesIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
             moviesButton.setIcon(new ImageIcon(moviesIcon));
 
+            Image showtimesIcon = ImageIO.read(getClass().getResource("/img/showtimes.png"));
+            showtimesIcon = showtimesIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            showtimesButton.setIcon(new ImageIcon(showtimesIcon));
+
+            Image roomsIcon = ImageIO.read(getClass().getResource("/img/rooms.png"));
+            roomsIcon = roomsIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            roomsButton.setIcon(new ImageIcon(roomsIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
@@ -275,11 +351,17 @@ public class AdminView extends JPanel {
         darkMode.addActionListener(listener);
         employeeButton.addActionListener(listener);
         moviesButton.addActionListener(listener);
+        showtimesButton.addActionListener(listener);
+        roomsButton.addActionListener(listener);
 
         moviesPanel.setListeners(listener);
         employeePanel.setListeners(listener);
-        addEmployeePanel.setListeners(listener);
+        employeeFormPanel.setListeners(listener);
         movieForm.setListeners(listener);
+        showtimesPanel.setListeners(listener);
+        showtimesFormPanel.setListeners(listener);
+        roomsPanel.setListeners(listener);
+        roomsFormPanel.setListeners(listener);
     }
 
     public JButton createButton(String buttonName, int fontSize, int w, int h){
@@ -319,7 +401,6 @@ public class AdminView extends JPanel {
             buttonTitleEmp.setForeground(fgColor);
 
             //peliculas
-
             salesPanel.setBackground(Color.WHITE);
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
@@ -402,16 +483,24 @@ public class AdminView extends JPanel {
         return mainPanel;
     }
 
-    public AddEmployeeForm getAddEmployeePanel(){
-        return addEmployeePanel;
+    public EmployeeForm getEmployeeFormPanel(){
+        return employeeFormPanel;
     }
 
     public EmployeeManagement getEmployeePanel(){
         return employeePanel;
     }
 
-    public AddMovieForm getMovieForm(){
+    public MovieForm getMovieForm(){
         return movieForm;
+    }
+
+    public ShowtimesForm getShowtimesFormPanel(){
+        return showtimesFormPanel;
+    }
+
+    public RoomsForm getRoomsFormPanel(){
+        return roomsFormPanel;
     }
 
     public void setMainPanel(JPanel mainPanel) {

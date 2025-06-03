@@ -74,9 +74,9 @@ public class AdminController implements ActionListener {
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
-                adminView.getAddEmployeePanel().clearFields();
+                adminView.getEmployeeFormPanel().clearFields();
                 showAdminPanel("agregar/editar empleado");
-                adminView.getAddEmployeePanel().setAction("Registrar");
+                adminView.getEmployeeFormPanel().setAction("Registrar");
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
@@ -86,7 +86,7 @@ public class AdminController implements ActionListener {
                 }
 
                 showAdminPanel("agregar/editar empleado");
-                adminView.getAddEmployeePanel().setAction("Editar");
+                adminView.getEmployeeFormPanel().setAction("Editar");
                 fillFieldsEmp();
                 break;
             case "Eliminar empleado":
@@ -98,12 +98,12 @@ public class AdminController implements ActionListener {
                 break;
             case "Confirmar empleado":
                 System.out.println("se ha agregado un usuario nuevo");
-                adminView.getAddEmployeePanel().setAction("Registrar");
+                adminView.getEmployeeFormPanel().setAction("Registrar");
                 addEmployee();
-                adminView.getAddEmployeePanel().clearFields();
+                adminView.getEmployeeFormPanel().clearFields();
                 break;
             case "Confirmar cambios de empleado":
-                adminView.getAddEmployeePanel().setAction("Editar");
+                adminView.getEmployeeFormPanel().setAction("Editar");
                 saveChanges();
                 loadEmployees();
                 showAdminPanel("empleados");
@@ -118,39 +118,101 @@ public class AdminController implements ActionListener {
                 showAdminPanel("peliculas");
                 break;
             case "Regresar pelicula":
-                System.out.println("se ha regresado a funcion");
+                System.out.println("se ha regresado a pelicula");
                 showAdminPanel("peliculas");
                 break;
-            case "Eliminar funcion":
-                System.out.println("eliminar funcion");
+            case "Eliminar pelicula":
+                System.out.println("eliminar pelicula");
                 break;
-            case "Editar funcion":
+            case "Editar pelicula":
                 System.out.println("editar pelicula");
                 adminView.getMovieForm().setAction("Editar");
-                showAdminPanel("agregar/editar funcion");
+                showAdminPanel("agregar/editar pelicula");
 
                 break;
-            case "Agregar funcion":
+            case "Agregar pelicula":
                 System.out.println("agregar pelicula");
                 adminView.getMovieForm().setAction("Agregar");
-                showAdminPanel("agregar/editar funcion");
+                showAdminPanel("agregar/editar pelicula");
 
 
                 break;
             case "Agregar imagen":
                 System.out.println("se ha agregado una imagen");
                 break;
-            case "Confirmar funcion":
+            case "Confirmar pelicula":
                 System.out.println("se ha agregado una pelicula");
                 adminView.getMovieForm().setAction("Agregar");
 
                 showAdminPanel("peliculas");
                 break;
-            case "Confirmar cambios de funcion":
+            case "Confirmar cambios de pelicula":
                 System.out.println("se ha editado la pelicula");
                 adminView.getMovieForm().setAction("Editar");
 
                 showAdminPanel("peliculas");
+                break;
+            case "Funciones":
+                System.out.println("funciones..");
+                showAdminPanel("funciones");
+                break;
+            case "Agregar funcion":
+                System.out.println("agregar funcion");
+                adminView.getShowtimesFormPanel().setAction("Agregar");
+                showAdminPanel("agregar/editar funcion");
+                break;
+            case "Editar funcion":
+                System.out.println("editar funcion");
+                adminView.getShowtimesFormPanel().setAction("Editar");
+                showAdminPanel("agregar/editar funcion");
+                break;
+            case "Eliminar funcion":
+                System.out.println("eliminar funcion");
+                break;
+            case "Regresar funcion":
+                System.out.println("regresar a la pestaña funcion");
+                showAdminPanel("funciones");
+                break;
+            case "Confirmar funcion":
+                System.out.println("funcion agregada");
+                adminView.getShowtimesFormPanel().setAction("Agregar");
+                showAdminPanel("funciones");
+                break;
+            case "Confirmar cambios de funcion":
+                System.out.println("cambios guardados de funcion");
+                adminView.getShowtimesFormPanel().setAction("Editar");
+                showAdminPanel("funciones");
+                break;
+            case "Salas":
+                System.out.println("salas");
+                showAdminPanel("salas");
+                break;
+            case "Agregar sala":
+                System.out.println("agregando sala");
+                adminView.getRoomsFormPanel().setAction("Agregar");
+                showAdminPanel("agregar/editar sala");
+                break;
+            case "Editar sala":
+                System.out.println("editar sala");
+                adminView.getRoomsFormPanel().setAction("Editar");
+                showAdminPanel("agregar/editar sala");
+                break;
+            case "Eliminar sala":
+                System.out.println("eliminar sala");
+                break;
+            case "Regresar sala":
+                System.out.println("regresando a sala");
+                showAdminPanel("salas");
+                break;
+            case "Confirmar sala":
+                System.out.println("confirmando sala");
+                adminView.getRoomsFormPanel().setAction("Agregar");
+                showAdminPanel("salas");
+                break;
+            case "Confirmar cambios de sala":
+                System.out.println("confirmando cambios de sala");
+                adminView.getRoomsFormPanel().setAction("Editar");
+                showAdminPanel("salas");
                 break;
         }
     }
@@ -188,7 +250,7 @@ public class AdminController implements ActionListener {
         try {
             Employee employee = createEmployeeForEdit();
 
-            String plainPassword = adminView.getAddEmployeePanel().getEmpPass();
+            String plainPassword = adminView.getEmployeeFormPanel().getEmpPass();
 
             int rowIndex = empTable.getRowById(employee.getIdEmployee());
             if (rowIndex == -1) {
@@ -206,7 +268,7 @@ public class AdminController implements ActionListener {
 
                 if (Employee.updateEmployee(employee)) {
                     empTable.setRowData(rowIndex, employee);
-                    adminView.getAddEmployeePanel().clearFields();
+                    adminView.getEmployeeFormPanel().clearFields();
                     System.out.println("se han efectuado los cambios");
                     JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
                 } else {
@@ -214,8 +276,8 @@ public class AdminController implements ActionListener {
                 }
             }else{
                 JOptionPane.showMessageDialog(frame, "Contraseña incorrecta","Error", JOptionPane.ERROR_MESSAGE);
-                adminView.getAddEmployeePanel().setAddEmpPass("");
-                adminView.getAddEmployeePanel().setAddEmpConfirmPass("");
+                adminView.getEmployeeFormPanel().setAddEmpPass("");
+                adminView.getEmployeeFormPanel().setAddEmpConfirmPass("");
             }
         }catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
@@ -225,37 +287,37 @@ public class AdminController implements ActionListener {
     public void fillFieldsEmp(){
         Employee employee = empTable.getRowData(adminView.getEmployeePanel().getEmployeesTable().getSelectedRow());
         adminView.getEmployeePanel().setIdEmployee(employee.getIdEmployee());
-        adminView.getAddEmployeePanel().setAddEmpName(employee.getFirstName());
-        adminView.getAddEmployeePanel().setAddEmpLastName(employee.getLastName());
-        adminView.getAddEmployeePanel().setEmpType(employee.getEmployeeType());
-        adminView.getAddEmployeePanel().setEmpUser(employee.getUsername());
+        adminView.getEmployeeFormPanel().setAddEmpName(employee.getFirstName());
+        adminView.getEmployeeFormPanel().setAddEmpLastName(employee.getLastName());
+        adminView.getEmployeeFormPanel().setEmpType(employee.getEmployeeType());
+        adminView.getEmployeeFormPanel().setEmpUser(employee.getUsername());
     }
 
     // Crea el objeto empleado que se usara en el metodo addEmployee
     public Employee createEmployee() {
-        String name = adminView.getAddEmployeePanel().getEmpName();
-        String lastName = adminView.getAddEmployeePanel().getEmpLastName();
-        String employeeType = (String)adminView.getAddEmployeePanel().getEmpType().getSelectedItem();
-        String empUsername = adminView.getAddEmployeePanel().getEmpUser();
+        String name = adminView.getEmployeeFormPanel().getEmpName();
+        String lastName = adminView.getEmployeeFormPanel().getEmpLastName();
+        String employeeType = (String)adminView.getEmployeeFormPanel().getEmpType().getSelectedItem();
+        String empUsername = adminView.getEmployeeFormPanel().getEmpUser();
 
         if (!Employee.isUsernameAvailable(empUsername)) {
             JOptionPane.showMessageDialog(frame, "El nombre de usuario ya existe. Intenta con otro.");
-            adminView.getAddEmployeePanel().setEmpUser("");
+            adminView.getEmployeeFormPanel().setEmpUser("");
             return null;
         }
 
-        String empPassword = adminView.getAddEmployeePanel().getEmpPass();
+        String empPassword = adminView.getEmployeeFormPanel().getEmpPass();
 
         return new Employee(adminView.getEmployeePanel().getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
     }
 
     // Crea un empleado sin validar el nombre de usuario (para edición)
     public Employee createEmployeeForEdit() {
-        String name = adminView.getAddEmployeePanel().getEmpName();
-        String lastName = adminView.getAddEmployeePanel().getEmpLastName();
-        String employeeType = (String)adminView.getAddEmployeePanel().getEmpType().getSelectedItem();
-        String empUsername = adminView.getAddEmployeePanel().getEmpUser();
-        String empPassword = adminView.getAddEmployeePanel().getEmpPass();
+        String name = adminView.getEmployeeFormPanel().getEmpName();
+        String lastName = adminView.getEmployeeFormPanel().getEmpLastName();
+        String employeeType = (String)adminView.getEmployeeFormPanel().getEmpType().getSelectedItem();
+        String empUsername = adminView.getEmployeeFormPanel().getEmpUser();
+        String empPassword = adminView.getEmployeeFormPanel().getEmpPass();
 
         return new Employee(adminView.getEmployeePanel().getIdEmployee(), name, lastName, employeeType, empUsername, empPassword);
     }
@@ -295,16 +357,16 @@ public class AdminController implements ActionListener {
 
     //valida que los campos esten llenos
     public boolean validateForm(){
-        if (adminView.getAddEmployeePanel().getEmpName().isBlank() ||
-            adminView.getAddEmployeePanel().getEmpLastName().isBlank()||
-            adminView.getAddEmployeePanel().getEmpType().getSelectedIndex() == 0 ||
-            adminView.getAddEmployeePanel().getEmpUser().isBlank() ||
-            adminView.getAddEmployeePanel().getEmpPass().isBlank() ||
-            adminView.getAddEmployeePanel().getEmpPassConfirm().isBlank()) {
+        if (adminView.getEmployeeFormPanel().getEmpName().isBlank() ||
+            adminView.getEmployeeFormPanel().getEmpLastName().isBlank()||
+            adminView.getEmployeeFormPanel().getEmpType().getSelectedIndex() == 0 ||
+            adminView.getEmployeeFormPanel().getEmpUser().isBlank() ||
+            adminView.getEmployeeFormPanel().getEmpPass().isBlank() ||
+            adminView.getEmployeeFormPanel().getEmpPassConfirm().isBlank()) {
             JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
                     "Campos vacíos", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (!adminView.getAddEmployeePanel().validatePassField()) {
+        } else if (!adminView.getEmployeeFormPanel().validatePassField()) {
             JOptionPane.showMessageDialog(frame, "Los campos de contraseña no coinciden.");
             return false;
         }

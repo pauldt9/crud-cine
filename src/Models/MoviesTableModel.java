@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MoviesTableModel extends AbstractTableModel {
     private ArrayList<MovieShowtime> data = new ArrayList<MovieShowtime>();
-    private String column[] = {"Titulo", "Duracion", "Genero", "Clasificacion","Horario", "Sala"};
+    private String column[] = {"Titulo", "Duracion", "Genero", "Clasificacion"};
 
     @Override
     public int getRowCount() {
@@ -38,10 +38,6 @@ public class MoviesTableModel extends AbstractTableModel {
                 return movie.getGenre();
             case 3:
                 return movie.getClassification();
-            case 4:
-                return showtime.getShowTime();
-            case 5:
-                return room.getRoomName();
         }
         return null;
     }

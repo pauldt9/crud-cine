@@ -9,26 +9,22 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class AddMovieForm extends JPanel {
+public class ShowtimesForm extends JPanel {
     private String action;
-
-    private JButton confirmEmp;
-    private JButton backButton;
-    private JButton addImage;
-
-    private Color bgColButtons = new Color(245, 245, 245);
-    private Color fgColor = new Color(0x2C3E50);
-
     private JLabel panelTitle;
+
+    private Color fgColor = new Color(0x2C3E50);
+    private Color bgColButtons = new Color(245, 245, 245);
+
+//    private JButton confirmButton;
+    private JButton backButton;
 
     /*----------Campos del formulario----------*/
     private JTextField addMovieTitle;
-    private JTextField addDuration;
-    private JComboBox<String> addGenre;
-    private JComboBox<String> addClassification;
-    private JTextField addShowtime;
+    private JComboBox<String> addShowtime;
+    private JComboBox<String> addRoom;
 
-    public AddMovieForm(){
+    public ShowtimesForm(){
         setLayout(new BorderLayout());
         setOpaque(false);
 
@@ -39,7 +35,7 @@ public class AddMovieForm extends JPanel {
         add(topPanel, BorderLayout.NORTH);
 
         backButton = createButton(null, 1, 45, 45);
-        backButton.setActionCommand("Regresar pelicula");
+        backButton.setActionCommand("Regresar funcion");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
         backButton.setBackground(bgColButtons);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
@@ -68,7 +64,7 @@ public class AddMovieForm extends JPanel {
 
         //aqui van los campos
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(4, 2, 30, 30));
+        formPanel.setLayout(new GridLayout(2, 2, 30, 30));
         formPanel.setOpaque(false);
         add(formPanel, BorderLayout.CENTER);
 
@@ -79,54 +75,14 @@ public class AddMovieForm extends JPanel {
         addMovieTitle.setForeground(fgColor);
         formPanel.add(addMovieTitle);
 
-        addDuration = createTextField("Ingresar duracion", 350, 50);
-        addDuration.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addDuration.setBorder(BorderFactory.createCompoundBorder(addDuration.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        addDuration.setBackground(bgColButtons);
-        addDuration.setForeground(fgColor);
-        formPanel.add(addDuration);
-
-        String[] genres = {"-----Genero-----", "Accion", "Aventura", "Comedia", "Drama", "Terror", "Ciencia ficción",
-        "Fantasia", "Suspenso", "Animacion", "Romance", "Musical", "Documental"};
-        addGenre = new JComboBox<String>(genres);
-        addGenre.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addGenre.setBackground(bgColButtons);
-        addGenre.setForeground(fgColor);
-        addGenre.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
-        addGenre.setMaximumSize(new Dimension(350, 50));
-        formPanel.add(addGenre);
-
-        String[] classifications = {"-----Clasificacion-----", "AA", "A", "B", "B15", "C"};
-        addClassification = new JComboBox<String>(classifications);
-        addClassification.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addClassification.setBackground(bgColButtons);
-        addClassification.setForeground(fgColor);
-        addClassification.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
-        addClassification.setMaximumSize(new Dimension(350, 50));
-        formPanel.add(addClassification);
-
-        addShowtime = createTextField("Ingresar Horario", 350, 50);
+        String[] schedules = {"12:00", "14:00", "16:00", "18:00", "20:00"};
+        addShowtime = new JComboBox<String>(schedules);
         addShowtime.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addShowtime.setBorder(BorderFactory.createCompoundBorder(addShowtime.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         addShowtime.setBackground(bgColButtons);
         addShowtime.setForeground(fgColor);
+        addShowtime.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addShowtime.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addShowtime);
-
-        addImage = createButton("Agregar Imagen", 15, 350, 50);
-        addImage.setActionCommand("Agregar imagen");
-        addImage.setForeground(fgColor);
-        addImage.setBackground(bgColButtons);
-        addImage.setAlignmentX(Component.LEFT_ALIGNMENT);
-        formPanel.add(addImage);
-
-        confirmEmp = createButton("Confirmar", 15, 350, 50);
-        confirmEmp.setActionCommand("Confirmar funcion");
-        confirmEmp.setForeground(fgColor);
-        confirmEmp.setBackground(bgColButtons);
-        confirmEmp.setAlignmentX(Component.LEFT_ALIGNMENT);
-        formPanel.add(confirmEmp);
-
-        formPanel.add(new JLabel());
 
         try {
             Image backIcon = ImageIO.read(getClass().getResource("/img/back.png"));
@@ -184,8 +140,7 @@ public class AddMovieForm extends JPanel {
     }
 
     public void setListeners(ActionListener listener){
-        confirmEmp.addActionListener(listener);
-        addImage.addActionListener(listener);
+//        confirmButton.addActionListener(listener);
         backButton.addActionListener(listener);
     }
 
@@ -193,10 +148,10 @@ public class AddMovieForm extends JPanel {
         this.action = action;
         if (action.equals("Agregar")){
             panelTitle.setText("Agregar Funcion");
-            confirmEmp.setActionCommand("Confirmar funcion");
+//            confirmButton.setActionCommand("Confirmar funcion");
         } else {
             panelTitle.setText("Actualizar Funcion");
-            confirmEmp.setActionCommand("Confirmar cambios de funcion");
+//            confirmButton.setActionCommand("Confirmar cambios de funcion");
         }
     }
 }

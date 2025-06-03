@@ -1,37 +1,34 @@
 package View;
 
-import Models.MoviesTableModel;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 
-public class MoviesViewAdmin extends JPanel {
-    private JLabel moviesLbl;
+public class ShowtimesView extends JPanel {
+    private JLabel titleLbl;
 
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColButtons = new Color(245, 245, 245);
 
-    private JButton addMov;
-    private JButton deleteMov;
-    private JButton editMov;
+    private JButton addShowtime;
+    private JButton deleteShowtime;
+    private JButton editShowtime;
 
-    private JTable moviesTable;
-    private MoviesTableModel moviesTableModel;
+    private JTable showtimesTable;
 
-    private int idMovie; //Primary Key
+    private int idShowtime; //primary key
 
-    public MoviesViewAdmin(){
-        setLayout(new BorderLayout());
+    public ShowtimesView(){
         setOpaque(false);
+        setLayout(new BorderLayout());
 
-        moviesLbl = createJLabel("Peliculas", 40, true);
-        moviesLbl.setForeground(fgColor);
-        moviesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
-        add(moviesLbl, BorderLayout.NORTH);
+        //titulo
+        titleLbl = createJLabel("Funciones", 40, true);
+        titleLbl.setForeground(fgColor);
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
+        add(titleLbl, BorderLayout.NORTH);
 
         //Paneles vacios
         JPanel emptyEast = createEmptyPanel();
@@ -46,36 +43,36 @@ public class MoviesViewAdmin extends JPanel {
         JPanel movButtonPanel = createButtonsPanel();
         add(movButtonPanel, BorderLayout.SOUTH);
 
-        addMov = createButton("Agregar", 15, 120, 40);
-        addMov.setActionCommand("Agregar pelicula");
-        addMov.setBackground(bgColButtons);
-        addMov.setForeground(fgColor);
-        movButtonPanel.add(addMov);
+        addShowtime = createButton("Agregar", 15, 120, 40);
+        addShowtime.setActionCommand("Agregar funcion");
+        addShowtime.setBackground(bgColButtons);
+        addShowtime.setForeground(fgColor);
+        movButtonPanel.add(addShowtime);
 
-        editMov = createButton("Editar", 15, 120, 40);
-        editMov.setActionCommand("Editar pelicula");
-        editMov.setBackground(bgColButtons);
-        editMov.setForeground(fgColor);
-        movButtonPanel.add(editMov);
+        editShowtime = createButton("Editar", 15, 120, 40);
+        editShowtime.setActionCommand("Editar funcion");
+        editShowtime.setBackground(bgColButtons);
+        editShowtime.setForeground(fgColor);
+        movButtonPanel.add(editShowtime);
 
-        deleteMov = createButton("Eliminar", 15 , 120, 40);
-        deleteMov.setActionCommand("Eliminar pelicula");
-        deleteMov.setBackground(bgColButtons);
-        deleteMov.setForeground(fgColor);
-        movButtonPanel.add(deleteMov);
+        deleteShowtime = createButton("Eliminar", 15 , 120, 40);
+        deleteShowtime.setActionCommand("Eliminar funcion");
+        deleteShowtime.setBackground(bgColButtons);
+        deleteShowtime.setForeground(fgColor);
+        movButtonPanel.add(deleteShowtime);
 
         try {
             Image deleteIcon = ImageIO.read(getClass().getResource("/img/remove.png"));
             deleteIcon = deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            deleteMov.setIcon(new ImageIcon(deleteIcon));
+            deleteShowtime.setIcon(new ImageIcon(deleteIcon));
 
             Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
             editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            editMov.setIcon(new ImageIcon(editIcon));
+            editShowtime.setIcon(new ImageIcon(editIcon));
 
             Image addIcon = ImageIO.read(getClass().getResource("/img/add.png"));
             addIcon = addIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            addMov.setIcon(new ImageIcon(addIcon));
+            addShowtime.setIcon(new ImageIcon(addIcon));
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
@@ -120,48 +117,20 @@ public class MoviesViewAdmin extends JPanel {
     }
 
     public void initMovTable(){
-        moviesTableModel = new MoviesTableModel();
-        moviesTable = new JTable(moviesTableModel);
 
-        JScrollPane scroll = new JScrollPane(moviesTable);
-        add(scroll, BorderLayout.CENTER);
     }
 
     public void setListeners(ActionListener listener){
-        addMov.addActionListener(listener);
-        deleteMov.addActionListener(listener);
-        editMov.addActionListener(listener);
+        addShowtime.addActionListener(listener);
+        editShowtime.addActionListener(listener);
+        deleteShowtime.addActionListener(listener);
     }
 
-    public JTable getMoviesTable(){
-        return moviesTable;
+    public int getIdShowtime() {
+        return idShowtime;
     }
 
-    public void setMoviesTable(JTable moviesTable) {
-        this.moviesTable = moviesTable;
-    }
-
-    public MoviesTableModel getMoviesTableModel() {
-        return moviesTableModel;
-    }
-
-    public void setMoviesTableModel(MoviesTableModel moviesTableModel) {
-        this.moviesTableModel = moviesTableModel;
-    }
-
-    public int getIdMovie() {
-        return idMovie;
-    }
-
-    public void setIdMovie(int idMovie) {
-        this.idMovie = idMovie;
-    }
-
-    public void tableListener(KeyListener listener){
-        moviesTable.addKeyListener(listener);
-    }
-
-    public void removeTableSelection(){
-        moviesTable.clearSelection();
+    public void setIdShowtime(int idShowtime) {
+        this.idShowtime = idShowtime;
     }
 }
