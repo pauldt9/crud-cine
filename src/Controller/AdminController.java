@@ -55,14 +55,6 @@ public class AdminController implements ActionListener {
                 System.out.println("menu");
                 showAdminPanel("menu");
                 break;
-            case "Peliculas":
-                System.out.println("peliculas");
-                showAdminPanel("peliculas");
-                break;
-            case "Empleados":
-                System.out.println("empleados");
-                showAdminPanel("empleados");
-                break;
             case "Ventas":
                 System.out.println("ventas");
                 showAdminPanel("ventas");
@@ -74,6 +66,11 @@ public class AdminController implements ActionListener {
             case "Modo Claro":
                 System.out.println("cambiar a claro");
                 adminView.setViewMode("Modo Oscuro");
+                break;
+            //Acciones Empleados
+            case "Empleados":
+                System.out.println("empleados");
+                showAdminPanel("empleados");
                 break;
             case "Agregar empleado":
                 System.out.println("agregar empleado");
@@ -98,6 +95,27 @@ public class AdminController implements ActionListener {
                 deleteEmployee();
                 loadEmployees();
 
+                break;
+            case "Confirmar empleado":
+                System.out.println("se ha agregado un usuario nuevo");
+                adminView.getAddEmployeePanel().setAction("Registrar");
+                addEmployee();
+                adminView.getAddEmployeePanel().clearFields();
+                break;
+            case "Confirmar cambios de empleado":
+                adminView.getAddEmployeePanel().setAction("Editar");
+                saveChanges();
+                loadEmployees();
+                showAdminPanel("Empleados");
+                break;
+            case "Regresar empleado":
+                System.out.println("El usuario se ha regresado al apartado empleado");
+                showAdminPanel("empleados");
+                break;
+            //Acciones Peliculas
+            case "Peliculas":
+                System.out.println("peliculas");
+                showAdminPanel("peliculas");
                 break;
             case "Regresar pelicula":
                 System.out.println("se ha regresado a pelicula");
@@ -134,25 +152,12 @@ public class AdminController implements ActionListener {
 
                 showAdminPanel("peliculas");
                 break;
-            case "Confirmar empleado":
-                System.out.println("se ha agregado un usuario nuevo");
-                adminView.getAddEmployeePanel().setAction("Registrar");
-                addEmployee();
-                adminView.getAddEmployeePanel().clearFields();
-                break;
-            case "Confirmar cambios de empleado":
-                adminView.getAddEmployeePanel().setAction("Editar");
-                saveChanges();
-                loadEmployees();
-                showAdminPanel("Empleados");
-                break;
-            case "Regresar empleado":
-                System.out.println("El usuario se ha regresado al apartado empleado");
-                showAdminPanel("empleados");
-                break;
+
 
         }
     }
+
+
 
     private void deleteEmployee() {
         int selectedRow = adminView.getEmployeePanel().getEmployeesTable().getSelectedRow();
@@ -213,9 +218,13 @@ public class AdminController implements ActionListener {
                 }
             }else{
                 JOptionPane.showMessageDialog(frame, "Contraseña incorrecta","Error", JOptionPane.ERROR_MESSAGE);
+                adminView.getAddEmployeePanel().setAddEmpPass(null);
+                adminView.getAddEmployeePanel().setAddEmpConfirmPass(null);
             }
         }catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            adminView.getAddEmployeePanel().setAddEmpPass(null);
+            adminView.getAddEmployeePanel().setAddEmpConfirmPass(null);
         }
 
     }
@@ -327,4 +336,6 @@ public class AdminController implements ActionListener {
         CardLayout card = (CardLayout) (adminView.getMainPanel().getLayout());
         card.show(adminView.getMainPanel(), namePanel);
     }
+
+
 }

@@ -208,7 +208,6 @@ public class Employee {
     }
 
     //este metodo verifica si hay alguna coincidencia de nombre de usuario en la base de datos
-    //metodo chango
     public static boolean isUsernameAvailable(String username) {
         String query = "SELECT COUNT(*) FROM employees WHERE username = ?";
 
