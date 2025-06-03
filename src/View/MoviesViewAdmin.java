@@ -1,6 +1,7 @@
 package View;
 
-import Models.MovieShowtimeTableModel;
+import Models.MoviesTableModel;
+import Models.MoviesTableModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class MoviesViewAdmin extends JPanel {
     private JButton editMov;
 
     private JTable moviesTable;
-    private MovieShowtimeTableModel moviesTableModel;
+    private MoviesTableModel moviesTableModel;
 
     private int idMovie; //Primary Key
 
@@ -120,7 +121,7 @@ public class MoviesViewAdmin extends JPanel {
     }
 
     public void initMovTable(){
-        moviesTableModel = new MovieShowtimeTableModel();
+        moviesTableModel = new MoviesTableModel();
         moviesTable = new JTable(moviesTableModel);
 
         JScrollPane scroll = new JScrollPane(moviesTable);
@@ -141,11 +142,11 @@ public class MoviesViewAdmin extends JPanel {
         this.moviesTable = moviesTable;
     }
 
-    public MovieShowtimeTableModel getMoviesTableModel() {
+    public MoviesTableModel getMoviesTableModel() {
         return moviesTableModel;
     }
 
-    public void setMoviesTableModel(MovieShowtimeTableModel moviesTableModel) {
+    public void setMoviesTableModel(MoviesTableModel moviesTableModel) {
         this.moviesTableModel = moviesTableModel;
     }
 
