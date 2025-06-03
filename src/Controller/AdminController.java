@@ -204,6 +204,8 @@ public class AdminController implements ActionListener {
             String currentHashedPassword = original.getPassword();
 
             System.out.println("ID: "+ employee.getIdEmployee());
+
+
             if (PasswordUtils.checkPassword(plainPassword,currentHashedPassword )) {
 
                 employee.setPassword(PasswordUtils.hashPassword(plainPassword));
@@ -272,7 +274,6 @@ public class AdminController implements ActionListener {
     public void addEmployee(){
         if(!validateForm()) return;
         Employee emp = createEmployee();
-        emp.setPassword(PasswordUtils.hashPassword(emp.getPassword()));
 
         int idUser = Employee.addEmployee(emp);
 

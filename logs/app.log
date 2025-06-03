@@ -698,6 +698,8 @@ Jun 02, 2025 1:40:01 AM utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
 jun 02, 2025 1:46:01 A.M. utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:11:47 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
 jun 02, 2025 2:45:34 A.M. utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
 Jun 02, 2025 2:16:09 AM utils.MySQLConnection connect
@@ -1021,4 +1023,274 @@ INFO: Conexión exitosa a la base de datos
 jun 02, 2025 5:08:46 P.M. utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
 jun 02, 2025 5:08:52 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:13:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:13:44 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:13:44 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:13:56 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:13:57 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:06 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:07 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:21 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:21 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:28 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:30 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:45 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:14:46 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:15:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:15:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:15:24 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:15:25 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:15:47 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:20:10 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:20:20 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:20:20 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:21:41 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:21:41 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:33:30 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:33:41 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:33:41 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:33:48 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:33:48 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:34:00 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:34:01 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:34:08 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:16 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:25 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:25 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:35 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:36 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:42 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:43 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:53 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:56 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:49:59 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:00 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:05 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:06 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:13 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:29 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:29 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:47 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:48 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:50:54 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:51:11 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:51:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:51:18 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:51:19 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:02 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:03 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:41 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:48 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:52:48 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:00 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:04 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:13 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:14 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:17 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:19 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:23 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:27 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:31 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:32 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:53:59 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:06 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:07 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:13 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:23 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:30 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:34 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:37 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:38 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:57 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:54:57 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:05 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:05 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:11 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:11 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:17 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:17 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:30 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:55:30 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:56:58 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:03 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:07 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:08 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:15 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:16 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:17 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:20 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:57:21 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:24 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:24 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:33 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:34 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:37 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:37 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:45 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:48 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 5:59:52 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:00:00 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:00:09 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:00:15 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:00:17 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:00:18 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:00:23 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:36:37 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:36:42 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:36:43 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:36:52 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:36:52 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:36:59 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:11 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:12 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:13 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:21 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:22 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:33 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:37 P.M. utils.MySQLConnection connect
+INFO: Conexión exitosa a la base de datos
+jun 02, 2025 6:37:37 P.M. utils.MySQLConnection connect
 INFO: Conexión exitosa a la base de datos
