@@ -106,7 +106,7 @@ public class AdminController implements ActionListener {
                 adminView.getAddEmployeePanel().setAction("Editar");
                 saveChanges();
                 loadEmployees();
-                showAdminPanel("Empleados");
+                showAdminPanel("empleados");
                 break;
             case "Regresar empleado":
                 System.out.println("El usuario se ha regresado al apartado empleado");
@@ -214,11 +214,12 @@ public class AdminController implements ActionListener {
                 }
             }else{
                 JOptionPane.showMessageDialog(frame, "Contraseña incorrecta","Error", JOptionPane.ERROR_MESSAGE);
+                adminView.getAddEmployeePanel().setAddEmpPass("");
+                adminView.getAddEmployeePanel().setAddEmpConfirmPass("");
             }
         }catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     public void fillFieldsEmp(){
