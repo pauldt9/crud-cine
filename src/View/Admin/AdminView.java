@@ -1,5 +1,6 @@
 package View.Admin;
 
+import Models.Employee;
 import View.Admin.EmployeeManagement.EmployeeForm;
 import View.Admin.EmployeeManagement.EmployeeMain;
 import View.Admin.MovieManagement.MovieForm;
@@ -125,7 +126,7 @@ public class AdminView extends JPanel {
         summaryLbl.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
         menuPanel.add(summaryLbl);
 
-        numEmployees = createJLabel("Cantidad de empleados: " + "#no. empleado", 15, true);
+        numEmployees = createJLabel("Cantidad de empleados: " + Employee.getNumEmployees(), 15, true);
         numEmployees.setForeground(fgColor);
         numEmployees.setAlignmentX(Component.LEFT_ALIGNMENT);
         numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
@@ -363,6 +364,11 @@ public class AdminView extends JPanel {
         showtimesFormPanel.setListeners(listener);
         roomsPanel.setListeners(listener);
         roomsFormPanel.setListeners(listener);
+        salesMain.setListeners(listener);
+    }
+
+    public void updateNumEmployees(){
+        numEmployees.setText("Cantidad de empleados: " + Employee.getNumEmployees());
     }
 
     //Cambiar modos (dark mode) posiblemente lo voy a quitar

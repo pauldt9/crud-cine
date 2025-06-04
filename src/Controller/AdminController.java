@@ -101,6 +101,7 @@ public class AdminController implements ActionListener {
                 adminView.getEmployeeFormPanel().clearFields();
                 showAdminPanel("agregar/editar empleado");
                 adminView.getEmployeeFormPanel().setAction("Registrar");
+                adminView.updateNumEmployees();
                 break;
             case "Editar empleado":
                 System.out.println("editar empleado");
@@ -118,7 +119,7 @@ public class AdminController implements ActionListener {
 
                 deleteEmployee();
                 loadEmployees();
-
+                adminView.updateNumEmployees();
                 break;
             case "Confirmar empleado":
                 System.out.println("se ha agregado un usuario nuevo");
@@ -252,6 +253,12 @@ public class AdminController implements ActionListener {
                 System.out.println("confirmando cambios de sala");
                 adminView.getRoomsFormPanel().setAction("Editar");
                 showAdminPanel("salas");
+                break;
+            case "Eliminar venta":
+                System.out.println("venta eliminada");
+                break;
+            case "Generar pdf":
+                System.out.println("generando pdf");
                 break;
         }
     }

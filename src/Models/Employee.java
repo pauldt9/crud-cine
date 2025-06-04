@@ -207,6 +207,25 @@ public class Employee {
 
     }
 
+    public static int getNumEmployees(){
+        int count = 0;
+        String query = "SELECT COUNT(*) AS total FROM employees";
+
+        try (Connection conn = MySQLConnection.connect();
+            Statement st = (Statement)conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+        ){
+            while(rs.next()){
+                count = rs.getInt("total");
+            }
+
+        } catch (SQLException e){
+            System.out.println("Hubo un error: " + e.getMessage());
+        }
+
+        return count;
+    }
+
 //    //este metodo verifica si hay alguna coincidencia de nombre de usuario en la base de datos
 //    public static boolean isUsernameAvailable(String username) {
 //        String query = "SELECT COUNT(*) FROM employees WHERE username = ?";
