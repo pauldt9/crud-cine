@@ -11,13 +11,15 @@ public class Movie {
     private int duration;
     private String genre;
     private String classification;
+    private String imgRoute;
 
-    public Movie(int idMovie, String title, int duration, String genre, String classification) {
+    public Movie(int idMovie, String title, int duration, String genre, String classification, String imgRoute) {
         this.idMovie = idMovie;
         this.title = title;
         this.duration = duration;
         this.genre = genre;
         this.classification = classification;
+        this.imgRoute = imgRoute;
     }
 
     public int getIdMovie() {
@@ -60,6 +62,13 @@ public class Movie {
         this.classification = classification;
     }
 
+    public String getImgRoute() {
+        return imgRoute;
+    }
+    public void setImgRoute(String imgRoute) {
+        this.imgRoute = imgRoute;
+    }
+
     public static ArrayList<Movie> getMovies() {
         ArrayList<Movie> movies = new ArrayList<>();
         String query = "SELECT * FROM movies";
@@ -76,7 +85,8 @@ public class Movie {
                         rs.getString("title"),
                         rs.getInt("duration"),
                         rs.getString("genre"),
-                        rs.getString("classification")
+                        rs.getString("classification"),
+                        rs.getString("imgRoute")
                 ));
             }
 
@@ -103,7 +113,8 @@ public class Movie {
                         rs.getString("title"),
                         rs.getInt("duration"),
                         rs.getString("genre"),
-                        rs.getString("classification")
+                        rs.getString("classification"),
+                        rs.getString("imgRoute")
                 );
             }
 
@@ -117,8 +128,8 @@ public class Movie {
     public static int addMovie(Movie movie) {
 
         int id = 0;
-        String query = "INSERT INTO movies " + "(title,duration,genre,classification)"
-                + "VALUES (?,?,?,?)";
+        String query = "INSERT INTO movies " + "(title,duration,genre,classification,imgRoute)"
+                + "VALUES (?,?,?,?,?)";
         int created = 0;
 
         try (Connection connection = MySQLConnection.connect();
@@ -128,6 +139,7 @@ public class Movie {
             pst.setInt(2, movie.getDuration());
             pst.setString(3, movie.getGenre());
             pst.setString(4, movie.getClassification());
+            pst.setString(5, movie.getImgRoute());
 
             created = pst.executeUpdate();
 
@@ -144,7 +156,7 @@ public class Movie {
 
     public static boolean updateMovie(Movie movie) {
         String query = "UPDATE movies SET title = ?,duration = ?," +
-                "genre = ?,classification = ? WHERE idMovie = ?";
+                "genre = ?,classification = ?,imgRoute = ? WHERE idMovie = ?";
         int updated = 0;
 
         try (
@@ -155,7 +167,9 @@ public class Movie {
             pst.setInt(2, movie.getDuration());
             pst.setString(3, movie.getGenre());
             pst.setString(4, movie.getClassification());
-            pst.setInt(5, movie.getIdMovie());
+            pst.setString(5, movie.getImgRoute());
+            pst.setInt(6, movie.getIdMovie());
+
 
             updated = pst.executeUpdate();
             return updated > 0;

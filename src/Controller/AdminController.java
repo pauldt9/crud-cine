@@ -7,14 +7,17 @@ import Models.MoviesTableModel;
 import View.LoginPanel;
 import View.AdminView;
 import View.MoviesViewAdmin;
+import utils.ImageService;
 import utils.PasswordUtils;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 public class AdminController implements ActionListener {
@@ -28,6 +31,7 @@ public class AdminController implements ActionListener {
 
     private ArrayList<Movie> movies;
     private MoviesTableModel movTable;
+    private String finalRoute = null;
 
     public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
         this.loginPanel = loginPanel;
@@ -166,6 +170,12 @@ public class AdminController implements ActionListener {
                 break;
             case "Agregar imagen":
                 System.out.println("se ha agregado una imagen");
+                String route = chooseImage();
+
+                if (route != null) {
+                    finalRoute = route;
+                    JOptionPane.showMessageDialog(frame, "Imagen agregada correctamente");
+                }
                 break;
             case "Confirmar pelicula":
                 System.out.println("se ha agregado una pelicula");
@@ -246,13 +256,46 @@ public class AdminController implements ActionListener {
         }
     }
 
-    public void fillFieldsMovie(){
-        Movie movie = movTable.getRowData(adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow());
-        adminView.getMoviesViewAdminPanel().setIdMovie(movie.getIdMovie());
-        adminView.getMovieForm().setAddMovieTitle(movie.getTitle());
-        adminView.getMovieForm().setAddDuration(String.valueOf(movie.getDuration()));
-        adminView.getMovieForm().setAddGenre(movie.getGenre());
-        adminView.getMovieForm().setAddClassification(movie.getClassification());
+    private String chooseImage() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("Imagenes", "png", "jpg", "JPEG"));
+        int result = chooser.showOpenDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            String fileName = file.getName();
+
+            String route = ImageService.saveImage(file, fileName);
+
+            if (route != null) {
+                return route;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar la imagen.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una imagen.");
+        }
+
+        return null;
+    }
+
+
+    public void fillFieldsMovie() {
+        int selectedRow = adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow();
+        int movieId = movTable.getRowData(selectedRow).getIdMovie();
+
+        Movie movie = Movie.getMovie(movieId);
+        if (movie != null) {
+            adminView.getMoviesViewAdminPanel().setIdMovie(movie.getIdMovie());
+            adminView.getMovieForm().setAddMovieTitle(movie.getTitle());
+            adminView.getMovieForm().setAddDuration(String.valueOf(movie.getDuration()));
+            adminView.getMovieForm().setAddGenre(movie.getGenre());
+            adminView.getMovieForm().setAddClassification(movie.getClassification());
+            finalRoute = movie.getImgRoute();
+        } else {
+            System.out.println("No se encontró la película en la base de datos.");
+        }
     }
 
     private void deleteMovie() {
@@ -306,6 +349,8 @@ public class AdminController implements ActionListener {
 
         }catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + "La pelicula ya existe. Intenta con otra.","Error", JOptionPane.ERROR_MESSAGE);
+        }finally {
+            finalRoute = null;
         }
     }
 
@@ -328,8 +373,9 @@ public class AdminController implements ActionListener {
         int duration = Integer.parseInt(adminView.getMovieForm().getAddDuration().getText());
         String genre = (String)adminView.getMovieForm().getAddGenre().getSelectedItem();
         String classification = (String)adminView.getMovieForm().getAddClassification().getSelectedItem();
+        String imgRoute = finalRoute;
 
-        return new Movie(adminView.getMoviesViewAdminPanel().getIdMovie(),title,duration,genre,classification);
+        return new Movie(adminView.getMoviesViewAdminPanel().getIdMovie(),title,duration,genre,classification, imgRoute);
     }
 
     public void addMovie() {
@@ -354,6 +400,8 @@ public class AdminController implements ActionListener {
                     "La pelicula ya existe. Intenta con otra.",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+        }finally {
+            finalRoute = null;
         }
     }
 
@@ -526,7 +574,8 @@ public class AdminController implements ActionListener {
         if (adminView.getMovieForm().getMovieTitle().isBlank() ||
             adminView.getMovieForm().getDuration() == 0 ||
             adminView.getMovieForm().getGenre().getSelectedIndex() == 0 ||
-            adminView.getMovieForm().getClassification().getSelectedIndex() == 0) {
+            adminView.getMovieForm().getClassification().getSelectedIndex() == 0 ||
+            finalRoute == null ) {
 
             JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
                     "Campos vacíos", JOptionPane.ERROR_MESSAGE);
