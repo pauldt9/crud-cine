@@ -1,5 +1,6 @@
 package Controller;
 
+import View.Catalog;
 import View.EmployeeView;
 import View.LoginPanel;
 
@@ -12,12 +13,15 @@ public class EmployeeController implements ActionListener {
     private JFrame frame;
     private EmployeeView employeeView;
     private LoginPanel loginPanel;
+    private Catalog catalog;
 
-    public EmployeeController(JFrame frame, EmployeeView employeeView, LoginPanel loginPanel){
+    public EmployeeController(JFrame frame, EmployeeView employeeView, LoginPanel loginPanel, Catalog catalog){
         this.employeeView = employeeView;
         this.loginPanel = loginPanel;
         this.frame = frame;
+        this.catalog = catalog;
         this.employeeView.setListeners(this);
+        this.catalog.initMoviesCatalog(this);
     }
 
     @Override
@@ -28,12 +32,16 @@ public class EmployeeController implements ActionListener {
             case "Salir":
                 exit();
                 break;
-            case "Regresar al catalogo", "Inicio empleado":
+            case "Regresar al catalogo":
+            case "Inicio empleado":
                 showEmployeePanel("catalogo");
                 break;
             case "Funciones":
                 showEmployeePanel("seleccionar hora");
                 break;
+            default:
+                int idMovie = Integer.parseInt(command);
+                movieSelected(idMovie);
         }
     }
 
@@ -55,5 +63,7 @@ public class EmployeeController implements ActionListener {
         card.show(employeeView.getMainPanel(), namePanel);
     }
 
-
+    public void movieSelected(int idMovie){
+        System.out.println("ID pelicula: " + idMovie);
+    }
 }

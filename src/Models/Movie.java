@@ -13,6 +13,10 @@ public class Movie {
     private String classification;
     private String imgRoute;
 
+    public Movie(){
+
+    }
+
     public Movie(int idMovie, String title, int duration, String genre, String classification, String imgRoute) {
         this.idMovie = idMovie;
         this.title = title;
@@ -198,5 +202,7 @@ public class Movie {
         return deleted > 0;
 
     }
+
+
 
 }
