@@ -1,4 +1,4 @@
-package View;
+package View.Admin.ShowtimesManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

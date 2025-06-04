@@ -3,6 +3,9 @@ package View;
 import Controller.AdminController;
 import Controller.EmployeeController;
 import Controller.LoginController;
+import View.Admin.AdminView;
+import View.Employee.Catalog;
+import View.Employee.EmployeeView;
 
 import javax.swing.*;
 import java.awt.*;

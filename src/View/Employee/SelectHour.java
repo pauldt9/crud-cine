@@ -1,4 +1,4 @@
-package View;
+package View.Employee;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

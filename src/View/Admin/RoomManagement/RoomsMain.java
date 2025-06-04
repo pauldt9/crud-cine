@@ -1,6 +1,5 @@
-package View;
+package View.Admin.RoomManagement;
 
-import Models.MoviesTableModel;
 import Models.RoomsTableModel;
 
 import javax.imageio.ImageIO;
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 import static utils.CreateComponents.*;
 
-public class RoomsView extends JPanel {
+public class RoomsMain extends JPanel {
     private JLabel titleLbl;
 
     private Color fgColor = new Color(0x2C3E50);
@@ -26,7 +25,7 @@ public class RoomsView extends JPanel {
 
     private int idRoom; //primary key
 
-    public RoomsView(){
+    public RoomsMain(){
         setOpaque(false);
         setLayout(new BorderLayout());
 

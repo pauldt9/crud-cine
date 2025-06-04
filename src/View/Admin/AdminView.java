@@ -1,4 +1,14 @@
-package View;
+package View.Admin;
+
+import View.Admin.EmployeeManagement.EmployeeForm;
+import View.Admin.EmployeeManagement.EmployeeMain;
+import View.Admin.MovieManagement.MovieForm;
+import View.Admin.MovieManagement.MoviesMain;
+import View.Admin.RoomManagement.RoomsForm;
+import View.Admin.RoomManagement.RoomsMain;
+import View.Admin.SalesManagement.SalesMain;
+import View.Admin.ShowtimesManagement.ShowtimesForm;
+import View.Admin.ShowtimesManagement.ShowtimesView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,14 +36,14 @@ public class AdminView extends JPanel {
     private JButton roomsButton;
 
     //Vistas
-    private EmployeeManagement employeePanel;
+    private EmployeeMain employeePanel;
     private EmployeeForm employeeFormPanel;
-    private MoviesViewAdmin moviesPanel;
+    private MoviesMain moviesPanel;
     private MovieForm movieForm;
     private ShowtimesView showtimesPanel;
-    private SalesPanel salesPanel;
+    private SalesMain salesMain;
     private ShowtimesForm showtimesFormPanel;
-    private RoomsView roomsPanel;
+    private RoomsMain roomsPanel;
     private RoomsForm roomsFormPanel;
 
     //paneles
@@ -78,18 +88,18 @@ public class AdminView extends JPanel {
         add(mainPanel, BorderLayout.CENTER);
 
         menuPanel = new JPanel();
-        salesPanel = new SalesPanel();
-        employeePanel = new EmployeeManagement();
-        moviesPanel = new MoviesViewAdmin();
+        salesMain = new SalesMain();
+        employeePanel = new EmployeeMain();
+        moviesPanel = new MoviesMain();
         employeeFormPanel = new EmployeeForm();
         movieForm = new MovieForm();
         showtimesPanel = new ShowtimesView();
         showtimesFormPanel = new ShowtimesForm();
-        roomsPanel = new RoomsView();
+        roomsPanel = new RoomsMain();
         roomsFormPanel = new RoomsForm();
 
         mainPanel.add(menuPanel, "menu");
-        mainPanel.add(salesPanel, "ventas");
+        mainPanel.add(salesMain, "ventas");
         mainPanel.add(employeePanel, "empleados");
         mainPanel.add(moviesPanel, "peliculas");
         mainPanel.add(employeeFormPanel, "agregar/editar empleado");
@@ -380,7 +390,7 @@ public class AdminView extends JPanel {
             buttonTitleEmp.setForeground(fgColor);
 
             //peliculas
-            salesPanel.setBackground(Color.WHITE);
+            salesMain.setBackground(Color.WHITE);
             numEmployees.setForeground(fgColor);
             numMovies.setForeground(fgColor);
             totalSales.setForeground(fgColor);
@@ -416,7 +426,7 @@ public class AdminView extends JPanel {
             mainPanel.setBackground(new Color(0x1C1C2E));
             menuButtonsPanel.setBackground(new Color(0x1C1C2E));
 
-            salesPanel.setBackground(new Color(0x1C1C2E));
+            salesMain.setBackground(new Color(0x1C1C2E));
 
             title.setForeground(fgColor);
             userTitle.setForeground(fgColor);
@@ -466,7 +476,7 @@ public class AdminView extends JPanel {
         return employeeFormPanel;
     }
 
-    public EmployeeManagement getEmployeePanel(){
+    public EmployeeMain getEmployeePanel(){
         return employeePanel;
     }
 
@@ -486,7 +496,7 @@ public class AdminView extends JPanel {
         this.mainPanel = mainPanel;
     }
 
-    public MoviesViewAdmin getMoviesViewAdminPanel(){
+    public MoviesMain getMoviesViewAdminPanel(){
         return moviesPanel;
     }
 

@@ -5,8 +5,8 @@ import Models.EmployeeTableModel;
 import Models.Movie;
 import Models.MoviesTableModel;
 import View.LoginPanel;
-import View.AdminView;
-import View.MoviesViewAdmin;
+import View.Admin.AdminView;
+import View.Admin.MovieManagement.MoviesMain;
 import utils.ImageService;
 import utils.PasswordUtils;
 
@@ -24,7 +24,7 @@ public class AdminController implements ActionListener {
     private LoginPanel loginPanel;
     private JFrame frame;
     private AdminView adminView;
-    private MoviesViewAdmin moviesViewAdmin;
+    private MoviesMain moviesMain;
 
     private ArrayList<Employee> employees;
     private EmployeeTableModel empTable;

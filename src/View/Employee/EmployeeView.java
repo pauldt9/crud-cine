@@ -1,4 +1,4 @@
-package View;
+package View.Employee;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,15 +11,15 @@ public class EmployeeView extends JPanel {
 
     private JPanel mainPanel;
     private Catalog catalogView;
-    private LeftPanelEmployee leftPanelEmployee;
+    private LeftPanel leftPanel;
     private SelectHour selectHourPanel;
 
     public EmployeeView(Catalog catalog) {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
-        leftPanelEmployee = new LeftPanelEmployee();
+        leftPanel = new LeftPanel();
 
-        add(leftPanelEmployee, BorderLayout.WEST);
+        add(leftPanel, BorderLayout.WEST);
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
@@ -35,7 +35,7 @@ public class EmployeeView extends JPanel {
     }
 
     public void setListeners(ActionListener listener){
-        leftPanelEmployee.setListeners(listener);
+        leftPanel.setListeners(listener);
         selectHourPanel.setListeners(listener);
     }
 

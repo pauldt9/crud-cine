@@ -1,4 +1,4 @@
-package View;
+package View.Employee;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import static utils.CreateComponents.createButton;
 import static utils.CreateComponents.createJLabel;
 
-public class LeftPanelEmployee extends JPanel {
+public class LeftPanel extends JPanel {
     private Color westPanelCol = new Color(0xDCE9F9);
     private Color fgCol = new Color(0x2C3E50);
     private Color buttonColor = new Color(0xEDF2FA);
@@ -21,7 +21,7 @@ public class LeftPanelEmployee extends JPanel {
     private JButton darkMode;
     private JButton exitButton;
 
-    public LeftPanelEmployee(){
+    public LeftPanel(){
         setBackground(westPanelCol);
         setPreferredSize(new Dimension(200, 800));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

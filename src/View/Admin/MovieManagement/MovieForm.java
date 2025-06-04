@@ -1,4 +1,4 @@
-package View;
+package View.Admin.MovieManagement;
 
 import lib.TextPrompt;
 

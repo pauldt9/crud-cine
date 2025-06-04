@@ -1,8 +1,8 @@
 package Controller;
 
 import Models.Movie;
-import View.Catalog;
-import View.EmployeeView;
+import View.Employee.Catalog;
+import View.Employee.EmployeeView;
 import View.LoginPanel;
 
 import javax.swing.*;

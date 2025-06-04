@@ -1,13 +1,13 @@
-package View;
+package View.Admin.SalesManagement;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SalesPanel extends JPanel {
+public class SalesMain extends JPanel {
     private JLabel salesLbl;
     private Color fgCol = new Color(0x2C3E50);
 
-    public SalesPanel(){
+    public SalesMain(){
         setLayout(new BorderLayout());
         setOpaque(false);
 

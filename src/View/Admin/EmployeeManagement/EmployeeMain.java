@@ -1,4 +1,4 @@
-package View;
+package View.Admin.EmployeeManagement;
 
 import Models.EmployeeTableModel;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static utils.CreateComponents.*;
 
-public class EmployeeManagement extends JPanel {
+public class EmployeeMain extends JPanel {
     private Color bgColButtons = new Color(245, 245, 245);
     private Color fgColor = new Color(0x2C3E50);
 
@@ -26,10 +26,9 @@ public class EmployeeManagement extends JPanel {
     private JTable employeesTable;
     private EmployeeTableModel tableModelEmployees;
 
-    public EmployeeManagement(){
+    public EmployeeMain(){
         setLayout(new BorderLayout());
         setOpaque(false);
-//        setBackground(Color.BLUE);
 
         empTitle = createJLabel("Empleados", 40, true);
         empTitle.setForeground(fgColor);

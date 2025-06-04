@@ -1,6 +1,5 @@
-package View;
+package View.Admin.MovieManagement;
 
-import Models.MoviesTableModel;
 import Models.MoviesTableModel;
 
 import javax.imageio.ImageIO;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 import static utils.CreateComponents.*;
 
-public class MoviesViewAdmin extends JPanel {
+public class MoviesMain extends JPanel {
     private JLabel moviesLbl;
 
     private Color fgColor = new Color(0x2C3E50);
@@ -27,7 +26,7 @@ public class MoviesViewAdmin extends JPanel {
 
     private int idMovie; //Primary Key
 
-    public MoviesViewAdmin(){
+    public MoviesMain(){
         setLayout(new BorderLayout());
         setOpaque(false);
 

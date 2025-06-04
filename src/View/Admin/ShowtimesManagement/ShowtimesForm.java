@@ -1,6 +1,4 @@
-package View;
-
-import lib.TextPrompt;
+package View.Admin.ShowtimesManagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

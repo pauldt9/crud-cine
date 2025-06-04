@@ -1,7 +1,7 @@
 package Controller;
 
-import View.AdminView;
-import View.EmployeeView;
+import View.Admin.AdminView;
+import View.Employee.EmployeeView;
 import View.LoginPanel;
 
 import javax.swing.*;
