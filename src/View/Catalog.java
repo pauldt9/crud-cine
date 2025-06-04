@@ -1,15 +1,23 @@
 package View;
 
+import DAO.MoviesDAO;
+import Models.Movie;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Catalog extends JPanel {
     private Color fgCol = new Color(0x2C3E50);
     private Color bgColButtons = new Color(245, 245, 245);
 
     private JLabel catalogTitle;
-    private JButton testButton; //boton de prueba
+
+    private JPanel catalogPanel;
 
     public Catalog(){
         setLayout(new BorderLayout());
@@ -29,29 +37,56 @@ public class Catalog extends JPanel {
         topPanel.add(catalogTitle);
 
         //Paneles vacios
-        JPanel emptyWest = createEmptyPanel(40, Integer.MAX_VALUE);
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
-        JPanel emptyEast = createEmptyPanel(40, Integer.MAX_VALUE);
+        JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
         JPanel emptySouth = createEmptyPanel(1100, 40);
         add(emptySouth, BorderLayout.SOUTH);
 
-        /*Este boton es de prueba, se va a borrar al final*/
-        testButton = createButton("Funciones", 100, 40);
-        testButton.setActionCommand("Funciones");
-        testButton.setBackground(bgColButtons);
-        emptySouth.add(testButton);
 
         //Panel donde se mostraran las peliculas
-        JPanel catalogPanel = new JPanel();
+        catalogPanel = new JPanel();
         catalogPanel.setOpaque(false);
 //        catalogPanel.setBackground(Color.GREEN);
-        catalogPanel.setLayout(new GridLayout(0, 3));
+        catalogPanel.setLayout(new GridLayout(0, 3, 20, 20));
         add(catalogPanel, BorderLayout.CENTER);
+    }
 
+    //aqui muestra las imagenes (botones) de las peliculas
+    public void initMoviesCatalog(ActionListener listener){
+        MoviesDAO moviesDAO = new MoviesDAO();
+        ArrayList<Movie> moviesList = moviesDAO.getImgMovies();
 
+        catalogPanel.removeAll();
+        System.out.println("Peliculas encontradas: " + moviesList.size());
+
+        for (Movie m : moviesList){
+            JButton btn = new JButton();
+            btn.setActionCommand(String.valueOf(m.getIdMovie()));
+            btn.setBorder(null);
+            btn.setContentAreaFilled(false);
+            btn.setFocusPainted(false);
+            btn.setPreferredSize(new Dimension(180, 270));
+
+            File imageFile = new File(m.getImgRoute());
+
+            try {
+                Image movieIcon = ImageIO.read(imageFile);
+                movieIcon = movieIcon.getScaledInstance(180, 270, Image.SCALE_SMOOTH);
+                btn.setIcon(new ImageIcon(movieIcon));
+            } catch (IOException e){
+                System.out.println("Error al cargar la imagen: " + e.getMessage());
+            }
+
+            btn.addActionListener(listener);
+            catalogPanel.add(btn);
+        }
+
+        catalogPanel.revalidate();
+        catalogPanel.repaint();
     }
 
     public JLabel createJLabel(String title, int fontSize, boolean bold){
@@ -82,7 +117,9 @@ public class Catalog extends JPanel {
         return empty;
     }
 
-    public void setListeners(ActionListener listener){
-        testButton.addActionListener(listener);
+    public int getNumMovies() {
+        MoviesDAO moviesDAO = new MoviesDAO();
+        ArrayList<Movie> moviesList = moviesDAO.getImgMovies();
+        return moviesList.size();
     }
 }

@@ -29,11 +29,12 @@ public class App {
 
         configPath = "config.properties";
 
-        AdminView adminView = new AdminView();
-        EmployeeView employeeView = new EmployeeView();
+        Catalog movieCatalog = new Catalog();
+        AdminView adminView = new AdminView(movieCatalog);
+        EmployeeView employeeView = new EmployeeView(movieCatalog);
 
         new LoginController(loginPanel, frame, adminView, employeeView);
         new AdminController(loginPanel, frame, adminView);
-        new EmployeeController(frame, employeeView, loginPanel);
+        new EmployeeController(frame, employeeView, loginPanel, movieCatalog);
     }
 }

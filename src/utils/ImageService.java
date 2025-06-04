@@ -11,19 +11,14 @@ public class ImageService {
 
         File folder = new File("moviesImages");
 
-
         if (!folder.exists()) {
             folder.mkdirs();
         }
 
-
         File route = new File(folder, fileName);
 
         try {
-
             Files.copy(img.toPath(), route.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-
             return "moviesImages/" + fileName;
 
         } catch (IOException e) {

@@ -39,7 +39,7 @@ public class AdminView extends JPanel {
 
     private JPanel menuPanel;
     private JPanel menuButtonsPanel;
-
+    private Catalog catalog;
 
     /*------------Labels------------*/
     //Menu
@@ -66,56 +66,9 @@ public class AdminView extends JPanel {
     //---Peliculas
 
 
-    public AdminView() {
+    public AdminView(Catalog catalog) {
         setLayout(new BorderLayout());
-        //aqui wa iniciar las tablas w luego le mueves, shi?, es que me perdi en todo el codigo w es que esta bien grande jajaja we ya bajale a las lineas we no ma-
-
-        /*-----------Panel izquierdo-----------*/
-        leftPanel = new JPanel();
-        leftPanel.setBackground(new Color(0xDCE9F9));
-        leftPanel.setPreferredSize(new Dimension(200, getHeight()));
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        add(leftPanel, BorderLayout.WEST);
-
-        userTitle = createJLabel("Admin", 30, true); //donde dice admin en el panel izquierdo
-        userTitle.setForeground(fgColor);
-        userTitle.setAlignmentX(CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(70));
-        leftPanel.add(userTitle);
-
-        //botones de navegacion
-        menuButton = createButton("Menu", 20, 150, 40);
-        menuButton.setActionCommand("Menu");
-        menuButton.setBackground(bgColor);
-        menuButton.setForeground(fgColor);
-        menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(50));
-        leftPanel.add(menuButton);
-
-        salesButton = createButton("Ventas", 20, 150, 40);
-        salesButton.setActionCommand("Ventas");
-        salesButton.setBackground(new Color(0xEDF2FA));
-        salesButton.setForeground(fgColor);
-        salesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(30));
-        leftPanel.add(salesButton);
-
-        darkMode = createButton(null, 15, 150, 40);
-        darkMode.setActionCommand("Modo Oscuro");
-        darkMode.setBackground(new Color(0xEDF2FA));
-        darkMode.setForeground(fgColor);
-        darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(350));
-        leftPanel.add(darkMode);
-
-        exitButton = createButton(null, 20, 150, 40);
-        exitButton.setActionCommand("Salir");
-        exitButton.setBackground(new Color(0x17C3B2));
-        exitButton.setForeground(Color.WHITE);
-        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        leftPanel.add(Box.createVerticalStrut(30));
-        leftPanel.add(exitButton);
+        this.catalog = catalog;
 
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
@@ -167,7 +120,7 @@ public class AdminView extends JPanel {
         numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
         menuPanel.add(numEmployees);
 
-        numMovies = createJLabel("Peliculas disponibles: " + "#no. pel", 15, true);
+        numMovies = createJLabel("Peliculas disponibles: " + catalog.getNumMovies(), 15, true);
         numMovies.setForeground(fgColor);
         numMovies.setAlignmentX(Component.LEFT_ALIGNMENT);
         numMovies.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
@@ -190,7 +143,7 @@ public class AdminView extends JPanel {
         menuButtonsPanel.setLayout(new GridBagLayout());
         menuButtonsPanel.setBackground(Color.WHITE);
         menuButtonsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                                                    //obtiene el mayor valor para el width del panel
+        //obtiene el mayor valor para el width del panel
         menuButtonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
         menuPanel.add(menuButtonsPanel);
 
@@ -262,7 +215,7 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(showtimesButton, c);
 
-        buttonTitleShowtime = createJLabel("Gestionar Funciones", 15, true);
+        buttonTitleShowtime = createJLabel("Agendar Funciones", 15, true);
         buttonTitleShowtime.setForeground(fgColor);
 
         c.gridy = 2;
@@ -302,6 +255,52 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(buttonTitleRooms, c);
 
+        /*-----------Panel izquierdo-----------*/
+        leftPanel = new JPanel();
+        leftPanel.setBackground(new Color(0xDCE9F9));
+        leftPanel.setPreferredSize(new Dimension(200, getHeight()));
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        add(leftPanel, BorderLayout.WEST);
+
+        userTitle = createJLabel("Admin", 30, true); //donde dice admin en el panel izquierdo
+        userTitle.setForeground(fgColor);
+        userTitle.setAlignmentX(CENTER_ALIGNMENT);
+        leftPanel.add(Box.createVerticalStrut(70));
+        leftPanel.add(userTitle);
+
+        //botones de navegacion
+        menuButton = createButton("Menu", 20, 150, 40);
+        menuButton.setActionCommand("Menu");
+        menuButton.setBackground(bgColor);
+        menuButton.setForeground(fgColor);
+        menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(Box.createVerticalStrut(50));
+        leftPanel.add(menuButton);
+
+        salesButton = createButton("Ventas", 20, 150, 40);
+        salesButton.setActionCommand("Ventas");
+        salesButton.setBackground(new Color(0xEDF2FA));
+        salesButton.setForeground(fgColor);
+        salesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(Box.createVerticalStrut(30));
+        leftPanel.add(salesButton);
+
+        darkMode = createButton(null, 15, 150, 40);
+        darkMode.setActionCommand("Modo Oscuro");
+        darkMode.setBackground(new Color(0xEDF2FA));
+        darkMode.setForeground(fgColor);
+        darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
+        leftPanel.add(Box.createVerticalStrut(350));
+        leftPanel.add(darkMode);
+
+        exitButton = createButton(null, 20, 150, 40);
+        exitButton.setActionCommand("Salir");
+        exitButton.setBackground(new Color(0x17C3B2));
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        leftPanel.add(Box.createVerticalStrut(30));
+        leftPanel.add(exitButton);
 
         //Iconos en botones
         try {
@@ -376,7 +375,7 @@ public class AdminView extends JPanel {
         return button;
     }
 
-    //Cambiar modos (dark mode)
+    //Cambiar modos (dark mode) posiblemente lo voy a quitar
     public void setViewMode(String action){
         this.action = action;
         darkMode.setActionCommand(action);
