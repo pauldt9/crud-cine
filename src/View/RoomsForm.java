@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class RoomsForm extends JPanel {
     private String action;
     private JLabel panelTitle;
@@ -35,7 +37,7 @@ public class RoomsForm extends JPanel {
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         add(topPanel, BorderLayout.NORTH);
 
-        backButton = createButton(null, 1, 45, 45);
+        backButton = createButton("", 45, 45);
         backButton.setActionCommand("Regresar sala");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
         backButton.setBackground(bgColButtons);
@@ -55,7 +57,7 @@ public class RoomsForm extends JPanel {
         emptyEast.setPreferredSize(new Dimension(300, Integer.MAX_VALUE));
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
         JPanel emptySouth = new JPanel();
@@ -102,7 +104,8 @@ public class RoomsForm extends JPanel {
         col.setMaximumSize(new Dimension(350, 50));
         formPanel.add(col);
 
-        confirmButton = createButton("Confirmar", 15, 350, 50);
+        confirmButton = createButton("Confirmar", 350, 50);
+        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         confirmButton.setActionCommand("Confirmar sala");
         confirmButton.setForeground(fgColor);
         confirmButton.setBackground(bgColButtons);
@@ -116,52 +119,6 @@ public class RoomsForm extends JPanel {
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
-    }
-
-    public JTextField createTextField(String placeHolder, int w, int h){
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-        JTextField textField = new JTextField();
-
-        textField.setFont(font);
-        textField.setForeground(new Color(30, 30 , 30));
-        textField.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        textField.setMaximumSize(new Dimension(w, h));
-
-        TextPrompt ph = new TextPrompt(placeHolder, textField);
-        ph.setForeground(new Color(0x999999));
-        ph.setFont(font);
-
-        return textField;
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
     }
 
     public void setListeners(ActionListener listener){

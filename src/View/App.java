@@ -30,7 +30,7 @@ public class App {
         configPath = "config.properties";
 
         Catalog movieCatalog = new Catalog();
-        AdminView adminView = new AdminView(movieCatalog);
+        AdminView adminView = new AdminView();
         EmployeeView employeeView = new EmployeeView(movieCatalog);
 
         new LoginController(loginPanel, frame, adminView, employeeView);

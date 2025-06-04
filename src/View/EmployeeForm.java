@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class EmployeeForm extends JPanel {
     private String action;
 
@@ -37,7 +39,7 @@ public class EmployeeForm extends JPanel {
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         add(topPanel, BorderLayout.NORTH);
 
-        backButton = createButton(null, 1, 45, 45);
+        backButton = createButton(null, 45, 45);
         backButton.setActionCommand("Regresar empleado");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
         backButton.setBackground(bgColButtons);
@@ -51,12 +53,10 @@ public class EmployeeForm extends JPanel {
         topPanel.add(Box.createHorizontalStrut(15));
         topPanel.add(addEmpTitle);
 
-        JPanel emptyEast = new JPanel();
-        emptyEast.setOpaque(false);
-        emptyEast.setPreferredSize(new Dimension(300, Integer.MAX_VALUE));
+        JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
         JPanel formPanel = new JPanel();
@@ -107,7 +107,8 @@ public class EmployeeForm extends JPanel {
         addEmpConfirmPass.setBorder(BorderFactory.createCompoundBorder(addEmpConfirmPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         formPanel.add(addEmpConfirmPass);
 
-        confirmEmp = createButton("Confirmar", 15, 350, 50);
+        confirmEmp = createButton("Confirmar", 350, 50);
+        confirmEmp.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         confirmEmp.setActionCommand("Confirmar empleado");
         confirmEmp.setForeground(fgColor);
         confirmEmp.setBackground(bgColButtons);
@@ -126,68 +127,6 @@ public class EmployeeForm extends JPanel {
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
-    }
-
-    public JTextField createTextField(String placeHolder, int w, int h){
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-        JTextField textField = new JTextField();
-
-        textField.setFont(font);
-        textField.setForeground(new Color(30, 30 , 30));
-        textField.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        textField.setMaximumSize(new Dimension(w, h));
-
-        TextPrompt ph = new TextPrompt(placeHolder, textField);
-        ph.setForeground(new Color(0x999999));
-        ph.setFont(font);
-
-        return textField;
-    }
-
-    public JPasswordField createPasswordField(String placeHolder, int w, int h){
-        JPasswordField pf = new JPasswordField();
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-
-        pf.setForeground(new Color(30, 30, 30));
-        pf.setMaximumSize(new Dimension(w, h));
-        pf.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        pf.setFont(font);
-
-        TextPrompt ph = new TextPrompt(placeHolder, pf);
-        ph.setForeground(new Color(100, 100, 100));
-        ph.setFont(font);
-
-        return pf;
     }
 
     public void setListeners(ActionListener listener){

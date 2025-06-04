@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class MovieForm extends JPanel {
     private String action;
 
@@ -38,7 +40,7 @@ public class MovieForm extends JPanel {
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         add(topPanel, BorderLayout.NORTH);
 
-        backButton = createButton(null, 1, 45, 45);
+        backButton = createButton("", 45, 45);
         backButton.setActionCommand("Regresar pelicula");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
         backButton.setBackground(bgColButtons);
@@ -58,7 +60,7 @@ public class MovieForm extends JPanel {
         emptyEast.setPreferredSize(new Dimension(300, Integer.MAX_VALUE));
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
         JPanel emptySouth = new JPanel();
@@ -112,14 +114,16 @@ public class MovieForm extends JPanel {
 //        addShowtime.setForeground(fgColor);
 //        formPanel.add(addShowtime);
 
-        addImage = createButton("Agregar Imagen", 15, 350, 50);
+        addImage = createButton("Agregar Imagen", 350, 50);
+        addImage.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addImage.setActionCommand("Agregar imagen");
         addImage.setForeground(fgColor);
         addImage.setBackground(bgColButtons);
         addImage.setAlignmentX(Component.LEFT_ALIGNMENT);
         formPanel.add(addImage);
 
-        confirmButton = createButton("Confirmar", 15, 350, 50);
+        confirmButton = createButton("Confirmar", 350, 50);
+        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         confirmButton.setActionCommand("Confirmar pelicula");
         confirmButton.setForeground(fgColor);
         confirmButton.setBackground(bgColButtons);
@@ -151,36 +155,6 @@ public class MovieForm extends JPanel {
         ph.setFont(font);
 
         return textField;
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
     }
 
     public void setListeners(ActionListener listener){

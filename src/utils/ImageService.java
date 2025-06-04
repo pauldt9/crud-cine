@@ -15,10 +15,10 @@ public class ImageService {
             folder.mkdirs();
         }
 
-        File route = new File(folder, fileName);
+        File path = new File(folder, fileName);
 
         try {
-            Files.copy(img.toPath(), route.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(img.toPath(), path.toPath(), StandardCopyOption.REPLACE_EXISTING);
             return "moviesImages/" + fileName;
 
         } catch (IOException e) {

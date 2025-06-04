@@ -16,6 +16,8 @@ public class SalesPanel extends JPanel {
         salesLbl.setHorizontalAlignment(SwingConstants.LEFT);
         salesLbl.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         add(salesLbl, BorderLayout.NORTH);
+
+
     }
 
     public JLabel createJLabel(String title, int fontSize, boolean bold){

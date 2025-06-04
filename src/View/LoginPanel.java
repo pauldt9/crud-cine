@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import static utils.CreateComponents.createJLabel;
+import static utils.CreateComponents.createPasswordField;
+
 public class LoginPanel extends JPanel {
     private JButton loginButton;
     private JTextField userField;
@@ -41,12 +44,12 @@ public class LoginPanel extends JPanel {
         centralPanel.setPreferredSize(new Dimension(480, 580));
         add(centralPanel);
 
-        JLabel loginLabel = createJLabel("Bienvenido", 40);
+        JLabel loginLabel = createJLabel("Bienvenido", 40, true);
         centralPanel.add(Box.createVerticalStrut(140));
         loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(loginLabel);
 
-        JLabel user = createJLabel("Usuario", 15);
+        JLabel user = createJLabel("Usuario", 15, true);
         centralPanel.add(Box.createVerticalStrut(30));
         user.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(user);
@@ -58,13 +61,12 @@ public class LoginPanel extends JPanel {
         centralPanel.add(Box.createVerticalStrut(5)); //baja el textfield
         centralPanel.add(userField);
 
-        JLabel password = createJLabel("Contraseña", 15);
+        JLabel password = createJLabel("Contraseña", 15, true);
         centralPanel.add(Box.createVerticalStrut(25));
         password.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(password);
 
-        passwordField = createPasswordField("Ingresar contraseña");
-        passwordField.setMaximumSize(new Dimension(325, 50));
+        passwordField = createPasswordField("Ingresar contraseña", 325, 60);
         passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
         passwordField.setBorder(BorderFactory.createCompoundBorder(passwordField.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         centralPanel.add(Box.createVerticalStrut(5));
@@ -74,13 +76,6 @@ public class LoginPanel extends JPanel {
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
-    }
-
-    public JLabel createJLabel(String title, int fontSize){
-        JLabel label = new JLabel(title);
-        label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        label.setForeground(new Color(30, 30, 30));
-        return label;
     }
 
     //crea los botones
@@ -111,21 +106,6 @@ public class LoginPanel extends JPanel {
         ph.setFont(font);
 
         return textField;
-    }
-
-    public JPasswordField createPasswordField(String placeHolder){
-        JPasswordField pf = new JPasswordField();
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-
-        pf.setForeground(new Color(30, 30, 30));
-        pf.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        pf.setFont(font);
-
-        TextPrompt ph = new TextPrompt(placeHolder, pf);
-        ph.setForeground(new Color(100, 100, 100));
-        ph.setFont(font);
-
-        return pf;
     }
 
     @Override

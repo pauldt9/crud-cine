@@ -43,4 +43,7 @@ public class EmployeeView extends JPanel {
         return mainPanel;
     }
 
+    public SelectHour getSelectHourPanel(){
+        return selectHourPanel;
+    }
 }

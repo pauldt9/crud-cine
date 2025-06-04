@@ -101,7 +101,7 @@ public class Movie {
         return movies;
     }
 
-    public static Movie getMovie(int id) {
+    public static Movie getMovieById(int id) {
         Movie movie = null;
         String query = "SELECT * FROM movies WHERE idMovie = " + id;
 
@@ -203,6 +203,30 @@ public class Movie {
 
     }
 
+    public static ArrayList<Movie> getImgMovies(){
+        ArrayList<Movie> moviesList = new ArrayList<>();
+        String query = "SELECT idMovie, imgRoute FROM movies";
 
+//        String query = "SELECT DISTINCT m.idMovie, m.imgRoute FROM movies m " +
+//                "JOIN functions s ON m.idMovie = s.idMovie";
+
+        try (Connection conn = MySQLConnection.connect();
+             Statement st = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+             ResultSet rs = st.executeQuery(query))
+        {
+            while (rs.next()){
+                Movie movie = new Movie();
+                movie.setIdMovie(rs.getInt("idMovie"));
+                movie.setImgRoute(rs.getString("imgRoute"));
+
+                moviesList.add(movie);
+            }
+
+        } catch (SQLException e){
+            System.out.println("Hubo un error: " + e.getMessage());
+        }
+
+        return moviesList;
+    }
 
 }

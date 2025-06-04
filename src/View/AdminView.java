@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.createButton;
+import static utils.CreateComponents.createJLabel;
+
 public class AdminView extends JPanel {
     private String action;
 
@@ -39,7 +42,6 @@ public class AdminView extends JPanel {
 
     private JPanel menuPanel;
     private JPanel menuButtonsPanel;
-    private Catalog catalog;
 
     /*------------Labels------------*/
     //Menu
@@ -66,9 +68,8 @@ public class AdminView extends JPanel {
     //---Peliculas
 
 
-    public AdminView(Catalog catalog) {
+    public AdminView() {
         setLayout(new BorderLayout());
-        this.catalog = catalog;
 
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
@@ -120,7 +121,7 @@ public class AdminView extends JPanel {
         numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
         menuPanel.add(numEmployees);
 
-        numMovies = createJLabel("Peliculas disponibles: " + catalog.getNumMovies(), 15, true);
+        numMovies = createJLabel("Peliculas disponibles: " + "", 15, true);
         numMovies.setForeground(fgColor);
         numMovies.setAlignmentX(Component.LEFT_ALIGNMENT);
         numMovies.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
@@ -156,7 +157,7 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.NONE;
 
-        employeeButton = createButton("", 1, 100, 100);
+        employeeButton = createButton("", 100, 100);
         employeeButton.setBackground(bgColButtons);
         employeeButton.setActionCommand("Empleados");
 
@@ -183,7 +184,7 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
         c.fill = GridBagConstraints.NONE;
 
-        moviesButton = createButton("", 1, 100, 100);
+        moviesButton = createButton("", 100, 100);
         moviesButton.setBackground(bgColButtons);
         moviesButton.setActionCommand("Peliculas");
         menuButtonsPanel.add(moviesButton, c);
@@ -201,7 +202,7 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(buttonTitleMov, c);
 
-        showtimesButton = createButton("", 1, 100, 100);
+        showtimesButton = createButton("", 100, 100);
         showtimesButton.setBackground(bgColButtons);
         showtimesButton.setActionCommand("Funciones");
 
@@ -228,7 +229,7 @@ public class AdminView extends JPanel {
 
         menuButtonsPanel.add(buttonTitleShowtime, c);
 
-        roomsButton = createButton("", 1, 100, 100);
+        roomsButton = createButton("", 100, 100);
         roomsButton.setBackground(bgColButtons);
         roomsButton.setActionCommand("Salas");
 
@@ -269,7 +270,8 @@ public class AdminView extends JPanel {
         leftPanel.add(userTitle);
 
         //botones de navegacion
-        menuButton = createButton("Menu", 20, 150, 40);
+        menuButton = createButton("Menu", 150, 40);
+        menuButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
         menuButton.setActionCommand("Menu");
         menuButton.setBackground(bgColor);
         menuButton.setForeground(fgColor);
@@ -277,7 +279,8 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(50));
         leftPanel.add(menuButton);
 
-        salesButton = createButton("Ventas", 20, 150, 40);
+        salesButton = createButton("Ventas", 150, 40);
+        salesButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
         salesButton.setActionCommand("Ventas");
         salesButton.setBackground(new Color(0xEDF2FA));
         salesButton.setForeground(fgColor);
@@ -285,7 +288,7 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(salesButton);
 
-        darkMode = createButton(null, 15, 150, 40);
+        darkMode = createButton("", 150, 40);
         darkMode.setActionCommand("Modo Oscuro");
         darkMode.setBackground(new Color(0xEDF2FA));
         darkMode.setForeground(fgColor);
@@ -293,7 +296,7 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(350));
         leftPanel.add(darkMode);
 
-        exitButton = createButton(null, 20, 150, 40);
+        exitButton = createButton("", 150, 40);
         exitButton.setActionCommand("Salir");
         exitButton.setBackground(new Color(0x17C3B2));
         exitButton.setForeground(Color.WHITE);
@@ -332,17 +335,6 @@ public class AdminView extends JPanel {
         }
     }
 
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
     public void setListeners(ActionListener listener){
         exitButton.addActionListener(listener);
         menuButton.addActionListener(listener);
@@ -361,18 +353,6 @@ public class AdminView extends JPanel {
         showtimesFormPanel.setListeners(listener);
         roomsPanel.setListeners(listener);
         roomsFormPanel.setListeners(listener);
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
     }
 
     //Cambiar modos (dark mode) posiblemente lo voy a quitar

@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class RoomsView extends JPanel {
     private JLabel titleLbl;
 
@@ -35,10 +37,10 @@ public class RoomsView extends JPanel {
         add(titleLbl, BorderLayout.NORTH);
 
         //Paneles vacios
-        JPanel emptyEast = createEmptyPanel();
+        JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
         initRoomsTable(); //tabla
@@ -47,19 +49,22 @@ public class RoomsView extends JPanel {
         JPanel movButtonPanel = createButtonsPanel();
         add(movButtonPanel, BorderLayout.SOUTH);
 
-        addRoom = createButton("Agregar", 15, 120, 40);
+        addRoom = createButton("Agregar",120, 40);
+        addRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addRoom.setActionCommand("Agregar sala");
         addRoom.setBackground(bgColButtons);
         addRoom.setForeground(fgColor);
         movButtonPanel.add(addRoom);
 
-        editRoom = createButton("Editar", 15, 120, 40);
+        editRoom = createButton("Editar", 120, 40);
+        editRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         editRoom.setActionCommand("Editar sala");
         editRoom.setBackground(bgColButtons);
         editRoom.setForeground(fgColor);
         movButtonPanel.add(editRoom);
 
-        deleteRoom = createButton("Eliminar", 15 , 120, 40);
+        deleteRoom = createButton("Eliminar", 120, 40);
+        deleteRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteRoom.setActionCommand("Eliminar sala");
         deleteRoom.setBackground(bgColButtons);
         deleteRoom.setForeground(fgColor);
@@ -80,44 +85,6 @@ public class RoomsView extends JPanel {
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
-    public JPanel createButtonsPanel(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.setOpaque(false);
-        panel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
-        return panel;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
     }
 
     public void initRoomsTable(){

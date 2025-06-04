@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class MoviesViewAdmin extends JPanel {
     private JLabel moviesLbl;
 
@@ -35,10 +37,10 @@ public class MoviesViewAdmin extends JPanel {
         add(moviesLbl, BorderLayout.NORTH);
 
         //Paneles vacios
-        JPanel emptyEast = createEmptyPanel();
+        JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
         initMovTable(); //tabla
@@ -47,19 +49,22 @@ public class MoviesViewAdmin extends JPanel {
         JPanel movButtonPanel = createButtonsPanel();
         add(movButtonPanel, BorderLayout.SOUTH);
 
-        addMov = createButton("Agregar", 15, 120, 40);
+        addMov = createButton("Agregar", 120, 40);
+        addMov.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addMov.setActionCommand("Agregar pelicula");
         addMov.setBackground(bgColButtons);
         addMov.setForeground(fgColor);
         movButtonPanel.add(addMov);
 
-        editMov = createButton("Editar", 15, 120, 40);
+        editMov = createButton("Editar",120, 40);
+        editMov.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         editMov.setActionCommand("Editar pelicula");
         editMov.setBackground(bgColButtons);
         editMov.setForeground(fgColor);
         movButtonPanel.add(editMov);
 
-        deleteMov = createButton("Eliminar", 15 , 120, 40);
+        deleteMov = createButton("Eliminar", 120, 40);
+        deleteMov.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteMov.setActionCommand("Eliminar pelicula");
         deleteMov.setBackground(bgColButtons);
         deleteMov.setForeground(fgColor);
@@ -80,44 +85,6 @@ public class MoviesViewAdmin extends JPanel {
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
-    public JPanel createButtonsPanel(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.setOpaque(false);
-        panel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
-        return panel;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
     }
 
     public void initMovTable(){

@@ -4,7 +4,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
+
+import static utils.CreateComponents.*;
 
 public class SelectHour extends JPanel {
     private Color fgCol = new Color(0x2C3E50);
@@ -13,6 +16,9 @@ public class SelectHour extends JPanel {
     private JLabel showtimesTitle;
 
     private JButton backButton;
+
+    private JPanel imgMoviePanel;
+    private JPanel showtimesPanel;
 
     public SelectHour(){
         setOpaque(false);
@@ -53,13 +59,13 @@ public class SelectHour extends JPanel {
         mainPanel.setLayout(new GridLayout(1, 2));
         add(mainPanel, BorderLayout.CENTER);
 
-        JPanel imgMoviePanel = new JPanel(); //aqui va a estar la imagen de la pelicula
-        imgMoviePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-//        imgMoviePanel.setOpaque(false);
-        imgMoviePanel.setBackground(Color.GREEN); //borrar esta linea
+        imgMoviePanel = new JPanel(); //aqui va a estar la imagen de la pelicula
+        imgMoviePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        imgMoviePanel.setOpaque(false);
+//        imgMoviePanel.setBackground(Color.GREEN); //borrar esta linea
         mainPanel.add(imgMoviePanel);
 
-        JPanel showtimesPanel = new JPanel(); //aqui van a estar las funciones
+        showtimesPanel = new JPanel(); //aqui van a estar las funciones
         showtimesPanel.setLayout(new GridLayout(0, 3));
         showtimesPanel.setBackground(Color.BLUE); //borrar esta linea
 //        showtimesPanel.setOpaque(false);
@@ -74,35 +80,24 @@ public class SelectHour extends JPanel {
         }
     }
 
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-        label.setForeground(fgCol);
-        return label;
-    }
-
-    public JButton createButton(String buttonName, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
-    }
-
-    public JPanel createEmptyPanel(int w, int h){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(w, h));
-        return empty;
-    }
-
     public void setListeners(ActionListener listener){
         backButton.addActionListener(listener);
+    }
+
+    public void updateMovieImage(String imgPath){
+        imgMoviePanel.removeAll();
+
+        try{
+            Image movieImg = ImageIO.read(new File(imgPath));
+            movieImg = movieImg.getScaledInstance(300, 470, Image.SCALE_SMOOTH);
+
+            JLabel img = new JLabel(new ImageIcon(movieImg));
+            imgMoviePanel.add(img);
+        } catch (IOException e){
+            System.out.println("Error al cargar imagen: " + e.getMessage());
+        }
+
+        imgMoviePanel.revalidate();
+        imgMoviePanel.repaint();
     }
 }

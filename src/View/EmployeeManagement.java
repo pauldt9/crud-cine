@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class EmployeeManagement extends JPanel {
     private Color bgColButtons = new Color(245, 245, 245);
     private Color fgColor = new Color(0x2C3E50);
@@ -38,70 +40,35 @@ public class EmployeeManagement extends JPanel {
         JPanel empButtonPanel = createButtonsPanel();
         add(empButtonPanel, BorderLayout.SOUTH);
 
-        addEmployee = createButton("Agregar", 15, 120, 40);
+        addEmployee = createButton("Agregar", 120, 40);
+        addEmployee.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addEmployee.setActionCommand("Agregar empleado");
         addEmployee.setBackground(bgColButtons);
         addEmployee.setForeground(fgColor);
         empButtonPanel.add(addEmployee);
 
-        editEmployee = createButton("Editar", 15, 120, 40);
+        editEmployee = createButton("Editar", 120, 40);
+        editEmployee.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         editEmployee.setActionCommand("Editar empleado");
         editEmployee.setBackground(bgColButtons);
         editEmployee.setForeground(fgColor);
         empButtonPanel.add(editEmployee);
 
-        deleteEmployee = createButton("Eliminar", 15, 120, 40);
+        deleteEmployee = createButton("Eliminar", 120, 40);
+        deleteEmployee.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteEmployee.setActionCommand("Eliminar empleado");
         deleteEmployee.setBackground(bgColButtons);
         deleteEmployee.setForeground(fgColor);
         empButtonPanel.add(deleteEmployee);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
-        JPanel emptyEast = createEmptyPanel();
+        JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
         initEmpTable();
         initIcons();
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
-    }
-
-    public JPanel createButtonsPanel(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.setOpaque(false);
-        panel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
-        return panel;
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
     }
 
     public void initEmpTable(){

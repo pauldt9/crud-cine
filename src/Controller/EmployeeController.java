@@ -1,5 +1,6 @@
 package Controller;
 
+import Models.Movie;
 import View.Catalog;
 import View.EmployeeView;
 import View.LoginPanel;
@@ -65,5 +66,12 @@ public class EmployeeController implements ActionListener {
 
     public void movieSelected(int idMovie){
         System.out.println("ID pelicula: " + idMovie);
+
+        Movie movie = Movie.getMovieById(idMovie);
+        System.out.println("Ruta: " + movie.getImgRoute());
+
+        employeeView.getSelectHourPanel().updateMovieImage(movie.getImgRoute());
+
+        showEmployeePanel("seleccionar hora");
     }
 }

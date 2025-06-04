@@ -1,6 +1,5 @@
 package View;
 
-import DAO.MoviesDAO;
 import Models.Movie;
 
 import javax.imageio.ImageIO;
@@ -11,9 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static utils.CreateComponents.createEmptyPanel;
+import static utils.CreateComponents.createJLabel;
+
 public class Catalog extends JPanel {
     private Color fgCol = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
 
     private JLabel catalogTitle;
 
@@ -51,14 +52,13 @@ public class Catalog extends JPanel {
         catalogPanel = new JPanel();
         catalogPanel.setOpaque(false);
 //        catalogPanel.setBackground(Color.GREEN);
-        catalogPanel.setLayout(new GridLayout(0, 3, 20, 20));
+        catalogPanel.setLayout(new GridLayout(0, 5, 25, 25));
         add(catalogPanel, BorderLayout.CENTER);
     }
 
-    //aqui muestra las imagenes (botones) de las peliculas
+    //aqui muestra las imagenes (botones) de las peliculas en el catalogo
     public void initMoviesCatalog(ActionListener listener){
-        MoviesDAO moviesDAO = new MoviesDAO();
-        ArrayList<Movie> moviesList = moviesDAO.getImgMovies();
+        ArrayList<Movie> moviesList = Movie.getImgMovies();
 
         catalogPanel.removeAll();
         System.out.println("Peliculas encontradas: " + moviesList.size());
@@ -87,39 +87,5 @@ public class Catalog extends JPanel {
 
         catalogPanel.revalidate();
         catalogPanel.repaint();
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-        label.setForeground(fgCol);
-        return label;
-    }
-
-    public JButton createButton(String buttonName, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
-    }
-
-    public JPanel createEmptyPanel(int w, int h){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(w, h));
-        return empty;
-    }
-
-    public int getNumMovies() {
-        MoviesDAO moviesDAO = new MoviesDAO();
-        ArrayList<Movie> moviesList = moviesDAO.getImgMovies();
-        return moviesList.size();
     }
 }

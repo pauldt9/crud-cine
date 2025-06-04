@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.createButton;
+import static utils.CreateComponents.createJLabel;
+
 public class LeftPanelEmployee extends JPanel {
     private Color westPanelCol = new Color(0xDCE9F9);
     private Color fgCol = new Color(0x2C3E50);
@@ -29,7 +32,8 @@ public class LeftPanelEmployee extends JPanel {
         add(Box.createVerticalStrut(70));
         add(userTitle);
 
-        homeButton = createButton("Inicio", 20, 150, 40);
+        homeButton = createButton("Inicio", 150, 40);
+        homeButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
         homeButton.setActionCommand("Inicio empleado");
         homeButton.setBackground(buttonColor);
         homeButton.setForeground(fgCol);
@@ -37,14 +41,14 @@ public class LeftPanelEmployee extends JPanel {
         add(Box.createVerticalStrut(50));
         add(homeButton);
 
-        darkMode = createButton(null, 1, 150, 40);
+        darkMode = createButton("", 150, 40);
         darkMode.setActionCommand("Modo Oscuro");
         darkMode.setBackground(buttonColor);
         darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(Box.createVerticalStrut(420));
         add(darkMode);
 
-        exitButton = createButton(null, 1, 150, 40);
+        exitButton = createButton("", 150, 40);
         exitButton.setActionCommand("Salir");
         exitButton.setBackground(new Color(0x17C3B2));
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -63,29 +67,6 @@ public class LeftPanelEmployee extends JPanel {
         } catch (IOException e){
             System.out.println("hubo un error al cargar las imagenes, error: " + e.getMessage());
         }
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-        label.setForeground(fgCol);
-        return label;
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
     }
 
     public void setListeners(ActionListener listener){

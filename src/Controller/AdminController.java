@@ -31,7 +31,7 @@ public class AdminController implements ActionListener {
 
     private ArrayList<Movie> movies;
     private MoviesTableModel movTable;
-    private String finalRoute = null;
+    private String finalPath = null;
 
     public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
         this.loginPanel = loginPanel;
@@ -173,7 +173,7 @@ public class AdminController implements ActionListener {
                 String route = chooseImage();
 
                 if (route != null) {
-                    finalRoute = route;
+                    finalPath = route;
                     JOptionPane.showMessageDialog(frame, "Imagen agregada correctamente");
                 }
                 break;
@@ -285,14 +285,14 @@ public class AdminController implements ActionListener {
         int selectedRow = adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow();
         int movieId = movTable.getRowData(selectedRow).getIdMovie();
 
-        Movie movie = Movie.getMovie(movieId);
+        Movie movie = Movie.getMovieById(movieId);
         if (movie != null) {
             adminView.getMoviesViewAdminPanel().setIdMovie(movie.getIdMovie());
             adminView.getMovieForm().setAddMovieTitle(movie.getTitle());
             adminView.getMovieForm().setAddDuration(String.valueOf(movie.getDuration()));
             adminView.getMovieForm().setAddGenre(movie.getGenre());
             adminView.getMovieForm().setAddClassification(movie.getClassification());
-            finalRoute = movie.getImgRoute();
+            finalPath = movie.getImgRoute();
         } else {
             System.out.println("No se encontró la película en la base de datos.");
         }
@@ -350,7 +350,7 @@ public class AdminController implements ActionListener {
         }catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + "La pelicula ya existe. Intenta con otra.","Error", JOptionPane.ERROR_MESSAGE);
         }finally {
-            finalRoute = null;
+            finalPath = null;
         }
     }
 
@@ -373,7 +373,7 @@ public class AdminController implements ActionListener {
         int duration = Integer.parseInt(adminView.getMovieForm().getAddDuration().getText());
         String genre = (String)adminView.getMovieForm().getAddGenre().getSelectedItem();
         String classification = (String)adminView.getMovieForm().getAddClassification().getSelectedItem();
-        String imgRoute = finalRoute;
+        String imgRoute = finalPath;
 
         return new Movie(adminView.getMoviesViewAdminPanel().getIdMovie(),title,duration,genre,classification, imgRoute);
     }
@@ -401,7 +401,7 @@ public class AdminController implements ActionListener {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }finally {
-            finalRoute = null;
+            finalPath = null;
         }
     }
 
@@ -575,7 +575,7 @@ public class AdminController implements ActionListener {
             adminView.getMovieForm().getDuration() == 0 ||
             adminView.getMovieForm().getGenre().getSelectedIndex() == 0 ||
             adminView.getMovieForm().getClassification().getSelectedIndex() == 0 ||
-            finalRoute == null ) {
+            finalPath == null ) {
 
             JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
                     "Campos vacíos", JOptionPane.ERROR_MESSAGE);

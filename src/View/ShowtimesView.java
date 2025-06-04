@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.CreateComponents.*;
+
 public class ShowtimesView extends JPanel {
     private JLabel titleLbl;
 
@@ -31,10 +33,10 @@ public class ShowtimesView extends JPanel {
         add(titleLbl, BorderLayout.NORTH);
 
         //Paneles vacios
-        JPanel emptyEast = createEmptyPanel();
+        JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel emptyWest = createEmptyPanel();
+        JPanel emptyWest = createEmptyPanel(40, 800);
         add(emptyWest, BorderLayout.WEST);
 
         initMovTable(); //tabla
@@ -43,19 +45,22 @@ public class ShowtimesView extends JPanel {
         JPanel movButtonPanel = createButtonsPanel();
         add(movButtonPanel, BorderLayout.SOUTH);
 
-        addShowtime = createButton("Agregar", 15, 120, 40);
+        addShowtime = createButton("Agregar", 120, 40);
+        addShowtime.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addShowtime.setActionCommand("Agregar funcion");
         addShowtime.setBackground(bgColButtons);
         addShowtime.setForeground(fgColor);
         movButtonPanel.add(addShowtime);
 
-        editShowtime = createButton("Editar", 15, 120, 40);
+        editShowtime = createButton("Editar", 120, 40);
+        editShowtime.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         editShowtime.setActionCommand("Editar funcion");
         editShowtime.setBackground(bgColButtons);
         editShowtime.setForeground(fgColor);
         movButtonPanel.add(editShowtime);
 
-        deleteShowtime = createButton("Eliminar", 15 , 120, 40);
+        deleteShowtime = createButton("Eliminar", 120, 40);
+        deleteShowtime.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteShowtime.setActionCommand("Eliminar funcion");
         deleteShowtime.setBackground(bgColButtons);
         deleteShowtime.setForeground(fgColor);
@@ -76,44 +81,6 @@ public class ShowtimesView extends JPanel {
         } catch (IOException e){
             System.out.println("error al cargar imagen: " + e.getMessage());
         }
-    }
-
-    public JLabel createJLabel(String title, int fontSize, boolean bold){
-        JLabel label = new JLabel(title);
-        if (bold){
-            label.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        } else {
-            label.setFont(new Font("Helvetica Neue", Font.PLAIN, fontSize));
-        }
-
-        return label;
-    }
-
-    public JPanel createButtonsPanel(){
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        panel.setOpaque(false);
-        panel.setPreferredSize(new Dimension(Integer.MAX_VALUE, 130));
-        return panel;
-    }
-
-    public JPanel createEmptyPanel(){
-        JPanel empty = new JPanel();
-        empty.setOpaque(false);
-        empty.setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
-        return empty;
-    }
-
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(w, h));
-        button.setMinimumSize(new Dimension(w, h));
-        button.setMaximumSize(new Dimension(w, h));
-        return button;
     }
 
     public void initMovTable(){
