@@ -168,52 +168,51 @@ public class Room {
             throw new RuntimeException(e);
         }
     }
-    // comente este metodo por que vi que se puede simplificar usando el metodo que ya tenemos de addSeats
-//    public void generateAndSaveSeats(int rows, int columns) {
-//        String query = "INSERT INTO seats (seatName, seatNumber, isOccupied, idRoom) VALUES (?, ?, ?, ?)";
-//        seats = new Seat[rows][columns];
-//        Connection connection = null;
-//        PreparedStatement pst = null;
-//        try {
-//            connection = MySQLConnection.connect();
-//            pst = connection.prepareStatement(query);
-//
-//            for (int i = 0; i < rows; i++) {
-//                char rowLetter = (char) ('A' + i);
-//
-//                for (int j = 0; j < columns; j++) {
-//                    String seatName = rowLetter + String.valueOf(j + 1);
-//
-//                    Seat seat = new Seat();
-//                    seat.setSeatName(seatName);
-//                    seat.setSeatNumber(j + 1);
-//                    seat.setOccupied(false);
-//                    seat.setRoom(this);
-//
-//                    seats[i][j] = seat;
-//
-//
-//                    pst.setString(1, seatName);
-//                    pst.setInt(2, seat.getSeatNumber());
-//                    pst.setBoolean(3, false);
-//                    pst.setInt(4, this.idRoom);
-//                    pst.addBatch();
-//                }
-//            }
-//
-//            pst.executeBatch();
-//            System.out.println("Asientos generados y guardados correctamente.");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (pst != null) pst.close();
-//                if (connection != null) connection.close();
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//    }
+
+    public void saveSeats() {
+        if (seats == null) return;
+
+        for (int i = 0; i < seats.length; i++) {
+            for (int j = 0; j < seats[i].length; j++) {
+                Seat seat = seats[i][j];
+                seat.setIdRoom(this.idRoom);
+                Seat.addSeat(seat);
+            }
+        }
+    }
+
+    public void updateRoomSize(Seat[][] oldSeats) {
+        ArrayList<Integer> existingIds = new ArrayList<>();
+
+        for (int i = 0; i < seats.length; i++) {
+            for (int j = 0; j < seats[i].length; j++) {
+                Seat newSeat = seats[i][j];
+                if (oldSeats != null && i < oldSeats.length && j < oldSeats[i].length && oldSeats[i][j] != null) {
+                    newSeat.setIdSeat(oldSeats[i][j].getIdSeat());
+                    existingIds.add(newSeat.getIdSeat());
+                    Seat.updateSeat(newSeat);
+                } else {
+                    newSeat.setIdRoom(this.idRoom);
+                    int newId = Seat.addSeat(newSeat);
+                    newSeat.setIdSeat(newId);
+                }
+            }
+        }
+
+        if (oldSeats != null) {
+            for (int i = 0; i < oldSeats.length; i++) {
+                for (int j = 0; j < oldSeats[i].length; j++) {
+                    Seat oldSeat = oldSeats[i][j];
+                    if (oldSeat != null && !existingIds.contains(oldSeat.getIdSeat())) {
+                        Seat.deleteSeat(oldSeat.getIdSeat());
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
 
 }

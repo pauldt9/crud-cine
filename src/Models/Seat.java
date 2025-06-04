@@ -9,26 +9,24 @@ public class Seat {
     private int idSeat; //primary key
     private String seatName;
     private int seatNumber;
-    private boolean isOccupied;
+//    private boolean isOccupied;
     private Room room; //Foreign Key
     private int idRoom = room.getIdRoom();
 
 
-    public Seat(int idSeat, String seatName, int seatNumber, boolean isOccupied, Room room, int idRoom) {
+    public Seat(int idSeat, String seatName, int seatNumber, Room room, int idRoom) {
         this.idSeat = idSeat;
         this.seatName = seatName;
         this.seatNumber = seatNumber;
-        this.isOccupied = isOccupied;
         this.room = room;
         this.idRoom = idRoom;
     }
 
-    public Seat(int idRoom, int idSeat, String seatName, int seatNumber, boolean isOccupied) {
+    public Seat(int idRoom, int idSeat, String seatName, int seatNumber) {
         this.idRoom = idRoom;
         this.idSeat = idSeat;
         this.seatName = seatName;
         this.seatNumber = seatNumber;
-        this.isOccupied = isOccupied;
     }
 
     public Seat() {
@@ -59,13 +57,13 @@ public class Seat {
         this.seatNumber = seatNumber;
     }
 
-    public boolean isOccupied() {
-        return isOccupied;
-    }
-
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
-    }
+//    public boolean isOccupied() {
+//        return isOccupied;
+//    }
+//
+//    public void setOccupied(boolean occupied) {
+//        isOccupied = occupied;
+//    }
 
     public Room getRoom() {
         return room;
@@ -98,8 +96,8 @@ public class Seat {
                         rs.getInt("idSeat"),
                         rs.getInt("idRoom"),
                         rs.getString("seatName"),
-                        rs.getInt("seatNumber"),
-                        rs.getBoolean("isOccupied")
+                        rs.getInt("seatNumber")
+//                        rs.getBoolean("isOccupied")
                 ));
             }
 
@@ -125,8 +123,8 @@ public class Seat {
                         rs.getInt("idSeat"),
                         rs.getInt("idRoom"),
                         rs.getString("seatName"),
-                        rs.getInt("seatNumber"),
-                        rs.getBoolean("isOccupied")
+                        rs.getInt("seatNumber")
+//                        rs.getBoolean("isOccupied")
                 );
             }
 
@@ -140,8 +138,8 @@ public class Seat {
     public static int addSeat(Seat seat) {
 
         int id = 0;
-        String query = "INSERT INTO seats " + "(seatName,seatNumber,isOccupied))"
-                + "VALUES (?,?,?)";
+        String query = "INSERT INTO seats " + "(seatName,seatNumber))"
+                + "VALUES (?,?)";
         int created = 0;
 
         try (Connection connection = MySQLConnection.connect();
@@ -149,7 +147,7 @@ public class Seat {
         ) {
             pst.setString(1, seat.getSeatName());
             pst.setInt(2, seat.getSeatNumber());
-            pst.setBoolean(3, seat.isOccupied());
+//            pst.setBoolean(3, seat.isOccupied());
 
             created = pst.executeUpdate();
 
@@ -165,8 +163,7 @@ public class Seat {
     }
 
     public static boolean updateSeat(Seat seat) {
-        String query = "UPDATE seats SET seatName = ?,seatNumber = ?," +
-                "isOccupied = ? WHERE idSeat = ?";
+        String query = "UPDATE seats SET seatName = ?,seatNumber = ? WHERE idSeat = ?";
         int updated = 0;
 
         try (
@@ -175,7 +172,7 @@ public class Seat {
         ) {
             pst.setString(1, seat.getSeatName());
             pst.setInt(2, seat.getSeatNumber());
-            pst.setBoolean(3, seat.isOccupied());
+//            pst.setBoolean(3, seat.isOccupied());
             pst.setInt(4, seat.getIdSeat());
 
             updated = pst.executeUpdate();
