@@ -55,7 +55,7 @@ public class LoginPanel extends JPanel {
         centralPanel.add(user);
 
         userField = createTextField("Ingresar usuario", 350, 50);
-        userField.setMaximumSize(new Dimension(325, 50));
+        userField.setMaximumSize(new Dimension(325, 60));
         userField.setAlignmentX(Component.CENTER_ALIGNMENT);
         userField.setBorder(BorderFactory.createCompoundBorder(userField.getBorder(), new EmptyBorder(0, 10, 0, 0))); //agrega un espacio al campo
         centralPanel.add(Box.createVerticalStrut(5)); //baja el textfield

@@ -9,7 +9,7 @@ import View.Admin.RoomManagement.RoomsForm;
 import View.Admin.RoomManagement.RoomsMain;
 import View.Admin.SalesManagement.SalesMain;
 import View.Admin.ShowtimesManagement.ShowtimesForm;
-import View.Admin.ShowtimesManagement.ShowtimesView;
+import View.Admin.ShowtimesManagement.ShowtimesMain;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -41,7 +41,7 @@ public class AdminView extends JPanel {
     private EmployeeForm employeeFormPanel;
     private MoviesMain moviesPanel;
     private MovieForm movieForm;
-    private ShowtimesView showtimesPanel;
+    private ShowtimesMain showtimesPanel;
     private SalesMain salesMain;
     private ShowtimesForm showtimesFormPanel;
     private RoomsMain roomsPanel;
@@ -94,7 +94,7 @@ public class AdminView extends JPanel {
         moviesPanel = new MoviesMain();
         employeeFormPanel = new EmployeeForm();
         movieForm = new MovieForm();
-        showtimesPanel = new ShowtimesView();
+        showtimesPanel = new ShowtimesMain();
         showtimesFormPanel = new ShowtimesForm();
         roomsPanel = new RoomsMain();
         roomsFormPanel = new RoomsForm();
@@ -504,6 +504,10 @@ public class AdminView extends JPanel {
 
     public MoviesMain getMoviesViewAdminPanel(){
         return moviesPanel;
+    }
+
+    public RoomsMain getRoomsView(){
+        return roomsPanel;
     }
 
 }

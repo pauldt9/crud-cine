@@ -62,7 +62,7 @@ public class CreateComponents {
         pf.setFont(font);
 
         TextPrompt ph = new TextPrompt(placeHolder, pf);
-        ph.setForeground(new Color(100, 100, 100));
+        ph.setForeground(new Color(0x999999));
         ph.setFont(font);
 
         return pf;
