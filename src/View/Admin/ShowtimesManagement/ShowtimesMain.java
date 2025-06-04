@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static utils.CreateComponents.*;
 
-public class ShowtimesView extends JPanel {
+public class ShowtimesMain extends JPanel {
     private JLabel titleLbl;
 
     private Color fgColor = new Color(0x2C3E50);
@@ -22,7 +22,7 @@ public class ShowtimesView extends JPanel {
 
     private int idShowtime; //primary key
 
-    public ShowtimesView(){
+    public ShowtimesMain(){
         setOpaque(false);
         setLayout(new BorderLayout());
 

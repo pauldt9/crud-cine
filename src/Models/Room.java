@@ -10,24 +10,30 @@ public class Room {
     private String roomName;
     private int capacity;
     private String roomType;
+    private int roomRows;
+    private int roomCols;
 
 
     //Por lo pronto y por conveniencia, empezamos los asientos como una matriz
     private Seat[][] seats;
 
-    public Room(int idRoom, int capacity, String roomName, Seat[][] seats, String roomType) {
+    public Room(int idRoom, int capacity, String roomName, Seat[][] seats, String roomType, int roomRows, int roomCols) {
         this.idRoom = idRoom;
         this.capacity = capacity;
         this.roomName = roomName;
         this.seats = seats;
         this.roomType = roomType;
+        this.roomRows = roomRows;
+        this.roomCols = roomCols;
     }
 
-    public Room(int idRoom, String roomName, int capacity, String roomType) {
+    public Room(int idRoom, String roomName, int capacity, String roomType, int roomRows, int roomCols) {
         this.idRoom = idRoom;
         this.roomName = roomName;
         this.capacity = capacity;
         this.roomType = roomType;
+        this.roomRows = roomRows;
+        this.roomCols = roomCols;
     }
 
     public int getIdRoom() {
@@ -70,6 +76,22 @@ public class Room {
         this.roomType = roomType;
     }
 
+    public int getRows() {
+        return roomRows;
+    }
+
+    public void setRows(int roomRows) {
+        this.roomRows = roomRows;
+    }
+
+    public int getCols() {
+        return roomCols;
+    }
+
+    public void setCols(int roomCols) {
+        this.roomCols = roomCols;
+    }
+
     public static ArrayList<Room> getRooms() {
         ArrayList<Room> rooms = new ArrayList<>();
         String query = "SELECT * FROM rooms";
@@ -85,7 +107,9 @@ public class Room {
                         rs.getInt("idRoom"),
                         rs.getString("roomName"),
                         rs.getInt("capacity"),
-                        rs.getString("roomType")
+                        rs.getString("roomType"),
+                        rs.getInt("roomRows"),
+                        rs.getInt("roomCols")
                 ));
             }
 
@@ -111,7 +135,9 @@ public class Room {
                         rs.getInt("idRoom"),
                         rs.getString("roomName"),
                         rs.getInt("capacity"),
-                        rs.getString("roomType")
+                        rs.getString("roomType"),
+                        rs.getInt("roomRows"),
+                        rs.getInt("roomCols")
                 );
             }
 
@@ -125,8 +151,8 @@ public class Room {
     public static int addRoom(Room room) {
 
         int id = 0;
-        String query = "INSERT INTO rooms " + "(roomName,capacity,roomType) ))"
-                + "VALUES (?,?,?)";
+        String query = "INSERT INTO rooms " + "(roomName,capacity,roomType,roomRows,roomCols)"
+                + "VALUES (?,?,?,?,?)";
         int created = 0;
 
         try (Connection connection = MySQLConnection.connect();
@@ -135,6 +161,8 @@ public class Room {
             pst.setString(1, room.getRoomName());
             pst.setInt(2, room.getCapacity());
             pst.setString(3, room.getRoomType());
+            pst.setInt(4, room.getRows());
+            pst.setInt(5, room.getCols());
 
             created = pst.executeUpdate();
 
@@ -150,7 +178,7 @@ public class Room {
     }
 
     public static boolean updateRoom(Room room) {
-        String query = "UPDATE rooms SET roomName = ?,capacity = ?,roomType = ? WHERE idRoom = ?";
+        String query = "UPDATE rooms SET roomName = ?,capacity = ?,roomType = ?,roomRows = ?, roomCols = ? WHERE idRoom = ?";
         int updated = 0;
 
         try (
@@ -160,7 +188,10 @@ public class Room {
             pst.setString(1, room.getRoomName());
             pst.setInt(2, room.getCapacity());
             pst.setString(3, room.getRoomType());
-            pst.setInt(4, room.getIdRoom());
+            pst.setInt(4, room.getRows());
+            pst.setInt(5, room.getCols());
+            pst.setInt(6, room.getIdRoom());
+
 
             updated = pst.executeUpdate();
             return updated > 0;
@@ -168,52 +199,110 @@ public class Room {
             throw new RuntimeException(e);
         }
     }
-    // comente este metodo por que vi que se puede simplificar usando el metodo que ya tenemos de addSeats
-//    public void generateAndSaveSeats(int rows, int columns) {
-//        String query = "INSERT INTO seats (seatName, seatNumber, isOccupied, idRoom) VALUES (?, ?, ?, ?)";
-//        seats = new Seat[rows][columns];
-//        Connection connection = null;
-//        PreparedStatement pst = null;
-//        try {
-//            connection = MySQLConnection.connect();
-//            pst = connection.prepareStatement(query);
-//
-//            for (int i = 0; i < rows; i++) {
-//                char rowLetter = (char) ('A' + i);
-//
-//                for (int j = 0; j < columns; j++) {
-//                    String seatName = rowLetter + String.valueOf(j + 1);
-//
-//                    Seat seat = new Seat();
-//                    seat.setSeatName(seatName);
-//                    seat.setSeatNumber(j + 1);
-//                    seat.setOccupied(false);
-//                    seat.setRoom(this);
-//
-//                    seats[i][j] = seat;
-//
-//
-//                    pst.setString(1, seatName);
-//                    pst.setInt(2, seat.getSeatNumber());
-//                    pst.setBoolean(3, false);
-//                    pst.setInt(4, this.idRoom);
-//                    pst.addBatch();
-//                }
-//            }
-//
-//            pst.executeBatch();
-//            System.out.println("Asientos generados y guardados correctamente.");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (pst != null) pst.close();
-//                if (connection != null) connection.close();
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
-//    }
+
+    public static boolean deleteRoom(int id) {
+
+        int deleted = 0;
+
+        String query = "DELETE FROM rooms WHERE idRoom = " + id;
+
+        try (
+                Connection connection = MySQLConnection.connect();
+                Statement st = (Statement) connection.createStatement();
+        ) {
+            deleted = st.executeUpdate(query);
+            System.out.println(deleted);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return deleted > 0;
+
+    }
+
+    public static boolean deleteRoomSeats(int id) {
+
+        int deleted = 0;
+
+        String query = "DELETE FROM seats WHERE idRoom = " + id;
+
+        try (
+                Connection connection = MySQLConnection.connect();
+                Statement st = (Statement) connection.createStatement();
+        ) {
+            deleted = st.executeUpdate(query);
+            System.out.println(deleted);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return deleted > 0;
+
+    }
+
+    public void generateSeats(int rows, int cols) {
+        Seat[][] generatedSeats = new Seat[rows][cols];
+        char rowLetter = 'A';
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                String seatName = rowLetter + String.valueOf(j + 1);
+                int seatNumber = j + 1;
+
+                Seat seat = new Seat();
+                seat.setSeatName(seatName);
+                seat.setSeatNumber(seatNumber);
+                seat.setIdRoom(this.idRoom);
+
+
+                int generatedId = Seat.addSeat(seat);
+                seat.setIdSeat(generatedId);
+
+                generatedSeats[i][j] = seat;
+            }
+            rowLetter++;
+        }
+
+        this.seats = generatedSeats;
+    }
+
+
+
+    public void updateRoomSize(Seat[][] oldSeats) {
+        ArrayList<Integer> existingIds = new ArrayList<>();
+
+        for (int i = 0; i < seats.length; i++) {
+            for (int j = 0; j < seats[i].length; j++) {
+                Seat newSeat = seats[i][j];
+
+                if (newSeat.getIdSeat() > 0) {
+                    // Si ya tiene ID, solo actualizar
+                    Seat.updateSeat(newSeat);
+                    existingIds.add(newSeat.getIdSeat());
+                } else {
+                    // Nuevo asiento
+                    newSeat.setIdRoom(this.idRoom);
+                    int newId = Seat.addSeat(newSeat);
+                    newSeat.setIdSeat(newId);
+                    existingIds.add(newId);
+                }
+            }
+        }
+
+        // Eliminar asientos que ya no existen
+        if (oldSeats != null) {
+            for (int i = 0; i < oldSeats.length; i++) {
+                for (int j = 0; j < oldSeats[i].length; j++) {
+                    Seat oldSeat = oldSeats[i][j];
+                    if (oldSeat != null && !existingIds.contains(oldSeat.getIdSeat())) {
+                        Seat.deleteSeat(oldSeat.getIdSeat());
+                    }
+                }
+            }
+        }
+    }
+
 
 }
