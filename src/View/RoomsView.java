@@ -1,5 +1,8 @@
 package View;
 
+import Models.MoviesTableModel;
+import Models.RoomsTableModel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +20,7 @@ public class RoomsView extends JPanel {
     private JButton editRoom;
 
     private JTable roomsTable;
+    private RoomsTableModel roomsTableModel;
 
     private int idRoom; //primary key
 
@@ -117,6 +121,11 @@ public class RoomsView extends JPanel {
     }
 
     public void initRoomsTable(){
+        roomsTableModel = new RoomsTableModel();
+        roomsTable = new JTable(roomsTableModel);
+
+        JScrollPane scroll = new JScrollPane(roomsTable);
+        add(scroll, BorderLayout.CENTER);
 
     }
 
