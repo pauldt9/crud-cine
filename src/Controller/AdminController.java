@@ -340,7 +340,6 @@ public class AdminController implements ActionListener {
 
         try {
             Room room = createRoom();
-
             int rowIndex = roomsTable.getRowById(room.getIdRoom());
             if (rowIndex == -1) {
                 JOptionPane.showMessageDialog(frame, "Sala no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
@@ -348,41 +347,57 @@ public class AdminController implements ActionListener {
             }
 
             Room existingRoom = rooms.get(rowIndex);
-            Seat[][] oldSeats = existingRoom.getSeats();
-
-            // ASIGNAR ID DE LA SALA ANTES DE CREAR LOS ASIENTOS
             room.setIdRoom(existingRoom.getIdRoom());
 
             if (Room.updateRoom(room)) {
                 int newRows = (Integer) adminView.getRoomsFormPanel().getRows().getSelectedItem();
                 int newCols = (Integer) adminView.getRoomsFormPanel().getCol().getSelectedItem();
 
+                ArrayList<Seat> existingSeats = Seat.getSeatsByRoomId(room.getIdRoom());
+
                 Seat[][] newSeats = new Seat[newRows][newCols];
+                ArrayList<Seat> seatsToKeep = new ArrayList<>();
 
+                char rowLetter = 'A';
                 for (int i = 0; i < newRows; i++) {
-                    char rowLetter = (char) ('A' + i);
                     for (int j = 0; j < newCols; j++) {
-                        int colNumber = j + 1;
+                        String seatName = rowLetter + String.valueOf(j + 1);
+                        Seat seat = null;
 
-                        Seat seat = new Seat();
-                        seat.setSeatName(String.valueOf(rowLetter) + colNumber);
-                        seat.setSeatNumber(colNumber);
-                        seat.setIdRoom(room.getIdRoom());
-
-                        if (oldSeats != null && i < oldSeats.length && j < oldSeats[i].length) {
-                            Seat oldSeat = oldSeats[i][j];
-                            if (oldSeat != null) {
-                                seat.setIdSeat(oldSeat.getIdSeat());
+                        for (Seat s : existingSeats) {
+                            if (s.getSeatName().equals(seatName)) {
+                                seat = s;
+                                seatsToKeep.add(s);
+                                break;
                             }
                         }
-
+                        if (seat == null) {
+                            seat = new Seat();
+                            seat.setSeatName(seatName);
+                            seat.setSeatNumber(j + 1);
+                            seat.setIdRoom(room.getIdRoom());
+                            int generatedId = Seat.addSeat(seat);
+                            seat.setIdSeat(generatedId);
+                        }
                         newSeats[i][j] = seat;
+                    }
+                    rowLetter++;
+                }
+
+                for (Seat s : existingSeats) {
+                    boolean found = false;
+                    for (Seat keep : seatsToKeep) {
+                        if (s.getIdSeat() == keep.getIdSeat()) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        Seat.deleteSeat(s.getIdSeat());
                     }
                 }
 
                 room.setSeats(newSeats);
-                room.updateRoomSize(oldSeats);
-
                 roomsTable.setRowData(rowIndex, room);
                 rooms.set(rowIndex, room);
 
@@ -427,8 +442,6 @@ public class AdminController implements ActionListener {
             }
         }
     }
-
-
 
     public Room createRoom() {
         String roomName = adminView.getRoomsFormPanel().getRoomName();
@@ -478,7 +491,6 @@ public class AdminController implements ActionListener {
 
         return null;
     }
-
 
     public void fillFieldsMovie() {
         int selectedRow = adminView.getMoviesViewAdminPanel().getMoviesTable().getSelectedRow();
@@ -560,12 +572,10 @@ public class AdminController implements ActionListener {
         }
     }
 
-
     private void loadMovies() {
         movies = Movie.getMovies();
         showMovies();
     }
-
 
     public Movie createMovie() {
         String title = adminView.getMovieForm().getAddMovieTitle().getText();
@@ -693,7 +703,6 @@ public class AdminController implements ActionListener {
         return new Employee(adminView.getEmployeePanel().getIdEmployee(),name,lastName,employeeType,empUsername,empPassword);
     }
 
-
     //agrega al empleado a la base de datos y a la tabla
     public void addEmployee() {
         if (!validateFormEmployee()) return;
@@ -796,7 +805,6 @@ public class AdminController implements ActionListener {
         return true;
     }
 
-
     public void exit(){
         int answer = JOptionPane.showConfirmDialog(frame, "¿Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
 
@@ -814,8 +822,5 @@ public class AdminController implements ActionListener {
         CardLayout card = (CardLayout) (adminView.getMainPanel().getLayout());
         card.show(adminView.getMainPanel(), namePanel);
     }
-
-
-
 
 }

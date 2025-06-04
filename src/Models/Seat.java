@@ -204,5 +204,27 @@ public class Seat {
 
     }
 
+    public static ArrayList<Seat> getSeatsByRoomId(int idRoom) {
+        ArrayList<Seat> seats = new ArrayList<>();
+        String query = "SELECT * FROM seats WHERE idRoom = " + idRoom;
 
+        try (
+                Connection connection = MySQLConnection.connect();
+                Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                ResultSet rs = st.executeQuery(query)
+        ) {
+            while (rs.next()) {
+                seats.add(new Seat(
+                        rs.getInt("idSeat"),
+                        rs.getString("seatName"),
+                        rs.getInt("seatNumber"),
+                        null,
+                        idRoom
+                ));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return seats;
+    }
 }

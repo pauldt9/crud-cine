@@ -293,9 +293,8 @@ public class Room {
 
         // Eliminar asientos que ya no existen
         if (oldSeats != null) {
-            for (int i = 0; i < oldSeats.length; i++) {
-                for (int j = 0; j < oldSeats[i].length; j++) {
-                    Seat oldSeat = oldSeats[i][j];
+            for (Seat[] seat : oldSeats) {
+                for (Seat oldSeat : seat) {
                     if (oldSeat != null && !existingIds.contains(oldSeat.getIdSeat())) {
                         Seat.deleteSeat(oldSeat.getIdSeat());
                     }
@@ -303,6 +302,4 @@ public class Room {
             }
         }
     }
-
-
 }
