@@ -1,9 +1,6 @@
 package Controller;
 
-import Models.Employee;
-import Models.EmployeeTableModel;
-import Models.Movie;
-import Models.MoviesTableModel;
+import Models.*;
 import View.LoginPanel;
 import View.AdminView;
 import View.MoviesViewAdmin;
@@ -24,7 +21,6 @@ public class AdminController implements ActionListener {
     private LoginPanel loginPanel;
     private JFrame frame;
     private AdminView adminView;
-    private MoviesViewAdmin moviesViewAdmin;
 
     private ArrayList<Employee> employees;
     private EmployeeTableModel empTable;
@@ -32,6 +28,9 @@ public class AdminController implements ActionListener {
     private ArrayList<Movie> movies;
     private MoviesTableModel movTable;
     private String finalRoute = null;
+
+    private ArrayList<Room> rooms;
+    private RoomsTableModel roomsTable;
 
     public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
         this.loginPanel = loginPanel;
@@ -41,6 +40,7 @@ public class AdminController implements ActionListener {
 
         empTable = adminView.getEmployeePanel().getTableModelEmployees();
         movTable = adminView.getMoviesViewAdminPanel().getMoviesTableModel();
+        roomsTable =  adminView.getRoomsView().getRoomsTableModel();
 
         adminView.getEmployeePanel().tableListener(new KeyAdapter() {
             @Override
@@ -60,10 +60,21 @@ public class AdminController implements ActionListener {
             }
         });
 
+        adminView.getRoomsView().tableListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    adminView.getRoomsView().removeTableSelection();
+                }
+            }
+        });
+
         employees = new ArrayList<>();
         movies = new ArrayList<>();
+        rooms = new ArrayList<>();
         loadEmployees();
         loadMovies();
+        loadRooms();
     }
 
     @Override
@@ -222,6 +233,8 @@ public class AdminController implements ActionListener {
                 adminView.getShowtimesFormPanel().setAction("Editar");
                 showAdminPanel("funciones");
                 break;
+
+                //salas
             case "Salas":
                 System.out.println("salas");
                 showAdminPanel("salas");
@@ -233,11 +246,18 @@ public class AdminController implements ActionListener {
                 break;
             case "Editar sala":
                 System.out.println("editar sala");
+                if (adminView.getRoomsView().getRoomsTable().getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(adminView, "Por favor selecciona una fila");
+                    break;
+                }
                 adminView.getRoomsFormPanel().setAction("Editar");
                 showAdminPanel("agregar/editar sala");
+                fillFieldsRoom();
                 break;
             case "Eliminar sala":
                 System.out.println("eliminar sala");
+                deleteRooms();
+                loadRooms();
                 break;
             case "Regresar sala":
                 System.out.println("regresando a sala");
@@ -247,13 +267,184 @@ public class AdminController implements ActionListener {
                 System.out.println("confirmando sala");
                 adminView.getRoomsFormPanel().setAction("Agregar");
                 showAdminPanel("salas");
+                addRoom();
+
                 break;
             case "Confirmar cambios de sala":
                 System.out.println("confirmando cambios de sala");
                 adminView.getRoomsFormPanel().setAction("Editar");
+                saveChangesRoom();
                 showAdminPanel("salas");
+                loadRooms();
                 break;
         }
+    }
+
+    public void fillFieldsRoom() {
+        int selectedRow = adminView.getRoomsView().getRoomsTable().getSelectedRow();
+        int roomId = roomsTable.getRowData(selectedRow).getIdRoom();
+
+        Room room = Room.getRoom(roomId);
+        if (room != null) {
+            adminView.getRoomsView().setIdRoom(room.getIdRoom());
+            adminView.getRoomsFormPanel().setRoomName(room.getRoomName());
+            adminView.getRoomsFormPanel().setRows(room.getRows());
+            adminView.getRoomsFormPanel().setCol(room.getCols());
+            adminView.getRoomsFormPanel().setRoomType(room.getRoomType());
+        } else {
+            System.out.println("No se encontró la sala en la base de datos.");
+        }
+    }
+
+    public void addRoom() {
+        if (!validateFormRoom()) return;
+
+        Room room = createRoom();
+        int rows = (Integer) adminView.getRoomsFormPanel().getRows().getSelectedItem();
+        int cols = (Integer) adminView.getRoomsFormPanel().getCol().getSelectedItem();
+
+        try {
+            int idRoom = Room.addRoom(room);
+            System.out.println(idRoom);
+            room.setIdRoom(idRoom);
+
+            room.generateSeats(rows,cols);
+
+            if (idRoom > 0) {
+                rooms.add(room);
+                roomsTable.addRow(room);
+                showAdminPanel("Salas");
+                JOptionPane.showMessageDialog(frame, "Se ha agregado una nueva sala");
+            } else {
+                JOptionPane.showMessageDialog(frame, "No se pudo crear la sala");
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(frame,
+                    "El nombre de la sala ya existe. Intenta con otro.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void saveChangesRoom() {
+        if (!validateFormRoom()) return;
+
+        try {
+            Room room = createRoom();
+
+            int rowIndex = roomsTable.getRowById(room.getIdRoom());
+            if (rowIndex == -1) {
+                JOptionPane.showMessageDialog(frame, "Sala no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Room existingRoom = rooms.get(rowIndex);
+            Seat[][] oldSeats = existingRoom.getSeats();
+
+            // ASIGNAR ID DE LA SALA ANTES DE CREAR LOS ASIENTOS
+            room.setIdRoom(existingRoom.getIdRoom());
+
+            if (Room.updateRoom(room)) {
+                int newRows = (Integer) adminView.getRoomsFormPanel().getRows().getSelectedItem();
+                int newCols = (Integer) adminView.getRoomsFormPanel().getCol().getSelectedItem();
+
+                Seat[][] newSeats = new Seat[newRows][newCols];
+
+                for (int i = 0; i < newRows; i++) {
+                    char rowLetter = (char) ('A' + i);
+                    for (int j = 0; j < newCols; j++) {
+                        int colNumber = j + 1;
+
+                        Seat seat = new Seat();
+                        seat.setSeatName(String.valueOf(rowLetter) + colNumber);
+                        seat.setSeatNumber(colNumber);
+                        seat.setIdRoom(room.getIdRoom());
+
+                        if (oldSeats != null && i < oldSeats.length && j < oldSeats[i].length) {
+                            Seat oldSeat = oldSeats[i][j];
+                            if (oldSeat != null) {
+                                seat.setIdSeat(oldSeat.getIdSeat());
+                            }
+                        }
+
+                        newSeats[i][j] = seat;
+                    }
+                }
+
+                room.setSeats(newSeats);
+                room.updateRoomSize(oldSeats);
+
+                roomsTable.setRowData(rowIndex, room);
+                rooms.set(rowIndex, room);
+
+                adminView.getRoomsFormPanel().clearFields();
+                JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
+            } else {
+                JOptionPane.showMessageDialog(frame, "No se pudo actualizar la sala");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame,
+                    "Error al guardar cambios: La sala ya existe. Intenta con otra.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
+    private void deleteRooms() {
+        int selectedRow = adminView.getRoomsView().getRoomsTable().getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(adminView, "Debes seleccionar una sala de la tabla");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                adminView,
+                "¿Esta seguro de que desea eliminar esta sala?",
+                "Confirmar eliminacion",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int id = rooms.get(selectedRow).getIdRoom();
+
+            boolean deletedSeats = Room.deleteRoomSeats(id);
+            boolean deleted = Room.deleteRoom(id);
+            if (deleted && deletedSeats) {
+                JOptionPane.showMessageDialog(adminView, "Sala eliminada correctamente");
+                showRooms();
+            } else {
+                JOptionPane.showMessageDialog(adminView, "No se pudo eliminar la sala");
+            }
+        }
+    }
+
+
+
+    public Room createRoom() {
+        String roomName = adminView.getRoomsFormPanel().getRoomName();
+
+        int rows = (Integer) adminView.getRoomsFormPanel().getRows().getSelectedItem();
+        int cols = (Integer) adminView.getRoomsFormPanel().getCol().getSelectedItem();
+
+        int capacity = rows * cols;
+        String roomType = (String)adminView.getRoomsFormPanel().getRoomType().getSelectedItem();
+
+        return new Room(adminView.getRoomsView().getIdRoom(),roomName,capacity,roomType,rows,cols);
+    }
+
+    private void showRooms() {
+        roomsTable.cleanTable();
+        for (Room r : rooms) {
+            roomsTable.addRow(r);
+        }
+    }
+
+
+    private void loadRooms() {
+        rooms = Room.getRooms();
+        showRooms();
     }
 
     private String chooseImage() {
@@ -583,6 +774,18 @@ public class AdminController implements ActionListener {
         }
         return true;
 
+    }
+
+    public boolean validateFormRoom(){
+        if (adminView.getRoomsFormPanel().getRoomName().isBlank() ||
+                adminView.getRoomsFormPanel().getCol().getSelectedIndex() == 0||
+                adminView.getRoomsFormPanel().getRows().getSelectedIndex() == 0 ||
+                adminView.getRoomsFormPanel().getRoomType().getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
+                    "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
 

@@ -510,4 +510,8 @@ public class AdminView extends JPanel {
         return moviesPanel;
     }
 
+    public RoomsView getRoomsView(){
+        return roomsPanel;
+    }
+
 }

@@ -187,12 +187,28 @@ public class RoomsForm extends JPanel {
         roomType.setSelectedIndex(0);
     }
 
+    public String getRoomName(){
+        return roomName.getText();
+    }
+
     public void setRoomName(String room){
         roomName.setText(room);
     }
 
     public JComboBox<Integer> getRows() {
         return rows;
+    }
+
+    public void setRows(int row) {
+        rows.setSelectedItem(row);
+    }
+
+    public void setCol(int cols) {
+        col.setSelectedItem(cols);
+    }
+
+    public void setRoomType(String type) {
+        roomType.setSelectedItem(type);
     }
 
     public JComboBox<Integer> getCol() {
@@ -202,4 +218,6 @@ public class RoomsForm extends JPanel {
     public JComboBox<String> getRoomType() {
         return roomType;
     }
+
+
 }

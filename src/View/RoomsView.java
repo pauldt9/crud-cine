@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class RoomsView extends JPanel {
@@ -141,5 +142,21 @@ public class RoomsView extends JPanel {
 
     public void setIdRoom(int idRoom) {
         this.idRoom = idRoom;
+    }
+
+    public JTable getRoomsTable() {
+        return roomsTable;
+    }
+
+    public RoomsTableModel getRoomsTableModel() {
+        return roomsTableModel;
+    }
+
+    public void tableListener(KeyListener listener){
+        roomsTable.addKeyListener(listener);
+    }
+
+    public void removeTableSelection(){
+        roomsTable.clearSelection();
     }
 }

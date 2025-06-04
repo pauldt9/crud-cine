@@ -11,7 +11,7 @@ public class Seat {
     private int seatNumber;
 //    private boolean isOccupied;
     private Room room; //Foreign Key
-    private int idRoom = room.getIdRoom();
+    private int idRoom;
 
 
     public Seat(int idSeat, String seatName, int seatNumber, Room room, int idRoom) {
@@ -138,8 +138,8 @@ public class Seat {
     public static int addSeat(Seat seat) {
 
         int id = 0;
-        String query = "INSERT INTO seats " + "(seatName,seatNumber))"
-                + "VALUES (?,?)";
+        String query = "INSERT INTO seats " + "(seatName,seatNumber,idRoom)"
+                + "VALUES (?,?,?)";
         int created = 0;
 
         try (Connection connection = MySQLConnection.connect();
@@ -147,6 +147,7 @@ public class Seat {
         ) {
             pst.setString(1, seat.getSeatName());
             pst.setInt(2, seat.getSeatNumber());
+            pst.setInt(3, seat.getIdRoom());
 //            pst.setBoolean(3, seat.isOccupied());
 
             created = pst.executeUpdate();
@@ -163,7 +164,7 @@ public class Seat {
     }
 
     public static boolean updateSeat(Seat seat) {
-        String query = "UPDATE seats SET seatName = ?,seatNumber = ? WHERE idSeat = ?";
+        String query = "UPDATE seats SET seatName = ?,seatNumber = ?, idRoom = ? WHERE idSeat = ?";
         int updated = 0;
 
         try (
@@ -172,7 +173,7 @@ public class Seat {
         ) {
             pst.setString(1, seat.getSeatName());
             pst.setInt(2, seat.getSeatNumber());
-//            pst.setBoolean(3, seat.isOccupied());
+            pst.setInt(3, seat.getIdRoom());
             pst.setInt(4, seat.getIdSeat());
 
             updated = pst.executeUpdate();
@@ -202,4 +203,6 @@ public class Seat {
         return deleted > 0;
 
     }
+
+
 }
