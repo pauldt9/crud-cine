@@ -161,6 +161,7 @@ public class AdminController implements ActionListener {
             case "Eliminar pelicula":
                 System.out.println("eliminar pelicula");
                 deleteMovie();
+                adminView.getShowtimesFormPanel().updateMovieCombo();
                 loadMovies();
                 break;
             case "Editar pelicula":
@@ -194,12 +195,14 @@ public class AdminController implements ActionListener {
                 System.out.println("se ha agregado una pelicula");
                 adminView.getMovieForm().setAction("Agregar");
                 addMovie();
+                adminView.getShowtimesFormPanel().updateMovieCombo();
                 showAdminPanel("peliculas");
                 break;
             case "Confirmar cambios de pelicula":
                 System.out.println("se ha editado la pelicula");
                 adminView.getMovieForm().setAction("Editar");
                 saveChangesMovie();
+                adminView.getShowtimesFormPanel().updateMovieCombo();
                 showAdminPanel("peliculas");
                 loadMovies();
                 break;
@@ -259,6 +262,7 @@ public class AdminController implements ActionListener {
             case "Eliminar sala":
                 System.out.println("eliminar sala");
                 deleteRooms();
+                adminView.getShowtimesFormPanel().updateRoomCombo();
                 loadRooms();
                 break;
             case "Regresar sala":
@@ -270,12 +274,13 @@ public class AdminController implements ActionListener {
                 adminView.getRoomsFormPanel().setAction("Agregar");
                 showAdminPanel("salas");
                 addRoom();
-
+                adminView.getShowtimesFormPanel().updateRoomCombo();
                 break;
             case "Confirmar cambios de sala":
                 System.out.println("confirmando cambios de sala");
                 adminView.getRoomsFormPanel().setAction("Editar");
                 saveChangesRoom();
+                adminView.getShowtimesFormPanel().updateRoomCombo();
                 showAdminPanel("salas");
                 loadRooms();
                 break;
