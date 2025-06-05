@@ -494,6 +494,10 @@ public class AdminView extends JPanel {
         return showtimesFormPanel;
     }
 
+    public ShowtimesMain getShowtimesPanel(){
+        return showtimesPanel;
+    }
+
     public RoomsForm getRoomsFormPanel(){
         return roomsFormPanel;
     }

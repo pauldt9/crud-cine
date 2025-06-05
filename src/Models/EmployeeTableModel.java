@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class EmployeeTableModel extends AbstractTableModel {
     private ArrayList<Employee> data = new ArrayList<Employee>();
-    private String column[] = {"Nombre", "Apellido", "Tipo de empleado", "Usuario"};
+    private String column[] = {"Nombre", "Apellido", "Tipo de empleado", "UsXuario"};
 
     @Override
     public int getRowCount() {

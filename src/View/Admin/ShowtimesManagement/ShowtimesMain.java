@@ -1,5 +1,7 @@
 package View.Admin.ShowtimesManagement;
 
+import Models.MovieShowtimeTableModel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,7 @@ public class ShowtimesMain extends JPanel {
     private JButton editShowtime;
 
     private JTable showtimesTable;
+    private MovieShowtimeTableModel showtimesTableModel;
 
     private int idShowtime; //primary key
 
@@ -84,7 +87,11 @@ public class ShowtimesMain extends JPanel {
     }
 
     public void initMovTable(){
+        showtimesTableModel = new MovieShowtimeTableModel();
+        showtimesTable = new JTable(showtimesTableModel);
 
+        JScrollPane scroll = new JScrollPane(showtimesTable);
+        add(scroll, BorderLayout.CENTER);
     }
 
     public void setListeners(ActionListener listener){
@@ -99,5 +106,13 @@ public class ShowtimesMain extends JPanel {
 
     public void setIdShowtime(int idShowtime) {
         this.idShowtime = idShowtime;
+    }
+
+    public JTable getShowtimesTable(){
+        return showtimesTable;
+    }
+
+    public MovieShowtimeTableModel getShowtimesTableModel(){
+        return showtimesTableModel;
     }
 }
