@@ -1,11 +1,15 @@
 package View.Admin.ShowtimesManagement;
 
+import Models.Movie;
+import Models.Room;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static utils.CreateComponents.*;
 
@@ -20,7 +24,7 @@ public class ShowtimesForm extends JPanel {
     private JButton backButton;
 
     /*----------Campos del formulario----------*/
-    private JTextField addMovieTitle;
+    private JComboBox<String> addMovieTitle;
     private JComboBox<String> addShowtime;
     private JComboBox<String> addRoom;
 
@@ -68,12 +72,16 @@ public class ShowtimesForm extends JPanel {
         formPanel.setOpaque(false);
         add(formPanel, BorderLayout.CENTER);
 
-        addMovieTitle = createTextField("Ingresar titulo", 350, 50);
+
+        addMovieTitle = new JComboBox<String>();
+        addMovieTitle.addItem("Seleccione una película");
         addMovieTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addMovieTitle.setBorder(BorderFactory.createCompoundBorder(addMovieTitle.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         addMovieTitle.setBackground(bgColButtons);
         addMovieTitle.setForeground(fgColor);
+        addMovieTitle.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addMovieTitle.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addMovieTitle);
+        updateMovieCombo();
 
         String[] schedules = {"12:00", "14:00", "16:00", "18:00", "20:00"};
         addShowtime = new JComboBox<String>(schedules);
@@ -83,6 +91,16 @@ public class ShowtimesForm extends JPanel {
         addShowtime.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         addShowtime.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addShowtime);
+
+        addRoom = new JComboBox<String>();
+        addRoom.addItem("Seleccione una sala");
+        addRoom.setAlignmentX(Component.LEFT_ALIGNMENT);
+        addRoom.setBackground(bgColButtons);
+        addRoom.setForeground(fgColor);
+        addRoom.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addRoom.setMaximumSize(new Dimension(350, 50));
+        formPanel.add(addRoom);
+        updateRoomCombo();
 
         try {
             Image backIcon = ImageIO.read(getClass().getResource("/img/back.png"));
@@ -108,4 +126,34 @@ public class ShowtimesForm extends JPanel {
 //            confirmButton.setActionCommand("Confirmar cambios de funcion");
         }
     }
+
+    public void updateMovieCombo() {
+        if (addMovieTitle == null) return;
+        addMovieTitle.removeAllItems();
+        addMovieTitle.addItem("Seleccione una película");
+
+        ArrayList<Movie> movieList = Movie.getMovies();
+        for (Movie movie : movieList) {
+            addMovieTitle.addItem(movie.getTitle());
+        }
+    }
+
+    public void updateRoomCombo() {
+        if (addRoom == null) return;
+        addRoom.removeAllItems();
+        addRoom.addItem("Seleccione una sala");
+
+        ArrayList<Room> roomList = Room.getRooms();
+        for (Room room : roomList) {
+            addRoom.addItem(room.getRoomName());
+        }
+    }
+//
+//    public JComboBox<String> getAddMovieTitle() {
+//        return addMovieTitle;
+//    }
+//
+//    public JComboBox<String> getAddRoom() {
+//        return addRoom;
+//    }
 }

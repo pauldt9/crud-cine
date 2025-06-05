@@ -35,6 +35,22 @@ public class MovieShowtime {
         this.idShowtime = id;
     }
 
+    public int getIdMovie() {
+        return idMovie;
+    }
+
+    public void setIdMovie(int idMovie) {
+        this.idMovie = idMovie;
+    }
+
+    public int getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(int idRoom) {
+        this.idRoom = idRoom;
+    }
+
     public Movie getMovie() {
         return movie;
     }
@@ -114,14 +130,16 @@ public class MovieShowtime {
     public static int addFunction(MovieShowtime movieShowtime) {
 
         int id = 0;
-        String query = "INSERT INTO functions " + "(showTime))"
-                + "VALUES (?)";
+        String query = "INSERT INTO functions " + "(idMovie,idRoom,showTime)"
+                + "VALUES (?,?,?)";
         int created = 0;
 
         try (Connection connection = MySQLConnection.connect();
              PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
-            pst.setString(1, movieShowtime.getShowTime());
+            pst.setInt(1, movieShowtime.getIdMovie());
+            pst.setInt(2, movieShowtime.getIdRoom());
+            pst.setString(3, movieShowtime.getShowTime());
 
             created = pst.executeUpdate();
 
