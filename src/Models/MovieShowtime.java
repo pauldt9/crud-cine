@@ -218,4 +218,26 @@ public class MovieShowtime {
 
         return false;
     }
+
+    public static ArrayList<String> getSeatsNames(int idRoom){
+        ArrayList<String> seatNames = new ArrayList<>();
+        String query = "SELECT seatName FROM seats WHERE idRoom = ?";
+
+        try (
+                Connection connection = MySQLConnection.connect();
+                PreparedStatement pst = connection.prepareStatement(query);
+        ) {
+
+            pst.setInt(1, idRoom);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                seatNames.add(rs.getString("seatName"));
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return seatNames;
+    }
 }

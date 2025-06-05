@@ -60,6 +60,22 @@ public class Ticket {
         this.price = price;
     }
 
+    public int getIdFunction() {
+        return idFunction;
+    }
+
+    public void setIdFunction(int idFunction) {
+        this.idFunction = idFunction;
+    }
+
+    public int getIdSeat() {
+        return idSeat;
+    }
+
+    public void setIdSeat(int idSeat) {
+        this.idSeat = idSeat;
+    }
+
     public static ArrayList<Ticket> getTickets() {
         ArrayList<Ticket> tickets = new ArrayList<>();
         String query = "SELECT * FROM tickets";
@@ -111,14 +127,16 @@ public class Ticket {
     public static int addTicket(Ticket ticket) {
 
         int id = 0;
-        String query = "INSERT INTO tickets " + "(price) ))"
-                + "VALUES (?)";
+        String query = "INSERT INTO tickets " + "(idFunction,idSeat,price)"
+                + "VALUES (?,?,?)";
         int created = 0;
 
         try (Connection connection = MySQLConnection.connect();
              PreparedStatement pst = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ) {
-            pst.setInt(1, ticket.getPrice());
+            pst.setInt(1, ticket.getIdFunction());
+            pst.setInt(2, ticket.getIdSeat());
+            pst.setInt(3, ticket.getPrice());
 
             created = pst.executeUpdate();
 
