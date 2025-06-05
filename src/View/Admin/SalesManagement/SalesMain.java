@@ -1,5 +1,7 @@
 package View.Admin.SalesManagement;
 
+import Models.SalesTableModel;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,9 @@ public class SalesMain extends JPanel {
 
     private JButton deleteButton;
     private JButton generatePdf;
+
+    private JTable salesTable;
+    private SalesTableModel salesTableModel;
 
     public SalesMain(){
         setLayout(new BorderLayout());
@@ -64,7 +69,11 @@ public class SalesMain extends JPanel {
     }
 
     public void initSalesTable(){
+        salesTableModel = new SalesTableModel();
+        salesTable = new JTable(salesTableModel);
 
+        JScrollPane scroll = new JScrollPane(salesTable);
+        add(scroll, BorderLayout.CENTER);
     }
 
     public void setListeners(ActionListener listener){
