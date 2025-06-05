@@ -198,16 +198,15 @@ public class MovieShowtime {
 
     }
 
-    public static boolean isShowtimeAvailable(String showtime, int idMovie, int idRoom) {
-        String query = "SELECT COUNT(*) FROM functions WHERE showTime = ? AND idMovie = ? AND idRoom = ?";
+    public static boolean isShowtimeAvailable(String showtime, int idRoom) {
+        String query = "SELECT COUNT(*) FROM functions WHERE showtime = ? AND idRoom = ?";
 
         try (
                 Connection connection = MySQLConnection.connect();
                 PreparedStatement stmt = connection.prepareStatement(query);
         ) {
             stmt.setString(1, showtime);
-            stmt.setInt(2, idMovie);
-            stmt.setInt(3, idRoom);
+            stmt.setInt(2, idRoom);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);

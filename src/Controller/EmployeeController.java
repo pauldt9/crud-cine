@@ -32,6 +32,7 @@ public class EmployeeController implements ActionListener {
         switch (command){
             case "Salir":
                 exit();
+                loginPanel.clearFields();
                 break;
             case "Regresar al catalogo":
             case "Inicio empleado":

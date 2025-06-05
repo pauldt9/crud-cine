@@ -91,6 +91,7 @@ public class AdminController implements ActionListener {
             case "Salir":
                 System.out.println("ha salido");
                 exit();
+                loginPanel.clearFields();
                 break;
             case "Menu":
                 System.out.println("menu");
@@ -328,8 +329,7 @@ public class AdminController implements ActionListener {
         if (!validateFormShowtimes()) return;
         MovieShowtime showtime = createShowtime();
 
-        if (!MovieShowtime.isShowtimeAvailable(showtime.getShowTime(),
-                showtime.getIdMovie(), showtime.getIdRoom())){
+        if (!MovieShowtime.isShowtimeAvailable(showtime.getShowTime(), showtime.getIdRoom())){
             JOptionPane.showMessageDialog(frame, "No puedes repetir la misma sala con el mismo horario mas de 1 vez");
             return;
         }
@@ -360,8 +360,7 @@ public class AdminController implements ActionListener {
 
         MovieShowtime showtime = createShowtime();
 
-        if (!MovieShowtime.isShowtimeAvailable(showtime.getShowTime(),
-                showtime.getIdMovie(), showtime.getIdRoom())){
+        if (!MovieShowtime.isShowtimeAvailable(showtime.getShowTime(), showtime.getIdRoom())){
             JOptionPane.showMessageDialog(frame, "No puedes repetir la misma sala con el mismo horario mas de 1 vez");
             return;
         }
