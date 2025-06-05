@@ -1,8 +1,10 @@
 package Controller;
 
+import Models.Employee;
 import View.Admin.AdminView;
 import View.Employee.EmployeeView;
 import View.LoginPanel;
+import utils.PasswordUtils;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ public class LoginController implements ActionListener {
     private AdminView adminView;
     private JFrame frame;
     private EmployeeView employeeView;
+    private Employee employee;
 
     public LoginController(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView employeeView){
         this.loginPanel = loginPanel;
@@ -28,27 +31,35 @@ public class LoginController implements ActionListener {
 
         if (command.equals("Ingresar")) {
             if (validateLogin()) {
-                if (!isAdmin()) {
-                    openAdminView();
+                try {
 
-                } else {
-                    openEmployeeView();
+                    employee = Employee.getEmployeeByUsername(loginPanel.getUserField());
+
+                    //Valida contraseña
+                    if(!PasswordUtils.checkPassword(loginPanel.getPasswordField(), employee.getPassword())){
+                        JOptionPane.showMessageDialog(frame,"Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    //Valida tipo de usuario
+                    if (isAdmin(employee)) {
+                        openAdminView();
+                    } else{
+                        openEmployeeView();
+                    }
+                }catch (Exception ex){
+                    JOptionPane.showMessageDialog(frame, "Usuario no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
-    public boolean isAdmin(){
-        /*alguna validacion si el usuario es admin, pero algo para determinar que ventana abrir*/
+    public boolean isAdmin(Employee employee){
+//        alguna validacion si el usuario es admin, pero algo para determinar que ventana abrir
 
-//        if(loginPanel.getUserField().trim().equals("admin")){
-//            return true;
-//        }
-//
-//        if(loginPanel.getPasswordField().trim().equals()){
-//
-//        }
-
+        if(employee.getEmployeeType().equals("Admin")){
+            return true;
+        }
         return false;
     }
 

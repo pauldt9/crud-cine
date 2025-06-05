@@ -180,7 +180,6 @@ public class AdminController implements ActionListener {
                 adminView.getMovieForm().setAction("Agregar");
                 showAdminPanel("agregar/editar pelicula");
 
-
                 break;
             case "Agregar imagen":
                 System.out.println("se ha agregado una imagen");

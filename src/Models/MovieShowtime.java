@@ -155,15 +155,18 @@ public class MovieShowtime {
     }
 
     public static boolean updateFunction(MovieShowtime movieShowtime) {
-        String query = "UPDATE functions SET showTime = ? WHERE idFunction = ?";
+        String query = "UPDATE functions SET idMovie = ?, idRoom = ?, showTime = ? WHERE idFunction = ?";
         int updated = 0;
 
         try (
                 Connection connection = MySQLConnection.connect();
                 PreparedStatement pst = connection.prepareStatement(query)
         ) {
-            pst.setString(1, movieShowtime.getShowTime());
-            pst.setInt(2, movieShowtime.getIdShowtime());
+
+            pst.setInt(1,movieShowtime.getIdMovie());
+            pst.setInt(2,movieShowtime.getIdRoom());
+            pst.setString(3, movieShowtime.getShowTime());
+            pst.setInt(4, movieShowtime.getIdShowtime());
 
             updated = pst.executeUpdate();
             return updated > 0;
