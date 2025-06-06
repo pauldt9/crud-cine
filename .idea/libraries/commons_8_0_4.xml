@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="commons-8.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/commons-8.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/io-8.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/slf4j-simple-2.0.13.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/layout-8.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/kernel-8.0.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/slf4j-api-2.0.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

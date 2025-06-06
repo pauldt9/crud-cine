@@ -95,13 +95,13 @@ public class OccupiedSeats {
         }
     }
 
-    public static boolean cancelReservation(int idSeat, int idSchedule) {
-        String query = "DELETE FROM occupiedseats WHERE idSeat = ? AND idSchedule = ?";
+    public static boolean cancelReservation(int idSeat, int idFunction) {
+        String query = "DELETE FROM occupiedseats WHERE idSeat = ? AND idFunction = ?";
         try (Connection connection = MySQLConnection.connect();
              PreparedStatement pst = connection.prepareStatement(query)) {
 
             pst.setInt(1, idSeat);
-            pst.setInt(2, idSchedule);
+            pst.setInt(2, idFunction);
             int deleted = pst.executeUpdate();
 
             return deleted > 0;
