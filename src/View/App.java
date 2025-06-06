@@ -38,6 +38,6 @@ public class App {
 
         new LoginController(loginPanel, frame, adminView, employeeView);
         new AdminController(loginPanel, frame, adminView);
-        new EmployeeController(frame, employeeView, loginPanel, movieCatalog);
+        new EmployeeController(frame, employeeView, loginPanel, movieCatalog,adminView);
     }
 }

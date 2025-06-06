@@ -498,6 +498,10 @@ public class AdminView extends JPanel {
         return showtimesPanel;
     }
 
+    public SalesMain getSalesMain(){
+        return salesMain;
+    }
+
     public RoomsForm getRoomsFormPanel(){
         return roomsFormPanel;
     }

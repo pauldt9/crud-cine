@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.*;
+import View.Admin.AdminView;
 import View.Employee.Catalog;
 import View.Employee.EmployeeView;
 import View.LoginPanel;
@@ -14,14 +15,16 @@ import java.util.ArrayList;
 public class EmployeeController implements ActionListener {
     private JFrame frame;
     private EmployeeView employeeView;
+    private AdminView adminView;
     private LoginPanel loginPanel;
     private Catalog catalog;
 
     private ArrayList<MovieShowtime> allShowtimes = new ArrayList<MovieShowtime>(); //aqui se guardan todas las funciones disponibles
     private ArrayList<Seat> seatsSelected = new ArrayList<Seat>();
     private MovieShowtime currentShowtime;
+    private SalesTableModel salesTableModel;
 
-    public EmployeeController(JFrame frame, EmployeeView employeeView, LoginPanel loginPanel, Catalog catalog){
+    public EmployeeController(JFrame frame, EmployeeView employeeView, LoginPanel loginPanel, Catalog catalog, AdminView adminView) {
         this.employeeView = employeeView;
         this.loginPanel = loginPanel;
         this.frame = frame;
@@ -29,6 +32,7 @@ public class EmployeeController implements ActionListener {
         this.employeeView.setListeners(this);
         this.catalog.initMoviesCatalog(this);
         this.allShowtimes = MovieShowtime.getShowtimes();
+        salesTableModel = adminView.getSalesMain().getSalesTableModel();
     }
 
     @Override
@@ -158,6 +162,7 @@ public class EmployeeController implements ActionListener {
                     currentShowtime.getIdShowtime(), seat.getIdSeat());
 
             Ticket.addTicket(ticket);
+            salesTableModel.addRow(ticket);
 
             OccupiedSeats os = new OccupiedSeats(0, seat.getIdSeat(),
                     currentShowtime.getIdShowtime(), true);

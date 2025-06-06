@@ -80,4 +80,12 @@ public class SalesMain extends JPanel {
         deleteButton.addActionListener(listener);
         generatePdf.addActionListener(listener);
     }
+
+    public SalesTableModel getSalesTableModel() {
+        return salesTableModel;
+    }
+
+    public JTable getSalesTable() {
+        return salesTable;
+    }
 }

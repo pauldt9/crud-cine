@@ -82,15 +82,20 @@ public class Ticket {
 
         try (
                 Connection connection = MySQLConnection.connect();
-                Statement st = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 ResultSet rs = st.executeQuery(query)
         ) {
 
             while (rs.next()) {
-                tickets.add(new Ticket(
-                        rs.getInt("idTicket"),
-                        rs.getInt("price")
-                ));
+                int idTicket = rs.getInt("idTicket");
+                int idFunction = rs.getInt("idFunction");
+                int idSeat = rs.getInt("idSeat");
+                int price = rs.getInt("price");
+
+                MovieShowtime ms = MovieShowtime.getShowtimes(idFunction);
+                Seat seat = Seat.getSeat(idSeat);
+
+                tickets.add(new Ticket(idTicket, ms, seat, price, idFunction, idSeat));
             }
 
         } catch (SQLException ex) {
@@ -167,5 +172,26 @@ public class Ticket {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean deleteTicket(int id) {
+
+        int deleted = 0;
+
+        String query = "DELETE FROM tickets WHERE idTicket = " + id;
+
+        try (
+                Connection connection = MySQLConnection.connect();
+                Statement st = (Statement) connection.createStatement();
+        ) {
+            deleted = st.executeUpdate(query);
+            System.out.println(deleted);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return deleted > 0;
+
     }
 }

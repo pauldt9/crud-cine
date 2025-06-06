@@ -32,8 +32,12 @@ public class AdminController implements ActionListener {
 
     private ArrayList<Room> rooms;
     private RoomsTableModel roomsTable;
+
     private ArrayList<MovieShowtime> showtimes;
     private MovieShowtimeTableModel showtimeTable;
+
+    private ArrayList<Ticket> tickets;
+    private SalesTableModel salesTable;
 
     public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
         this.loginPanel = loginPanel;
@@ -45,6 +49,7 @@ public class AdminController implements ActionListener {
         movTable = adminView.getMoviesViewAdminPanel().getMoviesTableModel();
         roomsTable =  adminView.getRoomsView().getRoomsTableModel();
         showtimeTable = adminView.getShowtimesPanel().getShowtimesTableModel();
+        salesTable = adminView.getSalesMain().getSalesTableModel();
 
         adminView.getEmployeePanel().tableListener(new KeyAdapter() {
             @Override
@@ -77,10 +82,12 @@ public class AdminController implements ActionListener {
         movies = new ArrayList<>();
         rooms = new ArrayList<>();
         showtimes = new ArrayList<>();
+        tickets = new ArrayList<>();
         loadEmployees();
         loadMovies();
         loadRooms();
         loadShowtimes();
+        loadTickets();
     }
 
     @Override
@@ -305,10 +312,52 @@ public class AdminController implements ActionListener {
                 break;
             case "Eliminar venta":
                 System.out.println("venta eliminada");
+                deleteSale();
+                loadTickets();
                 break;
             case "Generar pdf":
                 System.out.println("generando pdf");
                 break;
+        }
+    }
+
+    public void deleteSale(){
+        int selectedRow = adminView.getSalesMain().getSalesTable().getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(adminView, "Debes seleccionar una venta de la tabla");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                adminView,
+                "¿Esta seguro de que desea eliminar esta venta?",
+                "Confirmar eliminacion",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int id = tickets.get(selectedRow).getIdTicket();
+
+            boolean deleted = Ticket.deleteTicket(id);
+            if (deleted) {
+                JOptionPane.showMessageDialog(adminView, "Venta eliminada correctamente");
+                showShowtimes();
+            } else {
+                JOptionPane.showMessageDialog(adminView, "No se pudo eliminar la venta");
+            }
+        }
+    }
+
+    private void loadTickets(){
+        tickets = Ticket.getTickets();
+        showTickets();
+    }
+
+    private void showTickets(){
+        salesTable.clearTable();
+
+        for (Ticket ticket : tickets){
+            salesTable.addRow(ticket);
         }
     }
 

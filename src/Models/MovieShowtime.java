@@ -113,13 +113,15 @@ public class MovieShowtime {
                 ResultSet rs = st.executeQuery(query)
         ) {
 
-            if (rs.next()) {
-                movieShowtime = new MovieShowtime(
-                        rs.getInt("idFunction"),
-                        rs.getInt("idMovie"),
-                        rs.getInt("idRoom"),
-                        rs.getString("showTime")
-                );
+            if(rs.next()){
+                int idMovie = rs.getInt("idMovie");
+                int idRoom = rs.getInt("idRoom");
+                String showTime = rs.getString("showTime");
+
+                Movie movie = Movie.getMovieById(idMovie);
+                Room room = Room.getRoom(idRoom);
+
+                return new MovieShowtime(id, movie, room, showTime);
             }
 
         } catch (SQLException ex) {

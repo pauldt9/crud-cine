@@ -94,23 +94,23 @@ public class OccupiedSeats {
             return false;
         }
     }
-//
-//    public static boolean cancelReservation(int idSeat, int idSchedule) {
-//        String query = "DELETE FROM occupiedseats WHERE idSeat = ? AND idSchedule = ?";
-//        try (Connection connection = MySQLConnection.connect();
-//             PreparedStatement pst = connection.prepareStatement(query)) {
-//
-//            pst.setInt(1, idSeat);
-//            pst.setInt(2, idSchedule);
-//            int deleted = pst.executeUpdate();
-//
-//            return deleted > 0;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
+
+    public static boolean cancelReservation(int idSeat, int idSchedule) {
+        String query = "DELETE FROM occupiedseats WHERE idSeat = ? AND idSchedule = ?";
+        try (Connection connection = MySQLConnection.connect();
+             PreparedStatement pst = connection.prepareStatement(query)) {
+
+            pst.setInt(1, idSeat);
+            pst.setInt(2, idSchedule);
+            int deleted = pst.executeUpdate();
+
+            return deleted > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 //    public static boolean reserveSeats(List<OccupiedSeats> reservations) {
 //        String query = "INSERT INTO occupiedseats (idSeat, idSchedule, isOccupied) VALUES (?, ?, ?)";
