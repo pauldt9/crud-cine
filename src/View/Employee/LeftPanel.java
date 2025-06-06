@@ -18,7 +18,6 @@ public class LeftPanel extends JPanel {
 
     //Botones
     private JButton homeButton;
-    private JButton darkMode;
     private JButton exitButton;
 
     public LeftPanel(){
@@ -41,26 +40,15 @@ public class LeftPanel extends JPanel {
         add(Box.createVerticalStrut(50));
         add(homeButton);
 
-        darkMode = createButton("", 150, 40);
-        darkMode.setActionCommand("Modo Oscuro");
-        darkMode.setBackground(buttonColor);
-        darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(420));
-        add(darkMode);
-
         exitButton = createButton("", 150, 40);
         exitButton.setActionCommand("Salir");
         exitButton.setBackground(new Color(0x17C3B2));
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(30));
+        add(Box.createVerticalStrut(500));
         add(exitButton);
 
         //Iconos
         try {
-            Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
-            darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            darkMode.setIcon(new ImageIcon(darkIcon));
-
             Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
             exitIcon = exitIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             exitButton.setIcon(new ImageIcon(exitIcon));
@@ -71,7 +59,6 @@ public class LeftPanel extends JPanel {
 
     public void setListeners(ActionListener listener){
         homeButton.addActionListener(listener);
-        darkMode.addActionListener(listener);
         exitButton.addActionListener(listener);
     }
 }

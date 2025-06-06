@@ -1,6 +1,7 @@
 package Controller;
 
 import Models.*;
+import View.Employee.EmployeeView;
 import View.LoginPanel;
 import View.Admin.AdminView;
 import View.Admin.MovieManagement.MoviesMain;
@@ -41,6 +42,7 @@ public class AdminController implements ActionListener {
     private LoginPanel loginPanel;
     private JFrame frame;
     private AdminView adminView;
+    private EmployeeView employeeView;
     private MoviesMain moviesMain;
 
     private ArrayList<Employee> employees;
@@ -59,11 +61,12 @@ public class AdminController implements ActionListener {
     private ArrayList<Ticket> tickets;
     private SalesTableModel salesTable;
 
-    public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
+    public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView employeeView){
         this.loginPanel = loginPanel;
         this.frame = frame;
         this.adminView = adminView;
         this.adminView.setListeners(this);
+        this.employeeView = employeeView;
 
         empTable = adminView.getEmployeePanel().getTableModelEmployees();
         movTable = adminView.getMoviesViewAdminPanel().getMoviesTableModel();
@@ -127,14 +130,6 @@ public class AdminController implements ActionListener {
             case "Ventas":
                 System.out.println("ventas");
                 showAdminPanel("ventas");
-                break;
-            case "Modo Oscuro":
-                System.out.println("cambiar a oscuro");
-                adminView.setViewMode("Modo Claro");
-                break;
-            case "Modo Claro":
-                System.out.println("cambiar a claro");
-                adminView.setViewMode("Modo Oscuro");
                 break;
 //--------------------------Empleados
             case "Empleados":
@@ -213,7 +208,7 @@ public class AdminController implements ActionListener {
                 adminView.getMovieForm().setAction("Agregar");
                 adminView.getMovieForm().clearFields();
                 showAdminPanel("agregar/editar pelicula");
-
+                adminView.updateNumMovies();
                 break;
             case "Agregar imagen":
                 System.out.println("se ha agregado una imagen");
@@ -420,6 +415,7 @@ public class AdminController implements ActionListener {
             if (idShowtime > 0){
                 showtimes.add(showtime);
                 showtimeTable.addRow(showtime);
+                loadMovies();
                 JOptionPane.showMessageDialog(frame, "Se ha agregado una funcion");
             }
         } catch (Exception e){

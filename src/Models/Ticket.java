@@ -194,4 +194,23 @@ public class Ticket {
         return deleted > 0;
 
     }
+
+    public static int getTotalSales() {
+        int total = 0;
+        String query = "SELECT SUM(price) FROM tickets";
+
+        try (
+                Connection connection = MySQLConnection.connect();
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery(query);
+        ) {
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return total;
+    }
 }

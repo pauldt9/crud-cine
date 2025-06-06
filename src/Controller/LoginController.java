@@ -15,13 +15,15 @@ public class LoginController implements ActionListener {
     private AdminView adminView;
     private JFrame frame;
     private EmployeeView employeeView;
+    private EmployeeController employeeController;
     private Employee employee;
 
-    public LoginController(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView employeeView){
+    public LoginController(LoginPanel loginPanel, JFrame frame, AdminView adminView, EmployeeView employeeView, EmployeeController employeeController) {
         this.loginPanel = loginPanel;
         this.frame = frame;
         this.adminView = adminView;
         this.employeeView = employeeView;
+        this.employeeController = employeeController;
         this.loginPanel.setListeners(this);
     }
 
@@ -107,5 +109,9 @@ public class LoginController implements ActionListener {
         frame.repaint();
         frame.revalidate();
         frame.setTitle("Inicio");
+
+        employeeController.reloadShowtimes();
+        employeeController.showEmployeePanel("catalogo");
     }
+
 }

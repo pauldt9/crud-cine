@@ -62,4 +62,14 @@ public class EmployeeView extends JPanel {
     public Details getDetailsPanel(){
         return detailsPanel;
     }
+
+    public Catalog getCatalogView() {
+        return catalogView;
+    }
+
+    public void updateCatalog(ActionListener listener) {
+        catalogView.initMoviesCatalog(listener);
+    }
+
+
 }

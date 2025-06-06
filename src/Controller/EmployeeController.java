@@ -29,10 +29,14 @@ public class EmployeeController implements ActionListener {
         this.loginPanel = loginPanel;
         this.frame = frame;
         this.catalog = catalog;
-        this.employeeView.setListeners(this);
-        this.catalog.initMoviesCatalog(this);
         this.allShowtimes = MovieShowtime.getShowtimes();
+        this.catalog.initMoviesCatalog(this);
+        this.employeeView.setListeners(this);
+        this.adminView = adminView;
+
         salesTableModel = adminView.getSalesMain().getSalesTableModel();
+        CardLayout cl = (CardLayout) employeeView.getMainPanel().getLayout();
+        cl.show(employeeView.getMainPanel(), "catalogo");
     }
 
     @Override
@@ -52,6 +56,7 @@ public class EmployeeController implements ActionListener {
                 break;
             case "Regresar al catalogo":
             case "Inicio empleado":
+                reloadShowtimes();
                 showEmployeePanel("catalogo");
                 break;
             case "Funciones":
@@ -60,6 +65,7 @@ public class EmployeeController implements ActionListener {
                 break;
             case "Finalizar venta":
                 completeSale();
+                adminView.updateTotalSales();
                 break;
             case "Confirmar asientos":
                 //trae todos los nombres de los asientos seleccionados
@@ -83,7 +89,7 @@ public class EmployeeController implements ActionListener {
     }
 
     public void exit(){
-        int answer = JOptionPane.showConfirmDialog(frame, "Estas seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
+        int answer = JOptionPane.showConfirmDialog(frame, "¿Estás seguro de cerrar sesion?", "Salir", JOptionPane.YES_NO_OPTION);
 
         if (answer == JOptionPane.YES_OPTION){
             frame.remove(employeeView);
@@ -173,5 +179,10 @@ public class EmployeeController implements ActionListener {
         JOptionPane.showMessageDialog(frame, "Venta realizada con exito");
         seatsSelected.clear();
         showEmployeePanel("catalogo");
+    }
+
+    public void reloadShowtimes() {
+        this.allShowtimes = MovieShowtime.getShowtimes();
+        catalog.initMoviesCatalog(this);
     }
 }

@@ -180,24 +180,20 @@ public class MovieShowtime {
     }
 
     public static boolean deleteShowtime(int id) {
-
+        String query = "DELETE FROM functions WHERE idFunction = ?";
         int deleted = 0;
-
-        String query = "DELETE FROM functions WHERE idFunction = " + id;
-
         try (
                 Connection connection = MySQLConnection.connect();
-                Statement st = (Statement) connection.createStatement();
+                PreparedStatement pst = connection.prepareStatement(query)
         ) {
-            deleted = st.executeUpdate(query);
-            System.out.println(deleted);
-
+            pst.setInt(1, id);
+            deleted = pst.executeUpdate();
+            System.out.println("Funciones eliminadas: " + deleted);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
-
         return deleted > 0;
-
     }
 
     public static boolean isShowtimeAvailable(String showtime, int idRoom) {

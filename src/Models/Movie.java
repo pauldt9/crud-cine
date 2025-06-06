@@ -229,4 +229,22 @@ public class Movie {
         return moviesList;
     }
 
+    public static int getNumMovies(){
+        int count = 0;
+        String query = "SELECT COUNT(*) AS total FROM movies";
+
+        try (Connection conn = MySQLConnection.connect();
+             Statement st = (Statement)conn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+        ){
+            while(rs.next()){
+                count = rs.getInt("total");
+            }
+
+        } catch (SQLException e){
+            System.out.println("Hubo un error: " + e.getMessage());
+        }
+
+        return count;
+    }
 }

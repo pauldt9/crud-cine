@@ -36,8 +36,9 @@ public class App {
         AdminView adminView = new AdminView();
         EmployeeView employeeView = new EmployeeView(movieCatalog);
 
-        new LoginController(loginPanel, frame, adminView, employeeView);
-        new AdminController(loginPanel, frame, adminView);
-        new EmployeeController(frame, employeeView, loginPanel, movieCatalog,adminView);
+        EmployeeController employeeController = new EmployeeController(frame, employeeView, loginPanel, movieCatalog,adminView);
+        new LoginController(loginPanel, frame, adminView, employeeView, employeeController);
+        new AdminController(loginPanel, frame, adminView, employeeView);
+
     }
 }

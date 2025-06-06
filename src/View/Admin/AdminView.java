@@ -1,6 +1,8 @@
 package View.Admin;
 
 import Models.Employee;
+import Models.Movie;
+import Models.Ticket;
 import View.Admin.EmployeeManagement.EmployeeForm;
 import View.Admin.EmployeeManagement.EmployeeMain;
 import View.Admin.MovieManagement.MovieForm;
@@ -28,7 +30,6 @@ public class AdminView extends JPanel {
     private JButton exitButton;
     private JButton menuButton;
     private JButton salesButton;
-    private JButton darkMode;
 
     //botones del menu
     private JButton employeeButton;
@@ -132,13 +133,13 @@ public class AdminView extends JPanel {
         numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
         menuPanel.add(numEmployees);
 
-        numMovies = createJLabel("Peliculas disponibles: " + "", 15, true);
+        numMovies = createJLabel("Peliculas disponibles: " + Movie.getNumMovies(), 15, true);
         numMovies.setForeground(fgColor);
         numMovies.setAlignmentX(Component.LEFT_ALIGNMENT);
         numMovies.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
         menuPanel.add(numMovies);
 
-        totalSales = createJLabel("Ventas: $" + "$$", 15, true);
+        totalSales = createJLabel("Ventas: $" + Ticket.getTotalSales(), 15, true);
         totalSales.setForeground(fgColor);
         totalSales.setAlignmentX(Component.LEFT_ALIGNMENT);
         totalSales.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
@@ -299,21 +300,13 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(salesButton);
 
-        darkMode = createButton("", 150, 40);
-        darkMode.setActionCommand("Modo Oscuro");
-        darkMode.setBackground(new Color(0xEDF2FA));
-        darkMode.setForeground(fgColor);
-        darkMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(Box.createVerticalStrut(350));
-        leftPanel.add(darkMode);
-
         exitButton = createButton("", 150, 40);
         exitButton.setActionCommand("Salir");
         exitButton.setBackground(new Color(0x17C3B2));
         exitButton.setForeground(Color.WHITE);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        leftPanel.add(Box.createVerticalStrut(30));
+        leftPanel.add(Box.createVerticalStrut(430));
         leftPanel.add(exitButton);
 
         //Iconos en botones
@@ -321,10 +314,6 @@ public class AdminView extends JPanel {
             Image exitIcon = ImageIO.read(getClass().getResource("/img/exit.png"));
             exitIcon = exitIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             exitButton.setIcon(new ImageIcon(exitIcon));
-
-            Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
-            darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            darkMode.setIcon(new ImageIcon(darkIcon));
 
             Image userIcon = ImageIO.read(getClass().getResource("/img/employee.png"));
             userIcon = userIcon.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
@@ -350,7 +339,6 @@ public class AdminView extends JPanel {
         exitButton.addActionListener(listener);
         menuButton.addActionListener(listener);
         salesButton.addActionListener(listener);
-        darkMode.addActionListener(listener);
         employeeButton.addActionListener(listener);
         moviesButton.addActionListener(listener);
         showtimesButton.addActionListener(listener);
@@ -370,109 +358,8 @@ public class AdminView extends JPanel {
     public void updateNumEmployees(){
         numEmployees.setText("Cantidad de empleados: " + Employee.getNumEmployees());
     }
-
-    //Cambiar modos (dark mode) posiblemente lo voy a quitar
-    public void setViewMode(String action){
-        this.action = action;
-        darkMode.setActionCommand(action);
-
-        if (action.equals("Modo Oscuro")){
-            fgColor = new Color(0x2C3E50);
-            leftPanel.setBackground(new Color(0xDCE9F9));
-            bgColButtons = new Color(245, 245, 245);
-
-            //Menu
-            menuPanel.setBackground(Color.WHITE);
-            mainPanel.setBackground(Color.WHITE);
-            menuButtonsPanel.setBackground(Color.WHITE);
-            employeeButton.setBackground(bgColButtons);
-            moviesButton.setBackground(bgColButtons);
-            buttonTitleMov.setForeground(fgColor);
-            title.setForeground(fgColor);
-            userTitle.setForeground(fgColor);
-            summaryLbl.setForeground(fgColor);
-            managementTitle.setForeground(fgColor);
-            buttonTitleMov.setForeground(fgColor);
-            buttonTitleEmp.setForeground(fgColor);
-
-            //peliculas
-            salesMain.setBackground(Color.WHITE);
-            numEmployees.setForeground(fgColor);
-            numMovies.setForeground(fgColor);
-            totalSales.setForeground(fgColor);
-
-            menuButton.setBackground(new Color(0xEDF2FA));
-            menuButton.setForeground(fgColor);
-
-            salesButton.setBackground(new Color(0xEDF2FA));
-            salesButton.setForeground(fgColor);
-
-            darkMode.setBackground(new Color(0xEDF2FA));
-            darkMode.setForeground(fgColor);
-
-            exitButton.setBackground(new Color(0x17C3B2));
-
-            try {
-                Image darkIcon = ImageIO.read(getClass().getResource("/img/dark.png"));
-                darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                darkMode.setIcon(new ImageIcon(darkIcon));
-
-                Image editIcon = ImageIO.read(getClass().getResource("/img/editDark.png"));
-                editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            } catch (IOException e){
-                System.out.println("error al cargar imagen: " + e.getMessage());
-            }
-
-        } else {
-            fgColor = new Color(0xE0E0E0);
-            bgColButtons = new Color(0x2C2C3E);
-
-            leftPanel.setBackground(new Color(0x1E2A47));
-            menuPanel.setBackground(new Color(0x1C1C2E));
-            mainPanel.setBackground(new Color(0x1C1C2E));
-            menuButtonsPanel.setBackground(new Color(0x1C1C2E));
-
-            salesMain.setBackground(new Color(0x1C1C2E));
-
-            title.setForeground(fgColor);
-            userTitle.setForeground(fgColor);
-
-            //Menu
-            summaryLbl.setForeground(fgColor);
-            numEmployees.setForeground(fgColor);
-            numMovies.setForeground(fgColor);
-            totalSales.setForeground(fgColor);
-            employeeButton.setBackground(bgColButtons);
-            moviesButton.setBackground(bgColButtons);
-            managementTitle.setForeground(fgColor);
-            buttonTitleMov.setForeground(fgColor);
-            buttonTitleEmp.setForeground(fgColor);
-
-            //peliculas
-
-            menuButton.setBackground(new Color(0x3A4E84));
-            menuButton.setForeground(fgColor);
-
-            salesButton.setBackground(new Color(0x3A4E84));
-            salesButton.setForeground(fgColor);
-
-            darkMode.setBackground(new Color(0x3A4E84));
-            darkMode.setForeground(fgColor);
-
-            exitButton.setBackground(new Color(0x1ABC9C));
-
-            try {
-                Image darkIcon = ImageIO.read(getClass().getResource("/img/brightness.png"));
-                darkIcon = darkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-                darkMode.setIcon(new ImageIcon(darkIcon));
-
-                Image editIcon = ImageIO.read(getClass().getResource("/img/editWhite.png"));
-                editIcon = editIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            } catch (IOException e){
-                System.out.println("error al cargar imagen: " + e.getMessage());
-            }
-        }
-    }
+    public void updateNumMovies(){numMovies.setText("Peliculas disponibles: " + Movie.getNumMovies());}
+    public void updateTotalSales(){totalSales.setText("Ventas: $" + Ticket.getTotalSales());}
 
     public JPanel getMainPanel() {
         return mainPanel;
