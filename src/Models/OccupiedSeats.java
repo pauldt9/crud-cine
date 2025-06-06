@@ -74,22 +74,26 @@ public class OccupiedSeats {
         return id;
     }
 
-//    public static boolean isSeatOccupied(int idSeat, int idSchedule) {
-//        String query = "SELECT isOccupied FROM occupiedseats WHERE idSeat = ? AND idFunction = ?";
-//        try (Connection connection = MySQLConnection.connect();
-//             PreparedStatement pst = connection.prepareStatement(query)) {
-//
-//            pst.setInt(1, idSeat);
-//            pst.setInt(2, idSchedule);
-//            ResultSet rs = pst.executeQuery();
-//
-//            return rs.next() && rs.getBoolean("isOccupied");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
+    public static boolean isSeatOccupied(int idSeat, int idSchedule) {
+        String query = "SELECT isOccupied FROM occupiedseats WHERE idSeat = ? AND idFunction = ?";
+        try (Connection connection = MySQLConnection.connect();
+             PreparedStatement pst = connection.prepareStatement(query)) {
+
+            pst.setInt(1, idSeat);
+            pst.setInt(2, idSchedule);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()){
+                return rs.getBoolean("isOccupied");
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 //
 //    public static boolean cancelReservation(int idSeat, int idSchedule) {
 //        String query = "DELETE FROM occupiedseats WHERE idSeat = ? AND idSchedule = ?";

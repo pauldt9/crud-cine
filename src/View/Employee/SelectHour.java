@@ -1,11 +1,14 @@
 package View.Employee;
 
+import Models.MovieShowtime;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static utils.CreateComponents.*;
 
@@ -62,13 +65,11 @@ public class SelectHour extends JPanel {
         imgMoviePanel = new JPanel(); //aqui va a estar la imagen de la pelicula
         imgMoviePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         imgMoviePanel.setOpaque(false);
-//        imgMoviePanel.setBackground(Color.GREEN); //borrar esta linea
         mainPanel.add(imgMoviePanel);
 
         showtimesPanel = new JPanel(); //aqui van a estar las funciones
-        showtimesPanel.setLayout(new GridLayout(0, 3));
-        showtimesPanel.setBackground(Color.BLUE); //borrar esta linea
-//        showtimesPanel.setOpaque(false);
+        showtimesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        showtimesPanel.setOpaque(false);
         mainPanel.add(showtimesPanel);
 
         try {
@@ -89,7 +90,7 @@ public class SelectHour extends JPanel {
 
         try{
             Image movieImg = ImageIO.read(new File(imgPath));
-            movieImg = movieImg.getScaledInstance(300, 470, Image.SCALE_SMOOTH);
+            movieImg = movieImg.getScaledInstance(320, 500, Image.SCALE_SMOOTH);
 
             JLabel img = new JLabel(new ImageIcon(movieImg));
             imgMoviePanel.add(img);
@@ -99,5 +100,23 @@ public class SelectHour extends JPanel {
 
         imgMoviePanel.revalidate();
         imgMoviePanel.repaint();
+    }
+
+    public void updateShowtimes(ArrayList<MovieShowtime> showtimes, ActionListener listener){
+        showtimesPanel.removeAll();
+
+        for (MovieShowtime ms : showtimes){
+            JButton btn = createButton(ms.getShowTime() + " (" + ms.getRoom().getRoomType() + ") "
+                    , 130, 70);
+            btn.setFont(new Font("Helvetica Neue", Font.PLAIN, 12));
+            btn.setForeground(fgCol);
+            btn.setBackground(bgColButtons);
+            btn.setActionCommand("funcion " + ms.getIdShowtime());
+            btn.addActionListener(listener);
+            showtimesPanel.add(btn);
+        }
+
+        showtimesPanel.revalidate();
+        showtimesPanel.repaint();
     }
 }

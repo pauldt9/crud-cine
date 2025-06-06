@@ -32,6 +32,8 @@ public class AdminController implements ActionListener {
 
     private ArrayList<Room> rooms;
     private RoomsTableModel roomsTable;
+    private ArrayList<MovieShowtime> showtimes;
+    private MovieShowtimeTableModel showtimeTable;
 
     public AdminController(LoginPanel loginPanel, JFrame frame, AdminView adminView){
         this.loginPanel = loginPanel;
@@ -42,6 +44,7 @@ public class AdminController implements ActionListener {
         empTable = adminView.getEmployeePanel().getTableModelEmployees();
         movTable = adminView.getMoviesViewAdminPanel().getMoviesTableModel();
         roomsTable =  adminView.getRoomsView().getRoomsTableModel();
+        showtimeTable = adminView.getShowtimesPanel().getShowtimesTableModel();
 
         adminView.getEmployeePanel().tableListener(new KeyAdapter() {
             @Override
@@ -73,9 +76,11 @@ public class AdminController implements ActionListener {
         employees = new ArrayList<>();
         movies = new ArrayList<>();
         rooms = new ArrayList<>();
+        showtimes = new ArrayList<>();
         loadEmployees();
         loadMovies();
         loadRooms();
+        loadShowtimes();
     }
 
     @Override
@@ -86,6 +91,7 @@ public class AdminController implements ActionListener {
             case "Salir":
                 System.out.println("ha salido");
                 exit();
+                loginPanel.clearFields();
                 break;
             case "Menu":
                 System.out.println("menu");
@@ -103,7 +109,7 @@ public class AdminController implements ActionListener {
                 System.out.println("cambiar a claro");
                 adminView.setViewMode("Modo Oscuro");
                 break;
-            //Acciones Empleados
+//--------------------------Empleados
             case "Empleados":
                 System.out.println("empleados");
                 showAdminPanel("empleados");
@@ -149,7 +155,7 @@ public class AdminController implements ActionListener {
                 System.out.println("El usuario se ha regresado al apartado empleado");
                 showAdminPanel("empleados");
                 break;
-            //Acciones Peliculas
+//---------------------------Peliculas
             case "Peliculas":
                 System.out.println("peliculas");
                 showAdminPanel("peliculas");
@@ -171,13 +177,14 @@ public class AdminController implements ActionListener {
                     break;
                 }
                 adminView.getMovieForm().setAction("Editar");
-                showAdminPanel("agregar/editar pelicula");
                 fillFieldsMovie();
+                showAdminPanel("agregar/editar pelicula");
 
                 break;
             case "Agregar pelicula":
                 System.out.println("agregar pelicula");
                 adminView.getMovieForm().setAction("Agregar");
+                adminView.getMovieForm().clearFields();
                 showAdminPanel("agregar/editar pelicula");
 
                 break;
@@ -205,6 +212,7 @@ public class AdminController implements ActionListener {
                 showAdminPanel("peliculas");
                 loadMovies();
                 break;
+//--------------------------------funciones
             case "Funciones":
                 System.out.println("funciones..");
                 showAdminPanel("funciones");
@@ -212,38 +220,50 @@ public class AdminController implements ActionListener {
             case "Agregar funcion":
                 System.out.println("agregar funcion");
                 adminView.getShowtimesFormPanel().setAction("Agregar");
+                adminView.getShowtimesFormPanel().resetComboBox();
                 showAdminPanel("agregar/editar funcion");
                 break;
             case "Editar funcion":
                 System.out.println("editar funcion");
                 adminView.getShowtimesFormPanel().setAction("Editar");
+                if (adminView.getShowtimesPanel().getShowtimesTable().getSelectedRow() == -1) {
+                    JOptionPane.showMessageDialog(adminView, "Por favor selecciona una fila");
+                    break;
+                }
                 showAdminPanel("agregar/editar funcion");
+                fillFieldsShowtime();
                 break;
             case "Eliminar funcion":
                 System.out.println("eliminar funcion");
+                deleteShowtime();
+                loadShowtimes();
                 break;
             case "Regresar funcion":
                 System.out.println("regresar a la pestaña funcion");
+                adminView.getShowtimesFormPanel().resetComboBox();
                 showAdminPanel("funciones");
                 break;
             case "Confirmar funcion":
                 System.out.println("funcion agregada");
                 adminView.getShowtimesFormPanel().setAction("Agregar");
+                addShowtime();
                 showAdminPanel("funciones");
 
                 break;
             case "Confirmar cambios de funcion":
                 System.out.println("cambios guardados de funcion");
                 adminView.getShowtimesFormPanel().setAction("Editar");
+                saveChangesShowtime();
+                loadShowtimes();
                 showAdminPanel("funciones");
                 break;
-
-                //salas
+//------------------------------salas
             case "Salas":
                 System.out.println("salas");
                 showAdminPanel("salas");
                 break;
             case "Agregar sala":
+                adminView.getRoomsFormPanel().clearFields();
                 System.out.println("agregando sala");
                 adminView.getRoomsFormPanel().setAction("Agregar");
                 showAdminPanel("agregar/editar sala");
@@ -290,6 +310,150 @@ public class AdminController implements ActionListener {
                 System.out.println("generando pdf");
                 break;
         }
+    }
+
+    public void fillFieldsShowtime(){
+        int selectedRow = adminView.getShowtimesPanel().getShowtimesTable().getSelectedRow();
+        int idShowtime = showtimeTable.getRowData(selectedRow).getIdShowtime();
+
+        MovieShowtime showtime = MovieShowtime.getShowtimes(idShowtime);
+
+        Movie movie = Movie.getMovieById(showtime.getIdMovie());
+        Room room = Room.getRoom(showtime.getIdRoom());
+
+        adminView.getShowtimesPanel().setIdShowtime(showtime.getIdShowtime());
+        adminView.getShowtimesFormPanel().setAddMovieTitle(movie.getTitle());
+        adminView.getShowtimesFormPanel().setAddRoom(room.getRoomName());
+        adminView.getShowtimesFormPanel().setAddShowtime(showtime.getShowTime());
+    }
+
+    public void addShowtime(){
+        if (!validateFormShowtimes()) return;
+        MovieShowtime showtime = createShowtime();
+
+        if (!MovieShowtime.isShowtimeAvailable(showtime.getShowTime(), showtime.getIdRoom())){
+            JOptionPane.showMessageDialog(frame, "No puedes repetir la misma sala con el mismo horario mas de 1 vez");
+            return;
+        }
+
+        try {
+            int idShowtime = MovieShowtime.addShowtimes(showtime);
+            System.out.println(idShowtime);
+            showtime.setIdShowtime(idShowtime);
+
+
+            if (idShowtime > 0){
+                showtimes.add(showtime);
+                showtimeTable.addRow(showtime);
+                JOptionPane.showMessageDialog(frame, "Se ha agregado una funcion");
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(frame,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        adminView.getShowtimesFormPanel().resetComboBox();
+    }
+
+    public void saveChangesShowtime(){
+        if (!validateFormShowtimes()) return;
+
+        MovieShowtime showtime = createShowtime();
+
+        if (!MovieShowtime.isShowtimeAvailable(showtime.getShowTime(), showtime.getIdRoom())){
+            JOptionPane.showMessageDialog(frame, "No puedes repetir la misma sala con el mismo horario mas de 1 vez");
+            return;
+        }
+
+        try {
+            int rowIndex = showtimeTable.getRowById(showtime.getIdShowtime());
+
+            if (rowIndex == -1) {
+                JOptionPane.showMessageDialog(frame, "Funcion no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (MovieShowtime.updateShowtime(showtime)) {
+                showtimeTable.setRowData(rowIndex, showtime);
+                adminView.getShowtimesFormPanel().resetComboBox();
+                System.out.println("se han efectuado los cambios");
+                JOptionPane.showMessageDialog(frame, "Se han efectuado los cambios");
+            } else {
+                JOptionPane.showMessageDialog(frame, "No se pudo actualizar el usuario");
+            }
+
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error al guardar cambios: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            adminView.getShowtimesFormPanel().resetComboBox();
+        }
+
+        adminView.getShowtimesFormPanel().resetComboBox();
+    }
+
+    public void deleteShowtime(){
+        int selectedRow = adminView.getShowtimesPanel().getShowtimesTable().getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(adminView, "Debes seleccionar una funcion de la tabla");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                adminView,
+                "¿Esta seguro de que desea eliminar esta funcion?",
+                "Confirmar eliminacion",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int id = showtimes.get(selectedRow).getIdShowtime();
+
+            boolean deleted = MovieShowtime.deleteShowtime(id);
+            if (deleted) {
+                JOptionPane.showMessageDialog(adminView, "Funcion eliminado correctamente");
+                showShowtimes();
+            } else {
+                JOptionPane.showMessageDialog(adminView, "No se pudo eliminar la funcion");
+            }
+        }
+    }
+
+    public MovieShowtime createShowtime(){
+        String selectedMovieTitle = (String) adminView.getShowtimesFormPanel().getAddMovieTitle().getSelectedItem();
+        String selectedRoomName = (String) adminView.getShowtimesFormPanel().getAddRoom().getSelectedItem();
+        String showtime = (String) adminView.getShowtimesFormPanel().getAddShowtime().getSelectedItem();
+
+        Movie selectedMovie = null;
+        //recorre cada pelicula hasta encontrar el titulo
+        for (Movie movie : Movie.getMovies()){
+            if (movie.getTitle().equals(selectedMovieTitle)){
+                selectedMovie = movie;
+                break;
+            }
+        }
+
+        Room selectedRoom = null;
+        for (Room room : Room.getRooms()){
+            if (room.getRoomName().equals(selectedRoomName)){
+                selectedRoom = room;
+                break;
+            }
+        }
+        return new MovieShowtime(adminView.getShowtimesPanel().getIdShowtime(), selectedMovie, selectedRoom, showtime);
+    }
+
+    private void showShowtimes(){
+        showtimeTable.clearTable();
+
+        for (MovieShowtime ms : showtimes){
+            showtimeTable.addRow(ms);
+        }
+    }
+
+    private void loadShowtimes(){
+        showtimes = MovieShowtime.getShowtimes();
+        showShowtimes();
     }
 
     public void fillFieldsRoom() {
@@ -339,6 +503,7 @@ public class AdminController implements ActionListener {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
     private void saveChangesRoom() {
         if (!validateFormRoom()) return;
 
@@ -465,7 +630,6 @@ public class AdminController implements ActionListener {
             roomsTable.addRow(r);
         }
     }
-
 
     private void loadRooms() {
         rooms = Room.getRooms();
@@ -804,6 +968,16 @@ public class AdminController implements ActionListener {
                 adminView.getRoomsFormPanel().getRoomType().getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacíos.",
                     "Campos vacíos", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validateFormShowtimes(){
+        if (adminView.getShowtimesFormPanel().getAddMovieTitle().getSelectedIndex() == 0 ||
+        adminView.getShowtimesFormPanel().getAddRoom().getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(frame, "Los campos no pueden estar vacios", "Campos vacios",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;

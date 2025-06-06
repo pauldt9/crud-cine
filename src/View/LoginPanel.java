@@ -11,8 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import static utils.CreateComponents.createJLabel;
-import static utils.CreateComponents.createPasswordField;
+import static utils.CreateComponents.*;
 
 public class LoginPanel extends JPanel {
     private JButton loginButton;
@@ -72,40 +71,13 @@ public class LoginPanel extends JPanel {
         centralPanel.add(Box.createVerticalStrut(5));
         centralPanel.add(passwordField);
 
-        loginButton = createButton("Ingresar", 20,330, 40);
+        loginButton = createButton("Ingresar", 330, 40);
+        loginButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
+        loginButton.setBackground(new Color(0x17C3B2));
+        loginButton.setForeground(Color.WHITE);
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
-    }
-
-    //crea los botones
-    public JButton createButton(String buttonName, int fontSize, int w, int h){
-        JButton button = new JButton(buttonName);
-        button.setFont(new Font("Helvetica Neue", Font.BOLD, fontSize));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setMaximumSize(new Dimension(w, h));
-        button.setBackground(new Color(0x17C3B2));
-        button.setActionCommand(buttonName);
-
-        return button;
-    }
-
-    public JTextField createTextField(String placeHolder, int w, int h){
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
-        JTextField textField = new JTextField();
-
-        textField.setFont(font);
-        textField.setForeground(new Color(30, 30 , 30));
-        textField.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
-        textField.setMaximumSize(new Dimension(w, h));
-
-        TextPrompt ph = new TextPrompt(placeHolder, textField);
-        ph.setForeground(new Color(0x999999));
-        ph.setFont(font);
-
-        return textField;
     }
 
     @Override
@@ -133,6 +105,11 @@ public class LoginPanel extends JPanel {
 
     public String getPasswordField(){
         return new String(passwordField.getPassword());
+    }
+
+    public void clearFields(){
+        passwordField.setText("");
+        userField.setText("");
     }
 
     public void setListeners(ActionListener listener){

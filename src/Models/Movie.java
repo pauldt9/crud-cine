@@ -205,10 +205,10 @@ public class Movie {
 
     public static ArrayList<Movie> getImgMovies(){
         ArrayList<Movie> moviesList = new ArrayList<>();
-        String query = "SELECT idMovie, imgRoute FROM movies";
+//        String query = "SELECT idMovie, imgRoute FROM movies";
 
-//        String query = "SELECT DISTINCT m.idMovie, m.imgRoute FROM movies m " +
-//                "JOIN functions s ON m.idMovie = s.idMovie";
+        String query = "SELECT DISTINCT m.idMovie, m.imgRoute FROM movies m " +
+                "JOIN functions s ON m.idMovie = s.idMovie";
 
         try (Connection conn = MySQLConnection.connect();
              Statement st = (Statement) conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);

@@ -20,7 +20,7 @@ public class ShowtimesForm extends JPanel {
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColButtons = new Color(245, 245, 245);
 
-//    private JButton confirmButton;
+    private JButton confirmButton;
     private JButton backButton;
 
     /*----------Campos del formulario----------*/
@@ -72,7 +72,6 @@ public class ShowtimesForm extends JPanel {
         formPanel.setOpaque(false);
         add(formPanel, BorderLayout.CENTER);
 
-
         addMovieTitle = new JComboBox<String>();
         addMovieTitle.addItem("Seleccione una película");
         addMovieTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -83,7 +82,8 @@ public class ShowtimesForm extends JPanel {
         formPanel.add(addMovieTitle);
         updateMovieCombo();
 
-        String[] schedules = {"12:00", "14:00", "16:00", "18:00", "20:00"};
+
+        String[] schedules = {"Selecione una hora","12:00", "14:00", "16:00", "18:00", "20:00"};
         addShowtime = new JComboBox<String>(schedules);
         addShowtime.setAlignmentX(Component.LEFT_ALIGNMENT);
         addShowtime.setBackground(bgColButtons);
@@ -100,6 +100,15 @@ public class ShowtimesForm extends JPanel {
         addRoom.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         addRoom.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addRoom);
+
+        confirmButton = createButton("Confirmar", 350, 50);
+        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmButton.setBackground(bgColButtons);
+        confirmButton.setForeground(fgColor);
+        confirmButton.setActionCommand("Confirmar funcion");
+        formPanel.add(confirmButton);
+
+
         updateRoomCombo();
 
         try {
@@ -112,7 +121,7 @@ public class ShowtimesForm extends JPanel {
     }
 
     public void setListeners(ActionListener listener){
-//        confirmButton.addActionListener(listener);
+        confirmButton.addActionListener(listener);
         backButton.addActionListener(listener);
     }
 
@@ -120,10 +129,10 @@ public class ShowtimesForm extends JPanel {
         this.action = action;
         if (action.equals("Agregar")){
             panelTitle.setText("Agregar Funcion");
-//            confirmButton.setActionCommand("Confirmar funcion");
+            confirmButton.setActionCommand("Confirmar funcion");
         } else {
             panelTitle.setText("Actualizar Funcion");
-//            confirmButton.setActionCommand("Confirmar cambios de funcion");
+            confirmButton.setActionCommand("Confirmar cambios de funcion");
         }
     }
 
@@ -148,12 +157,34 @@ public class ShowtimesForm extends JPanel {
             addRoom.addItem(room.getRoomName());
         }
     }
-//
-//    public JComboBox<String> getAddMovieTitle() {
-//        return addMovieTitle;
-//    }
-//
-//    public JComboBox<String> getAddRoom() {
-//        return addRoom;
-//    }
+
+    public void resetComboBox(){
+        addMovieTitle.setSelectedIndex(0);
+        addRoom.setSelectedIndex(0);
+        addShowtime.setSelectedIndex(0);
+    }
+
+    public JComboBox<String> getAddMovieTitle() {
+        return addMovieTitle;
+    }
+
+    public JComboBox<String> getAddRoom() {
+        return addRoom;
+    }
+
+    public JComboBox<String> getAddShowtime(){
+        return addShowtime;
+    }
+
+    public void setAddMovieTitle(String title){
+        addMovieTitle.setSelectedItem(title);
+    }
+
+    public void setAddRoom(String room){
+        addRoom.setSelectedItem(room);
+    }
+
+    public void setAddShowtime(String showtime){
+        addShowtime.setSelectedItem(showtime);
+    }
 }
