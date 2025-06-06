@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CRUD Cine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CRUD_Cine_jar</output-path>
+    <root id="archive" name="CRUD Cine.jar">
+      <element id="module-output" name="CRUD Cine" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/flatlaf-3.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/mysql-connector-java-8.0.20.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/jbcrypt-0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/commons-8.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/io-8.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-simple-2.0.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/layout-8.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/kernel-8.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/slf4j-api-2.0.13.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -14,7 +14,7 @@ public class DBConfig {
             props.load(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Hubo un error al importar la configuración");
+            JOptionPane.showMessageDialog(null, "Hubo un error al importar la configuración" + e.getMessage());
             System.exit(0);
         }
     }

@@ -26,10 +26,8 @@ public class App {
         frame.add(loginPanel);
         frame.setVisible(true);
 
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        Image icon = tk.getImage("src/img/logo.png");
-        frame.setIconImage(icon);
-
+        ImageIcon icono = new ImageIcon("logo.png");
+        frame.setIconImage(icono.getImage());
         configPath = "config.properties";
 
         Catalog movieCatalog = new Catalog();
