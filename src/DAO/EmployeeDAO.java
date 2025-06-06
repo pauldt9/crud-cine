@@ -10,7 +10,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import utils.MySQLConnection;
 
 public class EmployeeDAO {
-
     public boolean authentifyEmployee(String username, String password) {
         String sql = "SELECT password FROM employees WHERE username = ?";
         try (Connection connection = MySQLConnection.connect();
@@ -30,26 +29,5 @@ public class EmployeeDAO {
         }
         return false;
     }
-
-//    public boolean createEmployee(String username, String password) {
-//        String sql = "INSERT INTO employees (username, password) VALUES (?, ?)";
-//
-//        //Aquí usamos la librería de JBCrypt para hashear la contraseña que ingresa el usuario
-//        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-//
-//        try (Connection connection = MySQLConnection.connect();
-//             PreparedStatement ps = connection.prepareStatement(sql)) {
-//
-//            ps.setString(1, username);
-//            ps.setString(2, hashedPassword);
-//
-//            int filasInsertadas = ps.executeUpdate();
-//            return filasInsertadas > 0;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
 }
 
