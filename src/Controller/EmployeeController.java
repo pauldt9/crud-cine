@@ -1,7 +1,6 @@
 package Controller;
 
-import Models.Movie;
-import Models.MovieShowtime;
+import Models.*;
 import View.Employee.Catalog;
 import View.Employee.EmployeeView;
 import View.LoginPanel;
@@ -17,7 +16,10 @@ public class EmployeeController implements ActionListener {
     private EmployeeView employeeView;
     private LoginPanel loginPanel;
     private Catalog catalog;
-    private ArrayList<MovieShowtime> allShowtimes = new ArrayList<MovieShowtime>();
+
+    private ArrayList<MovieShowtime> allShowtimes = new ArrayList<MovieShowtime>(); //aqui se guardan todas las funciones disponibles
+    private ArrayList<Seat> seatsSelected = new ArrayList<Seat>();
+    private MovieShowtime currentShowtime;
 
     public EmployeeController(JFrame frame, EmployeeView employeeView, LoginPanel loginPanel, Catalog catalog){
         this.employeeView = employeeView;
@@ -53,13 +55,17 @@ public class EmployeeController implements ActionListener {
                 showEmployeePanel("seleccionar hora");
                 break;
             case "Finalizar venta":
-                /*logica para concretar la venta y subirla a la base de datos...*/
-                showEmployeePanel("catalogo");
+                completeSale();
                 break;
             case "Confirmar asientos":
-                if (employeeView.getSelectSeatsPanel().getSelectedSeats().isEmpty()){
+                //trae todos los nombres de los asientos seleccionados
+                ArrayList<String> selectedSeatNames = employeeView.getSelectSeatsPanel().getSelectedSeats();
+                if (selectedSeatNames.isEmpty()){
                     JOptionPane.showMessageDialog(frame, "Debes seleccionar al menos 1 asiento");
                 } else {
+                    seatsSelected = getSeatsFromNames(selectedSeatNames, currentShowtime.getRoom().getIdRoom());
+                    employeeView.getDetailsPanel().updateMovieImage(currentShowtime.getMovie().getImgRoute());
+                    employeeView.getDetailsPanel().updateDetails(currentShowtime, seatsSelected);
                     showEmployeePanel("detalles de venta");
                 }
                 break;
@@ -116,9 +122,51 @@ public class EmployeeController implements ActionListener {
         }
 
         if (showtime != null){
+            currentShowtime = showtime;
             employeeView.getSelectSeatsPanel().updateSeats(showtime);
             showEmployeePanel("seleccionar asientos");
             employeeView.getSelectSeatsPanel().updateMovieImage(showtime.getMovie().getImgRoute());
         }
+    }
+
+    private ArrayList<Seat> getSeatsFromNames(ArrayList<String> names, int idRoom) {
+        ArrayList<Seat> allSeats = Seat.getSeatsByRoomId(idRoom);
+        ArrayList<Seat> selectedSeats = new ArrayList<>();
+
+        for (String name : names) {
+            for (Seat seat : allSeats) {
+                if (seat.getSeatName().equals(name)) {
+                    selectedSeats.add(seat);
+                    break;
+                }
+            }
+        }
+        return selectedSeats;
+    }
+
+    public void completeSale(){
+        int roomPrice = switch (currentShowtime.getRoom().getRoomType()){
+            case "IMAX" -> 150;
+            case "4D" -> 120;
+            case "3D" -> 100;
+            case "MacroXE" -> 90;
+            default -> 60;
+        };
+
+        for (Seat seat : seatsSelected){
+            Ticket ticket = new Ticket(0, currentShowtime, seat, roomPrice,
+                    currentShowtime.getIdShowtime(), seat.getIdSeat());
+
+            Ticket.addTicket(ticket);
+
+            OccupiedSeats os = new OccupiedSeats(0, seat.getIdSeat(),
+                    currentShowtime.getIdShowtime(), true);
+
+            OccupiedSeats.addReservation(os);
+        }
+
+        JOptionPane.showMessageDialog(frame, "Venta realizada con exito");
+        seatsSelected.clear();
+        showEmployeePanel("catalogo");
     }
 }

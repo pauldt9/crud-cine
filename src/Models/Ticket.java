@@ -9,9 +9,9 @@ public class Ticket {
 
     private int idTicket; //Primary Key
     private MovieShowtime movieShowtime; //Foreign Key
-    private int idFunction = movieShowtime.getIdShowtime();
+    private int idFunction;
     private Seat seat; //Foreign Key
-    private int idSeat = seat.getIdSeat();
+    private int idSeat;
     private int price;
 
     public Ticket(int idTicket, MovieShowtime movieShowtime, Seat seat, int price, int idFunction, int idSeat) {

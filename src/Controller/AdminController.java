@@ -184,8 +184,8 @@ public class AdminController implements ActionListener {
             case "Agregar pelicula":
                 System.out.println("agregar pelicula");
                 adminView.getMovieForm().setAction("Agregar");
+                adminView.getMovieForm().clearFields();
                 showAdminPanel("agregar/editar pelicula");
-
 
                 break;
             case "Agregar imagen":
@@ -220,6 +220,7 @@ public class AdminController implements ActionListener {
             case "Agregar funcion":
                 System.out.println("agregar funcion");
                 adminView.getShowtimesFormPanel().setAction("Agregar");
+                adminView.getShowtimesFormPanel().resetComboBox();
                 showAdminPanel("agregar/editar funcion");
                 break;
             case "Editar funcion":
@@ -262,6 +263,7 @@ public class AdminController implements ActionListener {
                 showAdminPanel("salas");
                 break;
             case "Agregar sala":
+                adminView.getRoomsFormPanel().clearFields();
                 System.out.println("agregando sala");
                 adminView.getRoomsFormPanel().setAction("Agregar");
                 showAdminPanel("agregar/editar sala");

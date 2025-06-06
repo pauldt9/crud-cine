@@ -1,11 +1,15 @@
 package View.Employee;
 
+import Models.MovieShowtime;
+import Models.Seat;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static utils.CreateComponents.*;
 import static utils.CreateComponents.createEmptyPanel;
@@ -52,7 +56,7 @@ public class Details extends JPanel {
         JPanel emptyEast = createEmptyPanel(40, Integer.MAX_VALUE);
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel southPanel = createEmptyPanel(1100, 60);
+        JPanel southPanel = createEmptyPanel(1100, 70);
         southPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         add(southPanel, BorderLayout.SOUTH);
 
@@ -62,6 +66,9 @@ public class Details extends JPanel {
         endButton.setBackground(new Color(0x17C3B2));
         endButton.setActionCommand("Finalizar venta");
         southPanel.add(endButton);
+
+        JPanel empty = createEmptyPanel(5, 60);
+        southPanel.add(empty);
 
         //Panel central
         JPanel mainPanel = new JPanel();
@@ -75,7 +82,7 @@ public class Details extends JPanel {
         mainPanel.add(imgMoviePanel);
 
         detailsPanel = new JPanel(); //aqui van los detalles
-        detailsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
         detailsPanel.setOpaque(false);
         mainPanel.add(detailsPanel);
 
@@ -108,5 +115,42 @@ public class Details extends JPanel {
 
         imgMoviePanel.revalidate();
         imgMoviePanel.repaint();
+    }
+
+    public void updateDetails(MovieShowtime movieShowtime, ArrayList<Seat> selectedSeats){
+        detailsPanel.removeAll();
+
+        StringBuilder seats = new StringBuilder("Asientos: ");
+        int total = 0;
+
+        int roomPrice = switch (movieShowtime.getRoom().getRoomType()) {
+            case "IMAX" -> 150;
+            case "4D" -> 120;
+            case "3D" -> 100;
+            case "MacroXE" -> 90;
+            default -> 60;
+        };
+
+        for (Seat seat : selectedSeats){
+            seats.append(seat.getSeatName()).append(", ");
+            total += roomPrice;
+        }
+
+        JLabel movie = createJLabel("Pelicula: " + movieShowtime.getMovie().getTitle(), 20, true);
+        JLabel room = createJLabel(movieShowtime.getRoom().getRoomName().toUpperCase().charAt(0) +
+                movieShowtime.getRoom().getRoomName().substring(1)+ " " + movieShowtime.getRoom().getRoomType(), 20, true);
+        JLabel schedule = createJLabel("Horario: " + movieShowtime.getShowTime(), 20, true);
+        JLabel seatsSelected = createJLabel(seats.toString(), 20, true);
+        JLabel price = createJLabel("Precio: $" + total, 20, true);
+
+        detailsPanel.add(movie);
+        detailsPanel.add(Box.createVerticalStrut(15));
+        detailsPanel.add(room);
+        detailsPanel.add(Box.createVerticalStrut(15));
+        detailsPanel.add(schedule);
+        detailsPanel.add(Box.createVerticalStrut(15));
+        detailsPanel.add(seatsSelected);
+        detailsPanel.add(Box.createVerticalStrut(15));
+        detailsPanel.add(price);
     }
 }

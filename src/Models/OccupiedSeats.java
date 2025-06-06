@@ -84,7 +84,7 @@ public class OccupiedSeats {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()){
-                return rs.next() && rs.getBoolean("isOccupied");
+                return rs.getBoolean("isOccupied");
             } else {
                 return false;
             }

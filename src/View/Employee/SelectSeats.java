@@ -2,6 +2,7 @@ package View.Employee;
 
 import Models.MovieShowtime;
 import Models.OccupiedSeats;
+import Models.Seat;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,8 +60,8 @@ public class SelectSeats extends JPanel {
         JPanel emptyEast = createEmptyPanel(40, 800);
         add(emptyEast, BorderLayout.EAST);
 
-        JPanel southPanel = createEmptyPanel(1100, 60);
-        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+        JPanel southPanel = createEmptyPanel(1100, 70);
+        southPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         add(southPanel, BorderLayout.SOUTH);
 
         confirmButton = createButton("Confirmar Asientos", 200, 40);
@@ -68,25 +69,37 @@ public class SelectSeats extends JPanel {
         confirmButton.setForeground(Color.WHITE);
         confirmButton.setBackground(new Color(0x17C3B2));
         confirmButton.setActionCommand("Confirmar asientos");
-        confirmButton.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        southPanel.add(Box.createVerticalStrut(10));
         southPanel.add(confirmButton);
+
+        JPanel empty = createEmptyPanel(5, 60);
+        southPanel.add(empty);
 
         //Panel central
         JPanel mainPanel = new JPanel();
         mainPanel.setOpaque(false);
-        mainPanel.setLayout(new GridLayout(1, 2));
+        mainPanel.setLayout(new GridBagLayout());
         add(mainPanel, BorderLayout.CENTER);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0.4;
+        c.weighty = 1.0;
+        c.gridx = 0;
+        c.gridy = 0;
 
         imgMoviePanel = new JPanel(); //aqui va a estar la imagen de la pelicula
         imgMoviePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         imgMoviePanel.setOpaque(false);
-        mainPanel.add(imgMoviePanel);
+        mainPanel.add(imgMoviePanel, c);
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0.6;
+        c.gridx = 1;
 
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         rightPanel.setOpaque(false);
-        mainPanel.add(rightPanel);
+        mainPanel.add(rightPanel, c);
 
         //"Mostrar" la pantalla
         screen = new JPanel();
@@ -142,15 +155,22 @@ public class SelectSeats extends JPanel {
                     btn.setBackground(bgColButtons);
                     btn.setForeground(fgCol);
 
-                    btn.addActionListener(e -> {
-                        if (selectedSeats.contains(name)){
-                            selectedSeats.remove(name);
-                            btn.setBackground(bgColButtons);
-                        } else {
-                            selectedSeats.add(name);
-                            btn.setBackground(new Color(200, 200, 200));
-                        }
-                    });
+                    int idSeats = getSeatsByName(name, idRoom);
+                    boolean isOccupied = OccupiedSeats.isSeatOccupied(idSeats, showtime.getIdShowtime());
+
+                    if (isOccupied){
+                        btn.setEnabled(false);
+                    } else {
+                        btn.addActionListener(e -> {
+                            if (selectedSeats.contains(name)){
+                                selectedSeats.remove(name);
+                                btn.setBackground(bgColButtons);
+                            } else {
+                                selectedSeats.add(name);
+                                btn.setBackground(new Color(200, 200, 200));
+                            }
+                        });
+                    }
 
                     index++;
                     seatsPanel.add(btn);
@@ -160,6 +180,17 @@ public class SelectSeats extends JPanel {
 
         seatsPanel.revalidate();
         seatsPanel.repaint();
+    }
+
+    private int getSeatsByName(String name, int idRoom){
+        ArrayList<Seat> allSeats = Seat.getSeatsByRoomId(idRoom);
+
+        for (Seat seat : allSeats){
+            if (seat.getSeatName().equals(name)) {
+                return seat.getIdSeat();
+            }
+        }
+        return -1;
     }
 
     public void updateMovieImage(String imgPath) {

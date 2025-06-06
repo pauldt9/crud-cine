@@ -58,4 +58,8 @@ public class EmployeeView extends JPanel {
     public SelectSeats getSelectSeatsPanel(){
         return selectSeatsPanel;
     }
+
+    public Details getDetailsPanel(){
+        return detailsPanel;
+    }
 }
