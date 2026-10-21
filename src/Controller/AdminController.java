@@ -5,24 +5,24 @@ import View.Employee.EmployeeView;
 import View.LoginPanel;
 import View.Admin.AdminView;
 import View.Admin.MovieManagement.MoviesMain;
-import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.colors.DeviceGray;
-import com.itextpdf.kernel.colors.DeviceRgb;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.UnitValue;
+//import com.itextpdf.io.font.constants.StandardFonts;
+//import com.itextpdf.io.image.ImageData;
+//import com.itextpdf.io.image.ImageDataFactory;
+//import com.itextpdf.kernel.colors.DeviceGray;
+//import com.itextpdf.kernel.colors.DeviceRgb;
+//import com.itextpdf.kernel.font.PdfFont;
+//import com.itextpdf.kernel.font.PdfFontFactory;
+//import com.itextpdf.layout.borders.SolidBorder;
+//import com.itextpdf.layout.element.Cell;
+//import com.itextpdf.layout.element.Image;
+//import com.itextpdf.kernel.geom.PageSize;
+//import com.itextpdf.kernel.pdf.PdfDocument;
+//import com.itextpdf.kernel.pdf.PdfWriter;
+//import com.itextpdf.layout.Document;
+//import com.itextpdf.layout.element.Paragraph;
+//import com.itextpdf.layout.element.Table;
+//import com.itextpdf.layout.properties.TextAlignment;
+//import com.itextpdf.layout.properties.UnitValue;
 import utils.ImageService;
 import utils.PasswordUtils;
 
@@ -1081,100 +1081,102 @@ public class AdminController implements ActionListener {
         JFileChooser fileChooser = new JFileChooser("src/PDF_Folder");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter pdf = new FileNameExtensionFilter("Documentos PDF","pdf");
+        FileNameExtensionFilter pdf = new FileNameExtensionFilter("Documentos PDF", "pdf");
         fileChooser.addChoosableFileFilter(pdf);
         fileChooser.setFileFilter(pdf);
 
         int message = fileChooser.showDialog(frame, "Generar PDF");
 
-        if(message == JFileChooser.CANCEL_OPTION) {
+        if (message == JFileChooser.CANCEL_OPTION) {
             JOptionPane.showMessageDialog(frame, "Se canceló la exportación");
             return;
         }
 
 
-        try (
-                PdfDocument pdfDoc = new PdfDocument(new PdfWriter(fileChooser.getSelectedFile()));
-                Document doc = new Document(pdfDoc, PageSize.LETTER.rotate());
-        ){
-
-            InputStream is = getClass().getClassLoader().getResourceAsStream("img/logo.png");
-            System.out.println(is);
-            if (is != null) {
-                ImageData data = ImageDataFactory.create(is.readAllBytes());
-                Image img = new Image(data).scaleAbsolute(50, 50);
-
-                float height = PageSize.LETTER.rotate().getHeight();
-                float border = 40;
-                img.setFixedPosition(border, height - border - 50);
-
-                doc.add(img);
-            }
-
-            doc.add(new Paragraph("Reporte de ventas generadas en Cine").setBold().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
-
-            doc.add(new Paragraph("").setMarginTop(30));
-
-
-
-            float[] cols = {2,2,2,2,2};
-            Table table = new Table(UnitValue.createPercentArray(cols)).useAllAvailableWidth();
-
-            PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
-
-
-            Cell cell = new Cell(1, 6)
-                    .add(new Paragraph("Ventas Cine"))
-                    .setFont(font)
-                    .setFontSize(14)
-                    .setFontColor(DeviceGray.BLACK)
-                    .setBackgroundColor(new DeviceRgb(160, 203, 231))
-                    .setTextAlignment(TextAlignment.CENTER);
-            table.addHeaderCell(cell);
-
-
-            for(int i = 0; i < 2; i++) {
-                Cell[] header = new Cell[] {
-                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Pelicula")),
-                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Sala")),
-                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Asiento")),
-                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Horario")),
-                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Precio")),
-                };
-
-                for(Cell cellss : header) {
-                    if(i == 0) {
-                        table.addHeaderCell(cellss);
-                    }
-                }
-            }
-
-
-            int i = 1;
-            for(Ticket t : tickets) {
-                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getFunction().getMovie().getTitle())));
-                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getFunction().getRoom().getRoomName())));
-                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getSeat().getSeatName())));
-                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getFunction().getShowTime())));
-                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(String.valueOf(t.getPrice()))));
-                i++;
-            }
-
-            doc.add(table);
-
-
-            if(Desktop.isDesktopSupported()) {
-                try {
-                    Desktop.getDesktop().open(fileChooser.getSelectedFile());
-                }catch(IOException ex) {
-                    JOptionPane.showMessageDialog(frame, "No se pudo abrir el archivo");
-                }
-            }
-
-        }catch(IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "No se pudo exportar el PDF");
-        }
+        // Generar pdf
+        // TODO: hacerlo funcionar
+//        try (
+//                PdfDocument pdfDoc = new PdfDocument(new PdfWriter(fileChooser.getSelectedFile()));
+//                Document doc = new Document(pdfDoc, PageSize.LETTER.rotate());
+//        ){
+//
+//            InputStream is = getClass().getClassLoader().getResourceAsStream("img/logo.png");
+//            System.out.println(is);
+//            if (is != null) {
+//                ImageData data = ImageDataFactory.create(is.readAllBytes());
+//                Image img = new Image(data).scaleAbsolute(50, 50);
+//
+//                float height = PageSize.LETTER.rotate().getHeight();
+//                float border = 40;
+//                img.setFixedPosition(border, height - border - 50);
+//
+//                doc.add(img);
+//            }
+//
+//            doc.add(new Paragraph("Reporte de ventas generadas en Cine").setBold().setFontSize(12).setTextAlignment(TextAlignment.CENTER));
+//
+//            doc.add(new Paragraph("").setMarginTop(30));
+//
+//
+//
+//            float[] cols = {2,2,2,2,2};
+//            Table table = new Table(UnitValue.createPercentArray(cols)).useAllAvailableWidth();
+//
+//            PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+//
+//
+//            Cell cell = new Cell(1, 6)
+//                    .add(new Paragraph("Ventas Cine"))
+//                    .setFont(font)
+//                    .setFontSize(14)
+//                    .setFontColor(DeviceGray.BLACK)
+//                    .setBackgroundColor(new DeviceRgb(160, 203, 231))
+//                    .setTextAlignment(TextAlignment.CENTER);
+//            table.addHeaderCell(cell);
+//
+//
+//            for(int i = 0; i < 2; i++) {
+//                Cell[] header = new Cell[] {
+//                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Pelicula")),
+//                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Sala")),
+//                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Asiento")),
+//                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Horario")),
+//                        new Cell().setTextAlignment(TextAlignment.CENTER).setBorderTop(new SolidBorder(1f)).setBackgroundColor(new DeviceRgb(191, 244, 250)).add(new Paragraph("Precio")),
+//                };
+//
+//                for(Cell cellss : header) {
+//                    if(i == 0) {
+//                        table.addHeaderCell(cellss);
+//                    }
+//                }
+//            }
+//
+//
+//            int i = 1;
+//            for(Ticket t : tickets) {
+//                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getFunction().getMovie().getTitle())));
+//                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getFunction().getRoom().getRoomName())));
+//                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getSeat().getSeatName())));
+//                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(t.getFunction().getShowTime())));
+//                table.addCell(new Cell().setTextAlignment(TextAlignment.LEFT).add(new Paragraph(String.valueOf(t.getPrice()))));
+//                i++;
+//            }
+//
+//            doc.add(table);
+//
+//
+//            if(Desktop.isDesktopSupported()) {
+//                try {
+//                    Desktop.getDesktop().open(fileChooser.getSelectedFile());
+//                }catch(IOException ex) {
+//                    JOptionPane.showMessageDialog(frame, "No se pudo abrir el archivo");
+//                }
+//            }
+//
+//        }catch(IOException ex) {
+//            ex.printStackTrace();
+//            JOptionPane.showMessageDialog(frame, "No se pudo exportar el PDF");
+//        }
     }
 
 }
