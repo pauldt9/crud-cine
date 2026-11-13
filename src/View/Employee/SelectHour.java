@@ -10,12 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static utils.Colors.BUTTON_BG;
+import static utils.Colors.BUTTON_TEXT;
 import static utils.CreateComponents.*;
 
 public class SelectHour extends JPanel {
-    private Color fgCol = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
-
     private JLabel showtimesTitle;
 
     private JButton backButton;
@@ -36,12 +35,12 @@ public class SelectHour extends JPanel {
         backButton = createButton(null, 45, 45);
         backButton.setActionCommand("Regresar al catalogo");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backButton.setBackground(bgColButtons);
+        backButton.setBackground(BUTTON_BG);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
         topPanel.add(backButton);
 
         showtimesTitle = createJLabel("Funciones", 40, true);
-        showtimesTitle.setForeground(fgCol);
+        showtimesTitle.setForeground(BUTTON_TEXT);
         showtimesTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
         topPanel.add(Box.createHorizontalStrut(15));
         topPanel.add(showtimesTitle);
@@ -109,8 +108,8 @@ public class SelectHour extends JPanel {
             JButton btn = createButton(ms.getShowTime() + " (" + ms.getRoom().getRoomType() + ") "
                     , 130, 70);
             btn.setFont(new Font("Helvetica Neue", Font.PLAIN, 12));
-            btn.setForeground(fgCol);
-            btn.setBackground(bgColButtons);
+            btn.setForeground(BUTTON_TEXT);
+            btn.setBackground(BUTTON_BG);
             btn.setActionCommand("funcion " + ms.getIdShowtime());
             btn.addActionListener(listener);
             showtimesPanel.add(btn);

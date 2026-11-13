@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import static utils.Colors.*;
 import static utils.CreateComponents.*;
 
 public class LoginPanel extends JPanel {
@@ -21,13 +22,9 @@ public class LoginPanel extends JPanel {
     private JPanel centralPanel;
 
     public LoginPanel(){
-        FlatLightLaf.setup();
-        UIManager.put("Button.arc", 10);
-        UIManager.put("Component.arc", 10);
-        UIManager.put("TextComponent.arc", 10);
 
         setLayout(new GridBagLayout());
-        setBackground(new Color(0x284B63));
+        setBackground(LOGIN_BG);
 
         //panel central del login (rectangulo blanco)
         centralPanel = new JPanel();
@@ -38,7 +35,7 @@ public class LoginPanel extends JPanel {
         add(centralPanel);
 
         JLabel loginLabel = createJLabel("Bienvenido", 40, true);
-        centralPanel.add(Box.createVerticalStrut(140));
+        centralPanel.add(Box.createVerticalStrut(100));
         loginLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(loginLabel);
 
@@ -50,8 +47,7 @@ public class LoginPanel extends JPanel {
         userField = createTextField("Ingresar usuario", 350, 50);
         userField.setMaximumSize(new Dimension(325, 60));
         userField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        userField.setBorder(BorderFactory.createCompoundBorder(userField.getBorder(), new EmptyBorder(0, 10, 0, 0))); //agrega un espacio al campo
-        centralPanel.add(Box.createVerticalStrut(5)); //baja el textfield
+        centralPanel.add(Box.createVerticalStrut(5));
         centralPanel.add(userField);
 
         JLabel password = createJLabel("Contraseña", 15, true);
@@ -61,14 +57,13 @@ public class LoginPanel extends JPanel {
 
         passwordField = createPasswordField("Ingresar contraseña", 325, 60);
         passwordField.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passwordField.setBorder(BorderFactory.createCompoundBorder(passwordField.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         centralPanel.add(Box.createVerticalStrut(5));
         centralPanel.add(passwordField);
 
         loginButton = createButton("Ingresar", 330, 40);
         loginButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
-        loginButton.setBackground(new Color(0x153243));
-        loginButton.setForeground(new Color(0xEEF0EB));
+        loginButton.setBackground(ACCENT);
+        loginButton.setForeground(ACCENT_TEXT);
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);

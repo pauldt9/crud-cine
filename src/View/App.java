@@ -6,6 +6,7 @@ import Controller.LoginController;
 import View.Admin.AdminView;
 import View.Employee.Catalog;
 import View.Employee.EmployeeView;
+import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,11 @@ public class App {
     public static String configPath;
 
     public static void main(String[] args) {
+        FlatLightLaf.setup();
+        UIManager.put("Button.arc", 10);
+        UIManager.put("Component.arc", 10);
+        UIManager.put("TextComponent.arc", 10);
+
         JFrame frame = new JFrame(); //ventana principal
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(1300, 800));

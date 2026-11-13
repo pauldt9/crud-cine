@@ -9,13 +9,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class RoomsMain extends JPanel {
     private JLabel titleLbl;
 
     private Color fgColor = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
 
     private JButton addRoom;
     private JButton deleteRoom;
@@ -52,21 +52,21 @@ public class RoomsMain extends JPanel {
         addRoom = createButton("Agregar",120, 40);
         addRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addRoom.setActionCommand("Agregar sala");
-        addRoom.setBackground(bgColButtons);
+        addRoom.setBackground(BUTTON_BG);
         addRoom.setForeground(fgColor);
         movButtonPanel.add(addRoom);
 
         editRoom = createButton("Editar", 120, 40);
         editRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         editRoom.setActionCommand("Editar sala");
-        editRoom.setBackground(bgColButtons);
+        editRoom.setBackground(BUTTON_BG);
         editRoom.setForeground(fgColor);
         movButtonPanel.add(editRoom);
 
         deleteRoom = createButton("Eliminar", 120, 40);
         deleteRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteRoom.setActionCommand("Eliminar sala");
-        deleteRoom.setBackground(bgColButtons);
+        deleteRoom.setBackground(BUTTON_BG);
         deleteRoom.setForeground(fgColor);
         movButtonPanel.add(deleteRoom);
 

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class RoomsForm extends JPanel {
@@ -14,7 +15,6 @@ public class RoomsForm extends JPanel {
     private JLabel panelTitle;
 
     private Color fgColor = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
 
     private JButton confirmButton;
     private JButton backButton;
@@ -38,7 +38,7 @@ public class RoomsForm extends JPanel {
         backButton = createButton("", 45, 45);
         backButton.setActionCommand("Regresar sala");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backButton.setBackground(bgColButtons);
+        backButton.setBackground(BUTTON_BG);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
         topPanel.add(backButton);
 
@@ -72,14 +72,14 @@ public class RoomsForm extends JPanel {
         roomName = createTextField("Ingresar nombre de la sala", 350, 50);
         roomName.setAlignmentX(Component.LEFT_ALIGNMENT);
         roomName.setBorder(BorderFactory.createCompoundBorder(roomName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        roomName.setBackground(bgColButtons);
+        roomName.setBackground(BUTTON_BG);
         roomName.setForeground(fgColor);
         formPanel.add(roomName);
 
         String[] roomTypes = {"Seleccionar tipo de sala", "IMAX", "3D", "4D", "MacroXE", "Tradicional"};
         roomType = new JComboBox<String>(roomTypes);
         roomType.setAlignmentX(Component.LEFT_ALIGNMENT);
-        roomType.setBackground(bgColButtons);
+        roomType.setBackground(BUTTON_BG);
         roomType.setForeground(fgColor);
         roomType.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         roomType.setMaximumSize(new Dimension(350, 50));
@@ -88,7 +88,7 @@ public class RoomsForm extends JPanel {
         Integer[] rowsArray = {1, 2, 3, 4, 5, 6, 7, 8 ,9, 10};
         rows = new JComboBox<Integer>(rowsArray);
         rows.setAlignmentX(Component.LEFT_ALIGNMENT);
-        rows.setBackground(bgColButtons);
+        rows.setBackground(BUTTON_BG);
         rows.setForeground(fgColor);
         rows.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         rows.setMaximumSize(new Dimension(350, 50));
@@ -97,7 +97,7 @@ public class RoomsForm extends JPanel {
         Integer[] columns = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         col = new JComboBox<Integer>(columns);
         col.setAlignmentX(Component.LEFT_ALIGNMENT);
-        col.setBackground(bgColButtons);
+        col.setBackground(BUTTON_BG);
         col.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         col.setMaximumSize(new Dimension(350, 50));
         formPanel.add(col);
@@ -106,7 +106,7 @@ public class RoomsForm extends JPanel {
         confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         confirmButton.setActionCommand("Confirmar sala");
         confirmButton.setForeground(fgColor);
-        confirmButton.setBackground(bgColButtons);
+        confirmButton.setBackground(BUTTON_BG);
         confirmButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         formPanel.add(confirmButton);
 

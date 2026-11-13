@@ -12,12 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static utils.Colors.*;
 import static utils.CreateComponents.*;
 
 public class SelectSeats extends JPanel {
-    private Color fgCol = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
-
     private JLabel title;
 
     private JButton backButton;
@@ -34,6 +32,7 @@ public class SelectSeats extends JPanel {
         setLayout(new BorderLayout());
         setOpaque(false);
 
+
         JPanel topPanel = new JPanel();
         topPanel.setOpaque(false);
         topPanel.setPreferredSize(new Dimension(1100, 140));
@@ -43,12 +42,12 @@ public class SelectSeats extends JPanel {
         backButton = createButton(null, 45, 45);
         backButton.setActionCommand("Regresar a funciones");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backButton.setBackground(bgColButtons);
+        backButton.setBackground(BUTTON_BG);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
         topPanel.add(backButton);
 
         title = createJLabel("Seleccionar asiento", 40, true);
-        title.setForeground(fgCol);
+        title.setForeground(BUTTON_TEXT);
         title.setAlignmentX(Component.LEFT_ALIGNMENT);
         topPanel.add(Box.createHorizontalStrut(15));
         topPanel.add(title);
@@ -107,7 +106,7 @@ public class SelectSeats extends JPanel {
         screen.setLayout(new FlowLayout(FlowLayout.CENTER));
         rightPanel.add(screen, BorderLayout.NORTH);
 
-        JLabel screenText = createJLabel("P A N T A L L A", 15, true);
+        JLabel screenText = createJLabel("P A N T A L L A", 20, true);
         screenText.setForeground(Color.WHITE);
         screen.add(screenText);
 
@@ -135,6 +134,7 @@ public class SelectSeats extends JPanel {
         seatsPanel.removeAll();
         selectedSeats.clear();
 
+
         int idRoom = showtime.getRoom().getIdRoom();
         ArrayList<String> seatName = MovieShowtime.getSeatsNames(idRoom);
 
@@ -151,20 +151,23 @@ public class SelectSeats extends JPanel {
                     String name = seatName.get(index);
 
                     btn = createButton(seatName.get(index), 50, 50);
-                    btn.setFont(new Font("Helvetica Neue", Font.PLAIN, 12));
-                    btn.setBackground(bgColButtons);
-                    btn.setForeground(fgCol);
+                    btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+                    btn.setBackground(BUTTON_BG);
+                    btn.setForeground(BUTTON_TEXT);
 
                     int idSeats = getSeatsByName(name, idRoom);
                     boolean isOccupied = OccupiedSeats.isSeatOccupied(idSeats, showtime.getIdShowtime());
 
                     if (isOccupied){
+                        String hex = String.format("#%06X", OCCUPIED_SEAT.getRGB() & 0xFFFFFF);
+                        btn.putClientProperty("FlatLaf.style", "disabledBackground: " + hex);
                         btn.setEnabled(false);
+//                        btn.setBackground(OCCUPIED_SEAT);
                     } else {
                         btn.addActionListener(e -> {
                             if (selectedSeats.contains(name)){
                                 selectedSeats.remove(name);
-                                btn.setBackground(bgColButtons);
+                                btn.setBackground(BUTTON_BG);
                             } else {
                                 selectedSeats.add(name);
                                 btn.setBackground(new Color(200, 200, 200));

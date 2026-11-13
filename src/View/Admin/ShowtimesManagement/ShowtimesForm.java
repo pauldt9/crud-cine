@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class ShowtimesForm extends JPanel {
@@ -18,7 +19,6 @@ public class ShowtimesForm extends JPanel {
     private JLabel panelTitle;
 
     private Color fgColor = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
 
     private JButton confirmButton;
     private JButton backButton;
@@ -41,7 +41,7 @@ public class ShowtimesForm extends JPanel {
         backButton = createButton("", 45, 45);
         backButton.setActionCommand("Regresar funcion");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backButton.setBackground(bgColButtons);
+        backButton.setBackground(BUTTON_BG);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
         topPanel.add(backButton);
 
@@ -75,7 +75,7 @@ public class ShowtimesForm extends JPanel {
         addMovieTitle = new JComboBox<String>();
         addMovieTitle.addItem("Seleccione una película");
         addMovieTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addMovieTitle.setBackground(bgColButtons);
+        addMovieTitle.setBackground(BUTTON_BG);
         addMovieTitle.setForeground(fgColor);
         addMovieTitle.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         addMovieTitle.setMaximumSize(new Dimension(350, 50));
@@ -86,7 +86,7 @@ public class ShowtimesForm extends JPanel {
         String[] schedules = {"Selecione una hora","12:00", "14:00", "16:00", "18:00", "20:00"};
         addShowtime = new JComboBox<String>(schedules);
         addShowtime.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addShowtime.setBackground(bgColButtons);
+        addShowtime.setBackground(BUTTON_BG);
         addShowtime.setForeground(fgColor);
         addShowtime.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         addShowtime.setMaximumSize(new Dimension(350, 50));
@@ -95,7 +95,7 @@ public class ShowtimesForm extends JPanel {
         addRoom = new JComboBox<String>();
         addRoom.addItem("Seleccione una sala");
         addRoom.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addRoom.setBackground(bgColButtons);
+        addRoom.setBackground(BUTTON_BG);
         addRoom.setForeground(fgColor);
         addRoom.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
         addRoom.setMaximumSize(new Dimension(350, 50));
@@ -103,7 +103,7 @@ public class ShowtimesForm extends JPanel {
 
         confirmButton = createButton("Confirmar", 350, 50);
         confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
-        confirmButton.setBackground(bgColButtons);
+        confirmButton.setBackground(BUTTON_BG);
         confirmButton.setForeground(fgColor);
         confirmButton.setActionCommand("Confirmar funcion");
         formPanel.add(confirmButton);

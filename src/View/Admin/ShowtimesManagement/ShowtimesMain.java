@@ -8,13 +8,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class ShowtimesMain extends JPanel {
     private JLabel titleLbl;
 
     private Color fgColor = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
 
     private JButton addShowtime;
     private JButton deleteShowtime;
@@ -51,21 +51,21 @@ public class ShowtimesMain extends JPanel {
         addShowtime = createButton("Agregar", 120, 40);
         addShowtime.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         addShowtime.setActionCommand("Agregar funcion");
-        addShowtime.setBackground(bgColButtons);
+        addShowtime.setBackground(BUTTON_BG);
         addShowtime.setForeground(fgColor);
         movButtonPanel.add(addShowtime);
 
         editShowtime = createButton("Editar", 120, 40);
         editShowtime.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         editShowtime.setActionCommand("Editar funcion");
-        editShowtime.setBackground(bgColButtons);
+        editShowtime.setBackground(BUTTON_BG);
         editShowtime.setForeground(fgColor);
         movButtonPanel.add(editShowtime);
 
         deleteShowtime = createButton("Eliminar", 120, 40);
         deleteShowtime.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteShowtime.setActionCommand("Eliminar funcion");
-        deleteShowtime.setBackground(bgColButtons);
+        deleteShowtime.setBackground(BUTTON_BG);
         deleteShowtime.setForeground(fgColor);
         movButtonPanel.add(deleteShowtime);
 

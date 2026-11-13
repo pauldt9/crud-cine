@@ -19,6 +19,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.Colors.*;
 import static utils.CreateComponents.createButton;
 import static utils.CreateComponents.createJLabel;
 
@@ -69,25 +70,13 @@ public class AdminView extends JPanel {
     private JLabel numMovies; //numero de peliculas disponibles
     private JLabel totalSales; //ventas totales
 
-    /*----------Colores de botones y texto----------*/
-    //no muevan aqui paro
-    private Color fgColor = new Color(0x2C3E50);
-    private Color bgColor = new Color(0xEDF2FA);
-
-    private Color mainBGColor = new Color(0xF4F9E9);
-    //para los botones
-    private Color bgColButtons = new Color(245, 245, 245);
-
-    //---Peliculas
-
-
     public AdminView() {
         setLayout(new BorderLayout());
 
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
-        mainPanel.setBackground(mainBGColor);
+        mainPanel.setBackground(APP_BG);
         add(mainPanel, BorderLayout.CENTER);
 
         menuPanel = new JPanel();
@@ -114,10 +103,10 @@ public class AdminView extends JPanel {
 
         // Panel menu de opciones del admin
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
-        menuPanel.setBackground(Color.WHITE);
+        menuPanel.setBackground(APP_BG);
 
         title = createJLabel("Inicio", 40, true); //titulo inicio
-        title.setForeground(fgColor);
+        title.setForeground(TEXT_PRIMARY);
         title.setAlignmentX(Component.LEFT_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         menuPanel.add(title);
@@ -125,32 +114,32 @@ public class AdminView extends JPanel {
 
         // <----------- Dashboard
         summaryLbl = createJLabel("Resumen", 20, true);
-        summaryLbl.setForeground(fgColor);
+        summaryLbl.setForeground(TEXT_PRIMARY);
         summaryLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
         summaryLbl.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
         menuPanel.add(summaryLbl);
 
         numEmployees = createJLabel("Cantidad de empleados: " + Employee.getNumEmployees(), 15, true);
-        numEmployees.setForeground(fgColor);
+        numEmployees.setForeground(TEXT_PRIMARY);
         numEmployees.setAlignmentX(Component.LEFT_ALIGNMENT);
         numEmployees.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));
         menuPanel.add(numEmployees);
 
         numMovies = createJLabel("Peliculas disponibles: " + Movie.getNumMovies(), 15, true);
-        numMovies.setForeground(fgColor);
+        numMovies.setForeground(TEXT_PRIMARY);
         numMovies.setAlignmentX(Component.LEFT_ALIGNMENT);
         numMovies.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
         menuPanel.add(numMovies);
 
         totalSales = createJLabel("Ventas: $" + Ticket.getTotalSales(), 15, true);
-        totalSales.setForeground(fgColor);
+        totalSales.setForeground(TEXT_PRIMARY);
         totalSales.setAlignmentX(Component.LEFT_ALIGNMENT);
         totalSales.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
         menuPanel.add(totalSales);
         // <-------------------------------->
 
         managementTitle = createJLabel("Gestion", 20, true);
-        managementTitle.setForeground(fgColor);
+        managementTitle.setForeground(TEXT_PRIMARY);
         managementTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
         managementTitle.setBorder(BorderFactory.createEmptyBorder(50, 40, 0, 0));
         menuPanel.add(managementTitle);
@@ -158,7 +147,7 @@ public class AdminView extends JPanel {
         // Acciones principales del administrador
         menuButtonsPanel = new JPanel();
         menuButtonsPanel.setLayout(new GridBagLayout());
-        menuButtonsPanel.setBackground(Color.WHITE);
+        menuButtonsPanel.setBackground(APP_BG);
         menuButtonsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         //obtiene el mayor valor para el width del panel
         menuButtonsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 300));
@@ -175,13 +164,13 @@ public class AdminView extends JPanel {
 
         // Modulo Gestionar empleados
         employeeButton = createButton("", 100, 100);
-        employeeButton.setBackground(bgColButtons);
+        employeeButton.setBackground(BUTTON_BG);
         employeeButton.setActionCommand("Empleados");
 
         menuButtonsPanel.add(employeeButton, c);
 
         buttonTitleEmp = createJLabel("Gestionar Empleados", 15, true);
-        buttonTitleEmp.setForeground(fgColor);
+        buttonTitleEmp.setForeground(TEXT_PRIMARY);
 
         c.gridy = 1;
         c.gridx = 1; // 1
@@ -199,12 +188,12 @@ public class AdminView extends JPanel {
         c.anchor = GridBagConstraints.NORTHWEST;
 
         moviesButton = createButton("", 100, 100);
-        moviesButton.setBackground(bgColButtons);
+        moviesButton.setBackground(BUTTON_BG);
         moviesButton.setActionCommand("Peliculas");
         menuButtonsPanel.add(moviesButton, c);
 
         buttonTitleMov = createJLabel("Agregar Peliculas", 15, true);
-        buttonTitleMov.setForeground(fgColor);
+        buttonTitleMov.setForeground(TEXT_PRIMARY);
 
         c.gridy = 1;
         c.gridx = 3; // 2
@@ -216,7 +205,7 @@ public class AdminView extends JPanel {
 
         // Modulo Agregar funciones
         showtimesButton = createButton("", 100, 100);
-        showtimesButton.setBackground(bgColButtons);
+        showtimesButton.setBackground(BUTTON_BG);
         showtimesButton.setActionCommand("Funciones");
 
         c.gridy = 2;
@@ -228,7 +217,7 @@ public class AdminView extends JPanel {
         menuButtonsPanel.add(showtimesButton, c);
 
         buttonTitleShowtime = createJLabel("Agendar Funciones", 15, true);
-        buttonTitleShowtime.setForeground(fgColor);
+        buttonTitleShowtime.setForeground(TEXT_PRIMARY);
 
         c.gridy = 2;
         c.gridx = 1;
@@ -240,7 +229,7 @@ public class AdminView extends JPanel {
 
         // Modulo Gestionar salas
         roomsButton = createButton("", 100, 100);
-        roomsButton.setBackground(bgColButtons);
+        roomsButton.setBackground(BUTTON_BG);
         roomsButton.setActionCommand("Salas");
 
         c.gridy = 2;
@@ -252,7 +241,7 @@ public class AdminView extends JPanel {
         menuButtonsPanel.add(roomsButton, c);
 
         buttonTitleRooms = createJLabel("Gestionar Salas", 15, true);
-        buttonTitleRooms.setForeground(fgColor);
+        buttonTitleRooms.setForeground(TEXT_PRIMARY);
 
         c.gridy = 2;
         c.gridx = 3;
@@ -264,44 +253,43 @@ public class AdminView extends JPanel {
 
         /*-----------Panel de navegacion (izquierdo)-----------*/
         leftPanel = new JPanel();
-        leftPanel.setBackground(new Color(0xDCE9F9));
+        leftPanel.setBackground(NAV_BG);
         leftPanel.setPreferredSize(new Dimension(200, getHeight()));
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         add(leftPanel, BorderLayout.WEST);
 
-        userTitle = createJLabel("Admin", 30, true); //donde dice admin en el panel izquierdo
-        userTitle.setForeground(fgColor);
+        userTitle = createJLabel("Admin", 30, true);
+        userTitle.setForeground(NAV_TEXT);
         userTitle.setAlignmentX(CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(70));
         leftPanel.add(userTitle);
 
         // botones de navegacion
         menuButton = createButton("Menu", 150, 40);
-        menuButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
+        menuButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         menuButton.setActionCommand("Menu");
-        menuButton.setBackground(bgColor);
-        menuButton.setForeground(fgColor);
+        menuButton.setBackground(NAV_BUTTON_BG);
+        menuButton.setForeground(NAV_BUTTON_TEXT);
         menuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(50));
         leftPanel.add(menuButton);
 
         salesButton = createButton("Ventas", 150, 40);
-        salesButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
+        salesButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         salesButton.setActionCommand("Ventas");
-        salesButton.setBackground(new Color(0xEDF2FA));
-        salesButton.setForeground(fgColor);
+        salesButton.setBackground(NAV_BUTTON_BG);
+        salesButton.setForeground(NAV_BUTTON_TEXT);
         salesButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         leftPanel.add(Box.createVerticalStrut(30));
         leftPanel.add(salesButton);
 
         exitButton = createButton("", 150, 40);
         exitButton.setActionCommand("Salir");
-        exitButton.setBackground(new Color(0x17C3B2));
+        exitButton.setBackground(LOG_OUT_BUTTON_BG);
         exitButton.setForeground(Color.WHITE);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-//        leftPanel.add(Box.createVerticalStrut(430));
-        leftPanel.add(Box.createVerticalGlue()); // Toma todo el espacio vertical disponible y lo coloca hasta abajo
+        leftPanel.add(Box.createVerticalGlue());
         leftPanel.add(exitButton);
         leftPanel.add(Box.createVerticalStrut(20));
 

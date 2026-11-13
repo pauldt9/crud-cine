@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class EmployeeView extends JPanel {
-    //colores principales
-    private Color fgCol = new Color(0x2C3E50);
-    private Color panelColor = Color.WHITE;
+import static utils.Colors.APP_BG;
 
+public class EmployeeView extends JPanel {
     private JPanel mainPanel;
     private Catalog catalogView;
     private LeftPanel leftPanel;
@@ -18,14 +16,14 @@ public class EmployeeView extends JPanel {
 
     public EmployeeView(Catalog catalog) {
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        setBackground(APP_BG);
         leftPanel = new LeftPanel();
 
         add(leftPanel, BorderLayout.WEST);
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
-        mainPanel.setBackground(panelColor);
+        mainPanel.setBackground(APP_BG);
 
         catalogView = catalog;
         selectHourPanel = new SelectHour();

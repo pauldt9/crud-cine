@@ -8,13 +8,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class SalesMain extends JPanel {
     private JLabel salesLbl;
 
     private Color fgCol = new Color(0x2C3E50);
-    private Color bgColButtons = new Color(245, 245, 245);
 
     private JButton deleteButton;
     private JButton generatePdf;
@@ -48,14 +48,14 @@ public class SalesMain extends JPanel {
         deleteButton = createButton("Eliminar", 120, 40);
         deleteButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         deleteButton.setActionCommand("Eliminar venta");
-        deleteButton.setBackground(bgColButtons);
+        deleteButton.setBackground(BUTTON_BG);
         deleteButton.setForeground(fgCol);
         buttonPanel.add(deleteButton);
 
         generatePdf = createButton("Generar PDF", 140, 40);
         generatePdf.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
         generatePdf.setActionCommand("Generar pdf");
-        generatePdf.setBackground(bgColButtons);
+        generatePdf.setBackground(BUTTON_BG);
         generatePdf.setForeground(fgCol);
         buttonPanel.add(generatePdf);
 
