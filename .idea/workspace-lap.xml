@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="CRUD Cine:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aff811d0-ae18-443c-ba3a-b8bcd165323b" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;pauldt9&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/pauldt9/crud-cine.git&quot;,
+    &quot;accountId&quot;: &quot;8d2d086c-9dc0-424d-9e7d-52921f21979c&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2xVgeDp8V7T0Gqwu8wneYvK3qK8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.App.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/paulc/OneDrive/Documentos/IDS/4to semestre/Programacion 3/CRUD Cine&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/paulc/OneDrive/Documentos/IDS/4to semestre/Programacion 3/CRUD Cine/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\paulc\OneDrive\Documentos\IDS\4to semestre\Programacion 3\CRUD Cine\src\img" />
+      <recent name="C:\Users\paulc\OneDrive\Documentos\IDS\4to semestre\Programacion 3\CRUD Cine\src\lib" />
+      <recent name="C:\Users\paulc\OneDrive\Documentos\IDS\4to semestre\Programacion 3\CRUD Cine\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="DAO" />
+      <recent name="lib" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.App" />
+      <module name="CRUD Cine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.Admin.EmployeeManagement.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.Main" />
+      <module name="CRUD Cine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.Admin.EmployeeManagement.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aff811d0-ae18-443c-ba3a-b8bcd165323b" name="Changes" comment="" />
+      <created>1748028748312</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1748028748312</updated>
+      <workItem from="1748028749414" duration="4984000" />
+      <workItem from="1748037911999" duration="17251000" />
+      <workItem from="1748114921144" duration="9356000" />
+      <workItem from="1748232237408" duration="2323000" />
+      <workItem from="1748276260564" duration="2224000" />
+      <workItem from="1748313250358" duration="16748000" />
+      <workItem from="1748330277913" duration="3167000" />
+      <workItem from="1748333488543" duration="35000" />
+      <workItem from="1748360198117" duration="16000" />
+      <workItem from="1748361886607" duration="678000" />
+      <workItem from="1748363596178" duration="3377000" />
+      <workItem from="1748392046735" duration="26840000" />
+      <workItem from="1748451458047" duration="328000" />
+      <workItem from="1748484366270" duration="14793000" />
+      <workItem from="1748502130993" duration="2664000" />
+      <workItem from="1748532681351" duration="440000" />
+      <workItem from="1748546109575" duration="2796000" />
+      <workItem from="1748585163911" duration="5298000" />
+      <workItem from="1748635815094" duration="3244000" />
+      <workItem from="1748641869976" duration="8885000" />
+      <workItem from="1748652075500" duration="15049000" />
+      <workItem from="1748724671997" duration="131000" />
+      <workItem from="1748726517991" duration="2000" />
+      <workItem from="1748739913029" duration="16580000" />
+      <workItem from="1748841281215" duration="23876000" />
+      <workItem from="1748894701922" duration="639000" />
+      <workItem from="1748912533422" duration="20763000" />
+      <workItem from="1748998549480" duration="32524000" />
+      <workItem from="1749084348976" duration="36981000" />
+      <workItem from="1749154250195" duration="15757000" />
+      <workItem from="1749171230647" duration="9000" />
+      <workItem from="1749201053730" duration="498000" />
+      <workItem from="1749203247708" duration="2820000" />
+      <workItem from="1750100153807" duration="252000" />
+      <workItem from="1760845035250" duration="474000" />
+      <workItem from="1792553920190" duration="296000" />
+      <workItem from="1792555225191" duration="2181000" />
+      <workItem from="1792777819782" duration="2179000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CRUD_Cine$Main.ic" NAME="Main Coverage Results" MODIFIED="1748039230313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>View.*</FILTER>
+    </SUITE>
+  </component>
+</project>

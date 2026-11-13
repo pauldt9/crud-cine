@@ -74,6 +74,7 @@ public class AdminView extends JPanel {
     private Color fgColor = new Color(0x2C3E50);
     private Color bgColor = new Color(0xEDF2FA);
 
+    private Color mainBGColor = new Color(0xF4F9E9);
     //para los botones
     private Color bgColButtons = new Color(245, 245, 245);
 
@@ -86,7 +87,7 @@ public class AdminView extends JPanel {
         /*-----------Panel central-----------*/
         mainPanel = new JPanel();
         mainPanel.setLayout(new CardLayout());
-        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setBackground(mainBGColor);
         add(mainPanel, BorderLayout.CENTER);
 
         menuPanel = new JPanel();
@@ -111,7 +112,7 @@ public class AdminView extends JPanel {
         mainPanel.add(roomsPanel, "salas");
         mainPanel.add(roomsFormPanel, "agregar/editar sala");
 
-        //Panel menu
+        // Panel menu de opciones del admin
         menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
         menuPanel.setBackground(Color.WHITE);
 
@@ -121,6 +122,8 @@ public class AdminView extends JPanel {
         title.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         menuPanel.add(title);
 
+
+        // <----------- Dashboard
         summaryLbl = createJLabel("Resumen", 20, true);
         summaryLbl.setForeground(fgColor);
         summaryLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -144,6 +147,7 @@ public class AdminView extends JPanel {
         totalSales.setAlignmentX(Component.LEFT_ALIGNMENT);
         totalSales.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
         menuPanel.add(totalSales);
+        // <-------------------------------->
 
         managementTitle = createJLabel("Gestion", 20, true);
         managementTitle.setForeground(fgColor);

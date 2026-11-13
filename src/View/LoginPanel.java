@@ -17,7 +17,8 @@ public class LoginPanel extends JPanel {
     private JButton loginButton;
     private JTextField userField;
     private JPasswordField passwordField;
-    private Image logo;
+
+    private JPanel centralPanel;
 
     public LoginPanel(){
         FlatLightLaf.setup();
@@ -26,17 +27,10 @@ public class LoginPanel extends JPanel {
         UIManager.put("TextComponent.arc", 10);
 
         setLayout(new GridBagLayout());
-        setBackground(new Color(0x5B75D6));
-
-        try {
-            logo = ImageIO.read(new File("src/img/logo.png"));
-            logo = logo.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        } catch (IOException e){
-            System.out.println("Error al cargar la imagen: " + e.getMessage());
-        }
+        setBackground(new Color(0x284B63));
 
         //panel central del login (rectangulo blanco)
-        JPanel centralPanel = new JPanel();
+        centralPanel = new JPanel();
         centralPanel.setLayout(new BoxLayout(centralPanel, BoxLayout.Y_AXIS));
         centralPanel.setBackground(Color.WHITE);
         centralPanel.setOpaque(false);
@@ -73,8 +67,8 @@ public class LoginPanel extends JPanel {
 
         loginButton = createButton("Ingresar", 330, 40);
         loginButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
-        loginButton.setBackground(new Color(0x17C3B2));
-        loginButton.setForeground(Color.WHITE);
+        loginButton.setBackground(new Color(0x153243));
+        loginButton.setForeground(new Color(0xEEF0EB));
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
@@ -89,14 +83,11 @@ public class LoginPanel extends JPanel {
 
         Composite original = g2.getComposite();
         g2.setColor(new Color(0, 0, 0, 50));
-        g2.fillRoundRect(407, 114, 500, 600, 20, 20);
+        g2.fillRoundRect(centralPanel.getX(), centralPanel.getY(), centralPanel.getWidth(), centralPanel.getHeight(), 20, 20);
         g2.setComposite(original);
 
         g2.setColor(Color.WHITE);
-        g2.fillRoundRect(394, 100, 500, 600, 20, 20);
-
-
-        g2.drawImage(logo, 595, 140, this);
+        g2.fillRoundRect(centralPanel.getX(), centralPanel.getY(), centralPanel.getWidth(), centralPanel.getHeight(), 20, 20);
     }
 
     public String getUserField(){

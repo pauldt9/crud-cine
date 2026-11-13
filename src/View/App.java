@@ -17,9 +17,10 @@ public class App {
     public static void main(String[] args) {
         JFrame frame = new JFrame(); //ventana principal
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1300, 800);
+        frame.setMinimumSize(new Dimension(1300, 800));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
+//        frame.setResizable(false);
         frame.setTitle("Ingresar credenciales");
 
         LoginPanel loginPanel = new LoginPanel();
