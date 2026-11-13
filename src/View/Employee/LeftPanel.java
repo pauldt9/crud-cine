@@ -44,8 +44,9 @@ public class LeftPanel extends JPanel {
         exitButton.setActionCommand("Salir");
         exitButton.setBackground(new Color(0x17C3B2));
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(Box.createVerticalStrut(500));
+        add(Box.createVerticalGlue());
         add(exitButton);
+        add(Box.createVerticalStrut(20));
 
         //Iconos
         try {

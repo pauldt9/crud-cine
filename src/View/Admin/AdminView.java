@@ -155,7 +155,7 @@ public class AdminView extends JPanel {
         managementTitle.setBorder(BorderFactory.createEmptyBorder(50, 40, 0, 0));
         menuPanel.add(managementTitle);
 
-        //Aqui estan otros botones del menu
+        // Acciones principales del administrador
         menuButtonsPanel = new JPanel();
         menuButtonsPanel.setLayout(new GridBagLayout());
         menuButtonsPanel.setBackground(Color.WHITE);
@@ -171,8 +171,9 @@ public class AdminView extends JPanel {
         c.weightx = 0;
         c.insets = new Insets(0, 40, 80, 10);
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.fill = GridBagConstraints.NONE;
+//        c.fill = GridBagConstraints.NONE;
 
+        // Modulo Gestionar empleados
         employeeButton = createButton("", 100, 100);
         employeeButton.setBackground(bgColButtons);
         employeeButton.setActionCommand("Empleados");
@@ -183,22 +184,19 @@ public class AdminView extends JPanel {
         buttonTitleEmp.setForeground(fgColor);
 
         c.gridy = 1;
-        c.gridx = 1;
-        c.weightx = 1;
-        c.weighty = 0;
+        c.gridx = 1; // 1
+        c.weightx = 0; // 1
         c.insets = new Insets(0, 10, 80, 10);
         c.anchor = GridBagConstraints.WEST;
-        c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(buttonTitleEmp, c);
 
+        // Modulo Agregar peliculas
         c.gridy = 1;
         c.gridx = 2;
-        c.weightx = 2;
-        c.weighty = 0;
-        c.insets = new Insets(0, 30, 80, 10);
+        c.weightx = 0; // 2
+        c.insets = new Insets(0, 80, 80, 10);
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.fill = GridBagConstraints.NONE;
 
         moviesButton = createButton("", 100, 100);
         moviesButton.setBackground(bgColButtons);
@@ -209,15 +207,14 @@ public class AdminView extends JPanel {
         buttonTitleMov.setForeground(fgColor);
 
         c.gridy = 1;
-        c.gridx = 2;
-        c.weightx = 3;
-        c.weighty = 0;
-        c.insets = new Insets(0, 150, 80, 10);
+        c.gridx = 3; // 2
+        c.weightx = 1; // 3
+        c.insets = new Insets(0, 10, 80, 10);
         c.anchor = GridBagConstraints.WEST;
-        c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(buttonTitleMov, c);
 
+        // Modulo Agregar funciones
         showtimesButton = createButton("", 100, 100);
         showtimesButton.setBackground(bgColButtons);
         showtimesButton.setActionCommand("Funciones");
@@ -225,10 +222,8 @@ public class AdminView extends JPanel {
         c.gridy = 2;
         c.gridx = 0;
         c.weightx = 0;
-        c.weighty = 0;
         c.insets = new Insets(0, 40, 0, 10);
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(showtimesButton, c);
 
@@ -237,14 +232,13 @@ public class AdminView extends JPanel {
 
         c.gridy = 2;
         c.gridx = 1;
-        c.weightx = 1;
-        c.weighty = 0;
+        c.weightx = 0;
         c.insets = new Insets(0, 10, 0, 10);
         c.anchor = GridBagConstraints.WEST;
-        c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(buttonTitleShowtime, c);
 
+        // Modulo Gestionar salas
         roomsButton = createButton("", 100, 100);
         roomsButton.setBackground(bgColButtons);
         roomsButton.setActionCommand("Salas");
@@ -252,10 +246,8 @@ public class AdminView extends JPanel {
         c.gridy = 2;
         c.gridx = 2;
         c.weightx = 0;
-        c.weighty = 0;
-        c.insets = new Insets(0, 30, 0, 10);
+        c.insets = new Insets(0, 80, 0, 10);
         c.anchor = GridBagConstraints.NORTHWEST;
-        c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(roomsButton, c);
 
@@ -265,14 +257,12 @@ public class AdminView extends JPanel {
         c.gridy = 2;
         c.gridx = 3;
         c.weightx = 1;
-        c.weighty = 0;
-        c.insets = new Insets(0, -420, 0, 10);
+        c.insets = new Insets(0, 10, 0, 10);
         c.anchor = GridBagConstraints.WEST;
-        c.fill = GridBagConstraints.NONE;
 
         menuButtonsPanel.add(buttonTitleRooms, c);
 
-        /*-----------Panel izquierdo-----------*/
+        /*-----------Panel de navegacion (izquierdo)-----------*/
         leftPanel = new JPanel();
         leftPanel.setBackground(new Color(0xDCE9F9));
         leftPanel.setPreferredSize(new Dimension(200, getHeight()));
@@ -285,7 +275,7 @@ public class AdminView extends JPanel {
         leftPanel.add(Box.createVerticalStrut(70));
         leftPanel.add(userTitle);
 
-        //botones de navegacion
+        // botones de navegacion
         menuButton = createButton("Menu", 150, 40);
         menuButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
         menuButton.setActionCommand("Menu");
@@ -310,8 +300,10 @@ public class AdminView extends JPanel {
         exitButton.setForeground(Color.WHITE);
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        leftPanel.add(Box.createVerticalStrut(430));
+//        leftPanel.add(Box.createVerticalStrut(430));
+        leftPanel.add(Box.createVerticalGlue()); // Toma todo el espacio vertical disponible y lo coloca hasta abajo
         leftPanel.add(exitButton);
+        leftPanel.add(Box.createVerticalStrut(20));
 
         //Iconos en botones
         try {
