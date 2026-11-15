@@ -64,7 +64,7 @@ public class SelectSeats extends JPanel {
         add(southPanel, BorderLayout.SOUTH);
 
         confirmButton = createButton("Confirmar Asientos", 200, 40);
-        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         confirmButton.setForeground(Color.WHITE);
         confirmButton.setBackground(new Color(0x17C3B2));
         confirmButton.setActionCommand("Confirmar asientos");

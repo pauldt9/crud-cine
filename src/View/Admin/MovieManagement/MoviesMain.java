@@ -49,21 +49,21 @@ public class MoviesMain extends JPanel {
         add(movButtonPanel, BorderLayout.SOUTH);
 
         addMov = createButton("Agregar", 120, 40);
-        addMov.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        addMov.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         addMov.setActionCommand("Agregar pelicula");
         addMov.setBackground(bgColButtons);
         addMov.setForeground(fgColor);
         movButtonPanel.add(addMov);
 
         editMov = createButton("Editar",120, 40);
-        editMov.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        editMov.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         editMov.setActionCommand("Editar pelicula");
         editMov.setBackground(bgColButtons);
         editMov.setForeground(fgColor);
         movButtonPanel.add(editMov);
 
         deleteMov = createButton("Eliminar", 120, 40);
-        deleteMov.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        deleteMov.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         deleteMov.setActionCommand("Eliminar pelicula");
         deleteMov.setBackground(bgColButtons);
         deleteMov.setForeground(fgColor);

@@ -61,7 +61,7 @@ public class LoginPanel extends JPanel {
         centralPanel.add(passwordField);
 
         loginButton = createButton("Ingresar", 330, 40);
-        loginButton.setFont(new Font("Helvetica Neue", Font.BOLD, 20));
+        loginButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
         loginButton.setBackground(ACCENT);
         loginButton.setForeground(ACCENT_TEXT);
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);

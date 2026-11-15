@@ -50,7 +50,7 @@ public class OccupiedSeats {
         isOccupied = occupied;
     }
 
-    public static int addReservation(OccupiedSeats reservation) {
+    public static int addReservation(OccupiedSeats reservation) throws SQLException{
         int id = 0;
         String query = "INSERT INTO occupiedseats (idSeat, idFunction, isOccupied) VALUES (?, ?, ?)";
 
@@ -68,8 +68,6 @@ public class OccupiedSeats {
                 id = rs.getInt(1);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return id;
     }

@@ -129,7 +129,7 @@ public class Ticket {
         return ticket;
     }
 
-    public static int addTicket(Ticket ticket) {
+    public static int addTicket(Ticket ticket) throws SQLException{
 
         int id = 0;
         String query = "INSERT INTO tickets " + "(idFunction,idSeat,price)"
@@ -150,8 +150,6 @@ public class Ticket {
                 id = rs.getInt(1);
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return id;
     }

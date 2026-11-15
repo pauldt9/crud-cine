@@ -81,7 +81,7 @@ public class RoomsForm extends JPanel {
         roomType.setAlignmentX(Component.LEFT_ALIGNMENT);
         roomType.setBackground(BUTTON_BG);
         roomType.setForeground(fgColor);
-        roomType.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        roomType.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         roomType.setMaximumSize(new Dimension(350, 50));
         formPanel.add(roomType);
 
@@ -90,7 +90,7 @@ public class RoomsForm extends JPanel {
         rows.setAlignmentX(Component.LEFT_ALIGNMENT);
         rows.setBackground(BUTTON_BG);
         rows.setForeground(fgColor);
-        rows.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        rows.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         rows.setMaximumSize(new Dimension(350, 50));
         formPanel.add(rows);
 
@@ -98,12 +98,12 @@ public class RoomsForm extends JPanel {
         col = new JComboBox<Integer>(columns);
         col.setAlignmentX(Component.LEFT_ALIGNMENT);
         col.setBackground(BUTTON_BG);
-        col.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        col.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         col.setMaximumSize(new Dimension(350, 50));
         formPanel.add(col);
 
         confirmButton = createButton("Confirmar", 350, 50);
-        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         confirmButton.setActionCommand("Confirmar sala");
         confirmButton.setForeground(fgColor);
         confirmButton.setBackground(BUTTON_BG);
