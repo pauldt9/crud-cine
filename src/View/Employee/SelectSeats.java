@@ -162,7 +162,6 @@ public class SelectSeats extends JPanel {
                         String hex = String.format("#%06X", OCCUPIED_SEAT.getRGB() & 0xFFFFFF);
                         btn.putClientProperty("FlatLaf.style", "disabledBackground: " + hex);
                         btn.setEnabled(false);
-//                        btn.setBackground(OCCUPIED_SEAT);
                     } else {
                         btn.addActionListener(e -> {
                             if (selectedSeats.contains(name)){
