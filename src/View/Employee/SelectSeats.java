@@ -64,7 +64,7 @@ public class SelectSeats extends JPanel {
         add(southPanel, BorderLayout.SOUTH);
 
         confirmButton = createButton("Confirmar Asientos", 200, 40);
-        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         confirmButton.setForeground(Color.WHITE);
         confirmButton.setBackground(new Color(0x17C3B2));
         confirmButton.setActionCommand("Confirmar asientos");
@@ -141,7 +141,7 @@ public class SelectSeats extends JPanel {
         int rows = showtime.getRoom().getRows();
         int cols = showtime.getRoom().getCols();
 
-        seatsPanel.setLayout(new GridLayout(rows, cols, 10, 10));
+        seatsPanel.setLayout(new GridLayout(rows, cols, 5, 5));
 
         int index = 0;
         for (int i = 0; i < rows; i++){
@@ -151,7 +151,7 @@ public class SelectSeats extends JPanel {
                     String name = seatName.get(index);
 
                     btn = createButton(seatName.get(index), 50, 50);
-                    btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+                    btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
                     btn.setBackground(BUTTON_BG);
                     btn.setForeground(BUTTON_TEXT);
 
@@ -162,7 +162,6 @@ public class SelectSeats extends JPanel {
                         String hex = String.format("#%06X", OCCUPIED_SEAT.getRGB() & 0xFFFFFF);
                         btn.putClientProperty("FlatLaf.style", "disabledBackground: " + hex);
                         btn.setEnabled(false);
-//                        btn.setBackground(OCCUPIED_SEAT);
                     } else {
                         btn.addActionListener(e -> {
                             if (selectedSeats.contains(name)){

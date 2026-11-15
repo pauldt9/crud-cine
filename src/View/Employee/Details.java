@@ -61,7 +61,7 @@ public class Details extends JPanel {
         add(southPanel, BorderLayout.SOUTH);
 
         endButton = createButton("Finalizar", 120, 40);
-        endButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        endButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         endButton.setForeground(Color.WHITE);
         endButton.setBackground(new Color(0x17C3B2));
         endButton.setActionCommand("Finalizar venta");

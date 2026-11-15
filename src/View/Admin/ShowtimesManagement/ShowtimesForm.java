@@ -77,7 +77,7 @@ public class ShowtimesForm extends JPanel {
         addMovieTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
         addMovieTitle.setBackground(BUTTON_BG);
         addMovieTitle.setForeground(fgColor);
-        addMovieTitle.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addMovieTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         addMovieTitle.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addMovieTitle);
         updateMovieCombo();
@@ -88,7 +88,7 @@ public class ShowtimesForm extends JPanel {
         addShowtime.setAlignmentX(Component.LEFT_ALIGNMENT);
         addShowtime.setBackground(BUTTON_BG);
         addShowtime.setForeground(fgColor);
-        addShowtime.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addShowtime.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         addShowtime.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addShowtime);
 
@@ -97,12 +97,12 @@ public class ShowtimesForm extends JPanel {
         addRoom.setAlignmentX(Component.LEFT_ALIGNMENT);
         addRoom.setBackground(BUTTON_BG);
         addRoom.setForeground(fgColor);
-        addRoom.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addRoom.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         addRoom.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addRoom);
 
         confirmButton = createButton("Confirmar", 350, 50);
-        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         confirmButton.setBackground(BUTTON_BG);
         confirmButton.setForeground(fgColor);
         confirmButton.setActionCommand("Confirmar funcion");

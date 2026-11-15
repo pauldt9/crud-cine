@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class EmployeeForm extends JPanel {
@@ -15,7 +16,6 @@ public class EmployeeForm extends JPanel {
     private JButton confirmEmp;
     private JButton backButton;
 
-    private Color bgColButtons = new Color(245, 245, 245);
     private Color fgColor = new Color(0x2C3E50);
 
     private JLabel addEmpTitle;
@@ -40,7 +40,7 @@ public class EmployeeForm extends JPanel {
         backButton = createButton(null, 45, 45);
         backButton.setActionCommand("Regresar empleado");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backButton.setBackground(bgColButtons);
+        backButton.setBackground(BUTTON_BG);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
         topPanel.add(backButton);
 
@@ -65,13 +65,13 @@ public class EmployeeForm extends JPanel {
         addEmpName = createTextField("Ingresar nombre", 350, 50);
         addEmpName.setAlignmentX(Component.LEFT_ALIGNMENT);
         addEmpName.setBorder(BorderFactory.createCompoundBorder(addEmpName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        addEmpName.setBackground(bgColButtons);
+        addEmpName.setBackground(BUTTON_BG);
         addEmpName.setForeground(fgColor);
         formPanel.add(addEmpName);
 
         addEmpLastName = createTextField("Ingresar Apellido", 350, 50);
         addEmpLastName.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpLastName.setBackground(bgColButtons);
+        addEmpLastName.setBackground(BUTTON_BG);
         addEmpLastName.setForeground(fgColor);
         addEmpLastName.setBorder(BorderFactory.createCompoundBorder(addEmpLastName.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         formPanel.add(addEmpLastName);
@@ -79,37 +79,37 @@ public class EmployeeForm extends JPanel {
         String[] types = {"-----Tipo de Empleado-----", "Taquillero", "Admin"};
         empType = new JComboBox<String>(types);
         empType.setAlignmentX(Component.LEFT_ALIGNMENT);
-        empType.setBackground(bgColButtons);
+        empType.setBackground(BUTTON_BG);
         empType.setForeground(fgColor);
-        empType.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        empType.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         empType.setMaximumSize(new Dimension(350, 50));
 
         formPanel.add(empType);
 
         addEmpUser = createTextField("Ingresar nombre de usuario", 350, 50);
         addEmpUser.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpUser.setBackground(bgColButtons);
+        addEmpUser.setBackground(BUTTON_BG);
         addEmpUser.setForeground(fgColor);
         addEmpUser.setBorder(BorderFactory.createCompoundBorder(addEmpUser.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         formPanel.add(addEmpUser);
 
         addEmpPass = createPasswordField("Ingresar Contraseña", 350, 50);
         addEmpPass.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpPass.setBackground(bgColButtons);
+        addEmpPass.setBackground(BUTTON_BG);
         addEmpPass.setBorder(BorderFactory.createCompoundBorder(addEmpPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         formPanel.add(addEmpPass);
 
         addEmpConfirmPass = createPasswordField("Confirmar Contraseña", 350, 50);
         addEmpConfirmPass.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addEmpConfirmPass.setBackground(bgColButtons);
+        addEmpConfirmPass.setBackground(BUTTON_BG);
         addEmpConfirmPass.setBorder(BorderFactory.createCompoundBorder(addEmpConfirmPass.getBorder(), new EmptyBorder(0, 10, 0, 0)));
         formPanel.add(addEmpConfirmPass);
 
         confirmEmp = createButton("Confirmar", 350, 50);
-        confirmEmp.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmEmp.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         confirmEmp.setActionCommand("Confirmar empleado");
         confirmEmp.setForeground(fgColor);
-        confirmEmp.setBackground(bgColButtons);
+        confirmEmp.setBackground(BUTTON_BG);
         confirmEmp.setAlignmentX(Component.LEFT_ALIGNMENT);
         formPanel.add(confirmEmp);
 

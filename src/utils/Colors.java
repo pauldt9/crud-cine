@@ -7,7 +7,7 @@ public final class Colors {
 
     public final static Color PRIMARY_DARK = new Color(0x011936);
 
-    public final static Color BUTTON_BG = new Color(0xEFEFEF);
+    public final static Color BUTTON_BG = new Color(0xE3E3E3);
     public final static Color BUTTON_TEXT = new Color(0x2C3E50);
     public final static Color APP_BG = new Color(0xF7F7F7);
     public final static Color LOGIN_BG = PRIMARY_DARK;

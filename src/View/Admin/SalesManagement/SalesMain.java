@@ -46,14 +46,14 @@ public class SalesMain extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
 
         deleteButton = createButton("Eliminar", 120, 40);
-        deleteButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        deleteButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         deleteButton.setActionCommand("Eliminar venta");
         deleteButton.setBackground(BUTTON_BG);
         deleteButton.setForeground(fgCol);
         buttonPanel.add(deleteButton);
 
         generatePdf = createButton("Generar PDF", 140, 40);
-        generatePdf.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        generatePdf.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         generatePdf.setActionCommand("Generar pdf");
         generatePdf.setBackground(BUTTON_BG);
         generatePdf.setForeground(fgCol);

@@ -50,21 +50,21 @@ public class RoomsMain extends JPanel {
         add(movButtonPanel, BorderLayout.SOUTH);
 
         addRoom = createButton("Agregar",120, 40);
-        addRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        addRoom.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         addRoom.setActionCommand("Agregar sala");
         addRoom.setBackground(BUTTON_BG);
         addRoom.setForeground(fgColor);
         movButtonPanel.add(addRoom);
 
         editRoom = createButton("Editar", 120, 40);
-        editRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        editRoom.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         editRoom.setActionCommand("Editar sala");
         editRoom.setBackground(BUTTON_BG);
         editRoom.setForeground(fgColor);
         movButtonPanel.add(editRoom);
 
         deleteRoom = createButton("Eliminar", 120, 40);
-        deleteRoom.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        deleteRoom.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         deleteRoom.setActionCommand("Eliminar sala");
         deleteRoom.setBackground(BUTTON_BG);
         deleteRoom.setForeground(fgColor);

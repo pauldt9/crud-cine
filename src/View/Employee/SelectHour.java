@@ -106,8 +106,8 @@ public class SelectHour extends JPanel {
 
         for (MovieShowtime ms : showtimes){
             JButton btn = createButton(ms.getShowTime() + " (" + ms.getRoom().getRoomType() + ") "
-                    , 130, 70);
-            btn.setFont(new Font("Helvetica Neue", Font.PLAIN, 12));
+                    , 180, 70);
+            btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
             btn.setForeground(BUTTON_TEXT);
             btn.setBackground(BUTTON_BG);
             btn.setActionCommand("funcion " + ms.getIdShowtime());

@@ -9,12 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
+import static utils.Colors.BUTTON_TEXT;
 import static utils.CreateComponents.*;
 
 public class EmployeeMain extends JPanel {
-    private Color bgColButtons = new Color(245, 245, 245);
-    private Color fgColor = new Color(0x2C3E50);
-
     private int idEmployee; //Primary Key
 
     private JButton addEmployee;
@@ -31,7 +30,7 @@ public class EmployeeMain extends JPanel {
         setOpaque(false);
 
         empTitle = createJLabel("Empleados", 40, true);
-        empTitle.setForeground(fgColor);
+        empTitle.setForeground(new Color(0x2C3E50));
         empTitle.setBorder(BorderFactory.createEmptyBorder(60, 40, 0, 0));
         add(empTitle, BorderLayout.NORTH);
 
@@ -40,24 +39,24 @@ public class EmployeeMain extends JPanel {
         add(empButtonPanel, BorderLayout.SOUTH);
 
         addEmployee = createButton("Agregar", 120, 40);
-        addEmployee.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        addEmployee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         addEmployee.setActionCommand("Agregar empleado");
-        addEmployee.setBackground(bgColButtons);
-        addEmployee.setForeground(fgColor);
+        addEmployee.setBackground(BUTTON_BG);
+        addEmployee.setForeground(BUTTON_TEXT);
         empButtonPanel.add(addEmployee);
 
         editEmployee = createButton("Editar", 120, 40);
-        editEmployee.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        editEmployee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         editEmployee.setActionCommand("Editar empleado");
-        editEmployee.setBackground(bgColButtons);
-        editEmployee.setForeground(fgColor);
+        editEmployee.setBackground(BUTTON_BG);
+        editEmployee.setForeground(BUTTON_TEXT);
         empButtonPanel.add(editEmployee);
 
         deleteEmployee = createButton("Eliminar", 120, 40);
-        deleteEmployee.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        deleteEmployee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         deleteEmployee.setActionCommand("Eliminar empleado");
-        deleteEmployee.setBackground(bgColButtons);
-        deleteEmployee.setForeground(fgColor);
+        deleteEmployee.setBackground(BUTTON_BG);
+        deleteEmployee.setForeground(BUTTON_TEXT);
         empButtonPanel.add(deleteEmployee);
 
         JPanel emptyWest = createEmptyPanel(40, 800);

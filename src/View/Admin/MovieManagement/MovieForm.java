@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import static utils.Colors.BUTTON_BG;
 import static utils.CreateComponents.*;
 
 public class MovieForm extends JPanel {
@@ -18,7 +19,6 @@ public class MovieForm extends JPanel {
     private JButton backButton;
     private JButton addImage;
 
-    private Color bgColButtons = new Color(245, 245, 245);
     private Color fgColor = new Color(0x2C3E50);
 
     private JLabel panelTitle;
@@ -43,7 +43,7 @@ public class MovieForm extends JPanel {
         backButton = createButton("", 45, 45);
         backButton.setActionCommand("Regresar pelicula");
         backButton.setAlignmentX(Box.LEFT_ALIGNMENT);
-        backButton.setBackground(bgColButtons);
+        backButton.setBackground(BUTTON_BG);
         topPanel.add(Box.createRigidArea(new Dimension(40, 60)));
         topPanel.add(backButton);
 
@@ -77,14 +77,14 @@ public class MovieForm extends JPanel {
         addMovieTitle = createTextField("Ingresar titulo", 350, 50);
         addMovieTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
         addMovieTitle.setBorder(BorderFactory.createCompoundBorder(addMovieTitle.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        addMovieTitle.setBackground(bgColButtons);
+        addMovieTitle.setBackground(BUTTON_BG);
         addMovieTitle.setForeground(fgColor);
         formPanel.add(addMovieTitle);
 
         addDuration = createTextField("Ingresar duracion", 350, 50);
         addDuration.setAlignmentX(Component.LEFT_ALIGNMENT);
         addDuration.setBorder(BorderFactory.createCompoundBorder(addDuration.getBorder(), new EmptyBorder(0, 10, 0, 0)));
-        addDuration.setBackground(bgColButtons);
+        addDuration.setBackground(BUTTON_BG);
         addDuration.setForeground(fgColor);
         formPanel.add(addDuration);
 
@@ -92,18 +92,18 @@ public class MovieForm extends JPanel {
         "Fantasia", "Suspenso", "Animacion", "Romance", "Musical", "Documental"};
         addGenre = new JComboBox<String>(genres);
         addGenre.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addGenre.setBackground(bgColButtons);
+        addGenre.setBackground(BUTTON_BG);
         addGenre.setForeground(fgColor);
-        addGenre.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addGenre.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         addGenre.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addGenre);
 
         String[] classifications = {"-----Clasificacion-----", "AA", "A", "B", "B15", "C"};
         addClassification = new JComboBox<String>(classifications);
         addClassification.setAlignmentX(Component.LEFT_ALIGNMENT);
-        addClassification.setBackground(bgColButtons);
+        addClassification.setBackground(BUTTON_BG);
         addClassification.setForeground(fgColor);
-        addClassification.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+        addClassification.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
         addClassification.setMaximumSize(new Dimension(350, 50));
         formPanel.add(addClassification);
 
@@ -115,18 +115,18 @@ public class MovieForm extends JPanel {
 //        formPanel.add(addShowtime);
 
         addImage = createButton("Agregar Imagen", 350, 50);
-        addImage.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        addImage.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         addImage.setActionCommand("Agregar imagen");
         addImage.setForeground(fgColor);
-        addImage.setBackground(bgColButtons);
+        addImage.setBackground(BUTTON_BG);
         addImage.setAlignmentX(Component.LEFT_ALIGNMENT);
         formPanel.add(addImage);
 
         confirmButton = createButton("Confirmar", 350, 50);
-        confirmButton.setFont(new Font("Helvetica Neue", Font.BOLD, 15));
+        confirmButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
         confirmButton.setActionCommand("Confirmar pelicula");
         confirmButton.setForeground(fgColor);
-        confirmButton.setBackground(bgColButtons);
+        confirmButton.setBackground(BUTTON_BG);
         confirmButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         formPanel.add(confirmButton);
 
@@ -142,7 +142,7 @@ public class MovieForm extends JPanel {
     }
 
     public JTextField createTextField(String placeHolder, int w, int h){
-        Font font = new Font("Helvetica Neue", Font.PLAIN, 16);
+        Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 15);
         JTextField textField = new JTextField();
 
         textField.setFont(font);

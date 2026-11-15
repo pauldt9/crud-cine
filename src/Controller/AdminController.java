@@ -166,6 +166,7 @@ public class AdminController implements ActionListener {
                 adminView.getEmployeeFormPanel().setAction("Registrar");
                 addEmployee();
                 adminView.getEmployeeFormPanel().clearFields();
+                showAdminPanel("empleados");
                 break;
             case "Confirmar cambios de empleado":
                 adminView.getEmployeeFormPanel().setAction("Editar");

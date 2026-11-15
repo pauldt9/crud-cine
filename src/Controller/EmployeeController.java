@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 public class EmployeeController implements ActionListener {
@@ -155,30 +157,39 @@ public class EmployeeController implements ActionListener {
     }
 
     public void completeSale(){
-        int roomPrice = switch (currentShowtime.getRoom().getRoomType()){
-            case "IMAX" -> 150;
-            case "4D" -> 120;
-            case "3D" -> 100;
-            case "MacroXE" -> 90;
-            default -> 60;
-        };
+        try {
+            int roomPrice = switch (currentShowtime.getRoom().getRoomType()){
+                case "IMAX" -> 150;
+                case "4D" -> 120;
+                case "3D" -> 100;
+                case "MacroXE" -> 90;
+                default -> 60;
+            };
 
-        for (Seat seat : seatsSelected){
-            Ticket ticket = new Ticket(0, currentShowtime, seat, roomPrice,
-                    currentShowtime.getIdShowtime(), seat.getIdSeat());
+            for (Seat seat : seatsSelected){
+                Ticket ticket = new Ticket(0, currentShowtime, seat, roomPrice,
+                        currentShowtime.getIdShowtime(), seat.getIdSeat());
 
-            Ticket.addTicket(ticket);
-            salesTableModel.addRow(ticket);
+                Ticket.addTicket(ticket);
+                salesTableModel.addRow(ticket);
 
-            OccupiedSeats os = new OccupiedSeats(0, seat.getIdSeat(),
-                    currentShowtime.getIdShowtime(), true);
+                OccupiedSeats os = new OccupiedSeats(0, seat.getIdSeat(),
+                        currentShowtime.getIdShowtime(), true);
 
-            OccupiedSeats.addReservation(os);
+                OccupiedSeats.addReservation(os);
+            }
+
+            JOptionPane.showMessageDialog(frame, "Venta realizada con exito");
+            seatsSelected.clear();
+            showEmployeePanel("catalogo");
+        } catch (SQLException e){
+            if (e instanceof SQLIntegrityConstraintViolationException){
+                JOptionPane.showMessageDialog(frame, "Los asientos seleccionados se encuentran ocupados.");
+                showEmployeePanel("seleccionar hora");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Hubo un error al realizar la venta: " + e.getMessage());
+            }
         }
-
-        JOptionPane.showMessageDialog(frame, "Venta realizada con exito");
-        seatsSelected.clear();
-        showEmployeePanel("catalogo");
     }
 
     public void reloadShowtimes() {
