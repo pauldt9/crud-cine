@@ -18,6 +18,8 @@ public class LoginPanel extends JPanel {
     private JButton loginButton;
     private JTextField userField;
     private JPasswordField passwordField;
+    private JProgressBar loadingBar;
+    private JLabel statusLabel;
 
     private JPanel centralPanel;
 
@@ -67,6 +69,19 @@ public class LoginPanel extends JPanel {
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         centralPanel.add(Box.createVerticalStrut(40));
         centralPanel.add(loginButton);
+        loadingBar = new JProgressBar();
+        loadingBar.setIndeterminate(true);
+        loadingBar.setMaximumSize(new Dimension(325, 6));
+        loadingBar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        centralPanel.add(Box.createVerticalStrut(25));
+        centralPanel.add(loadingBar);
+
+        statusLabel = createJLabel("Conectando con el servidor...", 14, false);
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        centralPanel.add(Box.createVerticalStrut(10));
+        centralPanel.add(statusLabel);
+
+        setLoading(true);
     }
 
     @Override
@@ -100,5 +115,26 @@ public class LoginPanel extends JPanel {
 
     public void setListeners(ActionListener listener){
         loginButton.addActionListener(listener);
+    }
+
+    // Actualiza el valor de loading
+    public void setLoading(boolean loading){
+        userField.setEnabled(!loading);
+        passwordField.setEnabled(!loading);
+        loginButton.setEnabled(!loading);
+        loadingBar.setVisible(loading);
+        statusLabel.setVisible(loading);
+        revalidate();
+        repaint();
+    }
+
+    // Actualiza el valor de un posible error de carga
+    public void setLoadError(String message){
+        loadingBar.setVisible(false);
+        statusLabel.setText(message);
+        statusLabel.setForeground(new Color(180, 40, 40));
+        statusLabel.setVisible(true);
+        revalidate();
+        repaint();
     }
 }

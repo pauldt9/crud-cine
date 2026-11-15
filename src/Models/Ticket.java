@@ -78,30 +78,38 @@ public class Ticket {
 
     public static ArrayList<Ticket> getTickets() {
         ArrayList<Ticket> tickets = new ArrayList<>();
-        String query = "SELECT * FROM tickets";
+        String query = "SELECT t.idTicket, t.idFunction, t.idSeat, t.price, f.showTime, "
+                + "m.idMovie, m.title, m.duration, m.genre, m.classification, m.imgRoute, "
+                + "r.idRoom, r.roomName, r.capacity, r.roomType, r.roomRows, r.roomCols, "
+                + "s.idRoom AS seatRoom, s.seatName, s.seatNumber "
+                + "FROM tickets t "
+                + "JOIN functions f ON f.idFunction = t.idFunction "
+                + "JOIN movies m ON m.idMovie = f.idMovie "
+                + "JOIN rooms r ON r.idRoom = f.idRoom "
+                + "JOIN seats s ON s.idSeat = t.idSeat "
+                + "ORDER BY t.idTicket";
 
         try (
                 Connection connection = MySQLConnection.connect();
-                Statement st = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery(query)
         ) {
-
             while (rs.next()) {
-                int idTicket = rs.getInt("idTicket");
                 int idFunction = rs.getInt("idFunction");
                 int idSeat = rs.getInt("idSeat");
-                int price = rs.getInt("price");
 
-                MovieShowtime ms = MovieShowtime.getShowtimes(idFunction);
-                Seat seat = Seat.getSeat(idSeat);
+                Movie movie = new Movie(rs.getInt("idMovie"), rs.getString("title"), rs.getInt("duration"),
+                        rs.getString("genre"), rs.getString("classification"), rs.getString("imgRoute"));
+                Room room = new Room(rs.getInt("idRoom"), rs.getString("roomName"), rs.getInt("capacity"),
+                        rs.getString("roomType"), rs.getInt("roomRows"), rs.getInt("roomCols"));
+                MovieShowtime ms = new MovieShowtime(idFunction, movie, room, rs.getString("showTime"));
+                Seat seat = new Seat(idSeat, rs.getInt("seatRoom"), rs.getString("seatName"), rs.getInt("seatNumber"));
 
-                tickets.add(new Ticket(idTicket, ms, seat, price, idFunction, idSeat));
+                tickets.add(new Ticket(rs.getInt("idTicket"), ms, seat, rs.getInt("price"), idFunction, idSeat));
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
         return tickets;
     }
 

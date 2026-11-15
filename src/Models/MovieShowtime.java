@@ -4,6 +4,8 @@ import utils.MySQLConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MovieShowtime {
     private int idShowtime; //Primary Key
@@ -77,19 +79,38 @@ public class MovieShowtime {
         this.showTime = showTime;
     }
 
+    // Obtiene y devuelve el valor de showtimes
     public static ArrayList<MovieShowtime> getShowtimes() {
         ArrayList<MovieShowtime> movieShowtimes = new ArrayList<>();
-        String query = "SELECT * FROM functions";
+        String query = "SELECT f.idFunction, f.showTime, "
+                + "m.idMovie, m.title, m.duration, m.genre, m.classification, m.imgRoute, "
+                + "r.idRoom, r.roomName, r.capacity, r.roomType, r.roomRows, r.roomCols "
+                + "FROM functions f "
+                + "JOIN movies m ON m.idMovie = f.idMovie "
+                + "JOIN rooms r ON r.idRoom = f.idRoom "
+                + "ORDER BY f.idFunction";
         try (
                 Connection connection = MySQLConnection.connect();
-                Statement st = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery(query)
         ) {
             while (rs.next()) {
-                int idMovie = rs.getInt("idMovie");
-                int idRoom = rs.getInt("idRoom");
-                Movie movie = Movie.getMovieById(idMovie);
-                Room room = Room.getRoom(idRoom);
+                Movie movie = new Movie(
+                        rs.getInt("idMovie"),
+                        rs.getString("title"),
+                        rs.getInt("duration"),
+                        rs.getString("genre"),
+                        rs.getString("classification"),
+                        rs.getString("imgRoute")
+                );
+                Room room = new Room(
+                        rs.getInt("idRoom"),
+                        rs.getString("roomName"),
+                        rs.getInt("capacity"),
+                        rs.getString("roomType"),
+                        rs.getInt("roomRows"),
+                        rs.getInt("roomCols")
+                );
                 movieShowtimes.add(new MovieShowtime(
                         rs.getInt("idFunction"),
                         movie,
@@ -103,6 +124,7 @@ public class MovieShowtime {
         return movieShowtimes;
     }
 
+    // Obtiene y devuelve el valor de un showtime especifico
     public static MovieShowtime getShowtimes(int id) {
         MovieShowtime movieShowtime = null;
         String query = "SELECT * FROM functions WHERE idFunction = " + id;
@@ -237,5 +259,31 @@ public class MovieShowtime {
         }
 
         return seatNames;
+    }
+
+    // Obtiene y devuelve el valor de los estados de los asientos (ocupados o no ocupados)
+    public static Map<String, Boolean> getSeatsStatus(int idRoom, int idFunction) {
+        Map<String, Boolean> seats = new LinkedHashMap<>();
+        String query = "SELECT s.seatName, COALESCE(o.isOccupied, 0) AS occupied "
+                + "FROM seats s "
+                + "LEFT JOIN occupiedseats o ON o.idSeat = s.idSeat AND o.idFunction = ? "
+                + "WHERE s.idRoom = ? "
+                + "ORDER BY s.idSeat";
+
+        try (
+                Connection connection = MySQLConnection.connect();
+                PreparedStatement pst = connection.prepareStatement(query)
+        ) {
+            pst.setInt(1, idFunction);
+            pst.setInt(2, idRoom);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    seats.put(rs.getString("seatName"), rs.getBoolean("occupied"));
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return seats;
     }
 }

@@ -31,7 +31,7 @@ public class Catalog extends JPanel {
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
         add(topPanel, BorderLayout.NORTH);
 
-        catalogTitle = createJLabel("Catalogo", 40, true);
+        catalogTitle = createJLabel("Catálogo", 40, true);
         catalogTitle.setForeground(fgCol);
         catalogTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
         catalogTitle.setBorder(BorderFactory.createEmptyBorder(30, 40, 0, 0));

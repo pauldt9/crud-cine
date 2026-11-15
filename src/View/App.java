@@ -37,13 +37,22 @@ public class App {
         frame.setIconImage(icono.getImage());
         configPath = "config.properties";
 
-        Catalog movieCatalog = new Catalog();
-        AdminView adminView = new AdminView();
-        EmployeeView employeeView = new EmployeeView(movieCatalog);
+        // Aplicación encapsulada en un try/catch por un posible fallo de conexión
+        try {
+            Catalog movieCatalog = new Catalog();
+            AdminView adminView = new AdminView();
+            EmployeeView employeeView = new EmployeeView(movieCatalog);
 
-        EmployeeController employeeController = new EmployeeController(frame, employeeView, loginPanel, movieCatalog,adminView);
-        new LoginController(loginPanel, frame, adminView, employeeView, employeeController);
-        new AdminController(loginPanel, frame, adminView, employeeView);
+            EmployeeController employeeController = new EmployeeController(frame, employeeView, loginPanel, movieCatalog, adminView);
+            new LoginController(loginPanel, frame, adminView, employeeView, employeeController);
+            new AdminController(loginPanel, frame, adminView, employeeView);
+
+            SwingUtilities.invokeLater(() -> loginPanel.setLoading(false));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            SwingUtilities.invokeLater(() -> loginPanel.setLoadError(
+                    "No se pudo conectar con el servidor. Revisa tu conexion y reinicia la aplicacion."));
+        }
 
     }
 }

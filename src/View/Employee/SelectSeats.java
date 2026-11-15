@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static utils.Colors.*;
 import static utils.CreateComponents.*;
@@ -136,7 +137,8 @@ public class SelectSeats extends JPanel {
 
 
         int idRoom = showtime.getRoom().getIdRoom();
-        ArrayList<String> seatName = MovieShowtime.getSeatsNames(idRoom);
+        Map<String, Boolean> seatStatus = MovieShowtime.getSeatsStatus(idRoom, showtime.getIdShowtime());
+        ArrayList<String> seatName = new ArrayList<>(seatStatus.keySet());
 
         int rows = showtime.getRoom().getRows();
         int cols = showtime.getRoom().getCols();
@@ -155,8 +157,7 @@ public class SelectSeats extends JPanel {
                     btn.setBackground(BUTTON_BG);
                     btn.setForeground(BUTTON_TEXT);
 
-                    int idSeats = getSeatsByName(name, idRoom);
-                    boolean isOccupied = OccupiedSeats.isSeatOccupied(idSeats, showtime.getIdShowtime());
+                    boolean isOccupied = seatStatus.get(name);
 
                     if (isOccupied){
                         String hex = String.format("#%06X", OCCUPIED_SEAT.getRGB() & 0xFFFFFF);

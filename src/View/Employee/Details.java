@@ -131,8 +131,9 @@ public class Details extends JPanel {
             default -> 60;
         };
 
-        for (Seat seat : selectedSeats){
-            seats.append(seat.getSeatName()).append(", ");
+        for (int i = 0; i < selectedSeats.size(); i++){
+            if (i > 0) seats.append(", "); // elimina la coma si es el asiento al final de los detalles de la compra
+            seats.append(selectedSeats.get(i).getSeatName());
             total += roomPrice;
         }
 
