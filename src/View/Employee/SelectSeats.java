@@ -141,7 +141,7 @@ public class SelectSeats extends JPanel {
         int rows = showtime.getRoom().getRows();
         int cols = showtime.getRoom().getCols();
 
-        seatsPanel.setLayout(new GridLayout(rows, cols, 10, 10));
+        seatsPanel.setLayout(new GridLayout(rows, cols, 5, 5));
 
         int index = 0;
         for (int i = 0; i < rows; i++){
@@ -151,7 +151,7 @@ public class SelectSeats extends JPanel {
                     String name = seatName.get(index);
 
                     btn = createButton(seatName.get(index), 50, 50);
-                    btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+                    btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
                     btn.setBackground(BUTTON_BG);
                     btn.setForeground(BUTTON_TEXT);
 
