@@ -1093,11 +1093,14 @@ public class AdminController implements ActionListener {
             return;
         }
 
+        File file = fileChooser.getSelectedFile();
 
+        if (!file.getName().toLowerCase().endsWith(".pdf")){
+            file = new File(file.getParentFile(), file.getName() + ".pdf");
+        }
         // Generar pdf
-        // TODO: hacerlo funcionar
         try (
-                PdfDocument pdfDoc = new PdfDocument(new PdfWriter(fileChooser.getSelectedFile()));
+                PdfDocument pdfDoc = new PdfDocument(new PdfWriter(file));
                 Document doc = new Document(pdfDoc, PageSize.LETTER.rotate());
         ){
 
@@ -1168,7 +1171,7 @@ public class AdminController implements ActionListener {
 
             if(Desktop.isDesktopSupported()) {
                 try {
-                    Desktop.getDesktop().open(fileChooser.getSelectedFile());
+                    Desktop.getDesktop().open(file);
                 }catch(IOException ex) {
                     JOptionPane.showMessageDialog(frame, "No se pudo abrir el archivo");
                 }
