@@ -19,5 +19,5 @@ public final class Colors {
     public final static Color LOG_OUT_BUTTON_BG = new Color(0xED254E);
     public final static Color ACCENT = new Color(0x0CAD9D);
     public final static Color ACCENT_TEXT = new Color(0xEEF0EB);
-    public final static Color OCCUPIED_SEAT = new Color(0xCFCFCF);
+    public final static Color OCCUPIED_SEAT = new Color(0xBCBCBC);
 }

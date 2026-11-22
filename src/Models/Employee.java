@@ -134,25 +134,26 @@ public class Employee {
 
     public static Employee getEmployeeByUsername(String username) {
         Employee employee = null;
-        String query = "SELECT * FROM employees WHERE username = '" + username + "'";
+        String query = "SELECT * FROM employees WHERE username = ?";
 
         try (
                 Connection connection = MySQLConnection.connect();
-                Statement st = (Statement) connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                ResultSet rs = st.executeQuery(query)
+                PreparedStatement pst = connection.prepareStatement(query);
         ) {
+            pst.setString(1, username);
 
-            if (rs.next()) {
-                employee = new Employee(
-                        rs.getInt("idEmployee"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("employeeType"),
-                        rs.getString("username"),
-                        rs.getString("password")
-                );
+            try (ResultSet rs = pst.executeQuery()){
+                if (rs.next()) {
+                    employee = new Employee(
+                            rs.getInt("idEmployee"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("employeeType"),
+                            rs.getString("username"),
+                            rs.getString("password")
+                    );
+                }
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
