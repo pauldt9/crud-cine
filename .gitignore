@@ -29,5 +29,6 @@ bin/
 .DS_Store
 
 config.properties
+config-lap.properties
 crud_cine.sql
 logs
