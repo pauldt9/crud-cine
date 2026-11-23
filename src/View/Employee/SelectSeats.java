@@ -170,7 +170,7 @@ public class SelectSeats extends JPanel {
                                 btn.setBackground(BUTTON_BG);
                             } else {
                                 selectedSeats.add(name);
-                                btn.setBackground(new Color(200, 200, 200));
+                                btn.setBackground(SELECTED_SEAT);
                             }
                         });
                     }

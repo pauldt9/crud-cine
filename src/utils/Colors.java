@@ -20,4 +20,5 @@ public final class Colors {
     public final static Color ACCENT = new Color(0x0CAD9D);
     public final static Color ACCENT_TEXT = new Color(0xEEF0EB);
     public final static Color OCCUPIED_SEAT = new Color(0xBCBCBC);
+    public final static Color SELECTED_SEAT = new Color(0x2589D8);
 }

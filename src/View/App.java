@@ -26,7 +26,6 @@ public class App {
         frame.setMinimumSize(new Dimension(1300, 800));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLocationRelativeTo(null);
-//        frame.setResizable(false);
         frame.setTitle("Ingresar credenciales");
 
         LoginPanel loginPanel = new LoginPanel();

@@ -43,7 +43,6 @@ public class CreateComponents {
 
         textField.setFont(font);
         textField.setForeground(new Color(30, 30 , 30));
-//        textField.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
         textField.putClientProperty("JTextField.padding", new Insets(0, 10, 0, 0));
         textField.setMaximumSize(new Dimension(w, h));
 
@@ -60,7 +59,6 @@ public class CreateComponents {
 
         pf.setForeground(new Color(30, 30, 30));
         pf.setMaximumSize(new Dimension(w, h));
-//        pf.setBorder(BorderFactory.createLineBorder(new Color(20, 20, 20), 1, true));
         pf.putClientProperty("JTextField.padding", new Insets(0, 10, 0, 0));
         pf.setFont(font);
 
